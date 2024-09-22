@@ -1,0 +1,764 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  
+  <title>小程序第一次学习 - M∃RLIN的博客</title>
+
+  
+    <meta name="description" content="和普通网页的差别运行环境 小程序运行在微信环境 API不同 无法调用DOM或者BOM的API 可以使用微信环境的API 开发模式 申请小程序开发账号 安装小程序开发者工具 创建和配置小程序  第一个小程序获取AppID在小程序的开发-&gt;开发设置里面找到 代码构成pages用来存放所有小程序的页面 utils用来存放工具性质的模块 app.js小程序项目的入口文件 app.json小程序的全局">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序第一次学习">
+<meta property="og:url" content="http://example.com/2024/09/22/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="M∃RLIN的博客">
+<meta property="og:description" content="和普通网页的差别运行环境 小程序运行在微信环境 API不同 无法调用DOM或者BOM的API 可以使用微信环境的API 开发模式 申请小程序开发账号 安装小程序开发者工具 创建和配置小程序  第一个小程序获取AppID在小程序的开发-&gt;开发设置里面找到 代码构成pages用来存放所有小程序的页面 utils用来存放工具性质的模块 app.js小程序项目的入口文件 app.json小程序的全局">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-09-22T02:52:10.681Z">
+<meta property="article:modified_time" content="2024-09-22T03:08:49.407Z">
+<meta property="article:author" content="LJL17378">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.29.1">
+
+  
+    <link rel="shortcut icon" href="/./source/pic/icon.ico">
+  
+
+  
+
+  
+</head>
+<body>
+
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="./source/pic/avatar.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">M∃RLIN的博客</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/09/22/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0/"><span class="title">小程序第一次学习</span></a><a class="item title" href="/2024/09/22/%E5%AF%92%E5%81%87%E5%AE%9E%E8%AE%AD%E7%BB%8F%E9%AA%8C%E5%9B%9E%E9%A1%BE/"><span class="title">寒假实训经验回顾</span></a><a class="item title" href="/2024/09/22/%E5%89%8D%E7%AB%AF%E5%9F%B9%E8%AE%AD%E4%B8%80/"><span class="title">前端培训一</span></a><a class="item title" href="/2024/09/22/%E5%9F%B9%E8%AE%AD%E5%89%8D%E9%A1%BB%E7%9F%A5%20(1)/"><span class="title">培训前须知</span></a><a class="item title" href="/2024/09/22/%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%AD%A3%E5%BC%8F%E4%BE%8B%E4%BC%9A%E5%AD%A6%E4%B9%A0/"><span class="title">学线前端第一次例会正式学习文档</span></a><a class="item title" href="/2024/09/22/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/"><span class="title">第一次自己学vue文档</span></a><a class="item title" href="/2024/09/22/%E4%BF%AE%E9%A5%B0%E7%AC%A6/"><span class="title">修饰符</span></a><a class="item title" href="/2024/09/22/%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%AD%A3%E5%BC%8F%E4%BE%8B%E4%BC%9A/"><span class="title">学线前端第三次例会正式学习文档</span></a><a class="item title" href="/2024/09/22/%E5%B0%8F%E8%AE%B0%EF%BC%881/"><span class="title">vue小记</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-09-22T02:52:10.681Z">2024-09-22</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-09-22T03:08:49.407Z">2024-09-22</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>小程序第一次学习</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="和普通网页的差别"><a href="#和普通网页的差别" class="headerlink" title="和普通网页的差别"></a>和普通网页的差别</h1><h2 id="运行环境"><a href="#运行环境" class="headerlink" title="运行环境"></a>运行环境</h2><p> 小程序运行在微信环境</p>
+<h2 id="API不同"><a href="#API不同" class="headerlink" title="API不同"></a>API不同</h2><p> 无法调用DOM或者BOM的API<br> 可以使用微信环境的API</p>
+<h2 id="开发模式"><a href="#开发模式" class="headerlink" title="开发模式"></a>开发模式</h2><ul>
+<li>申请小程序开发账号</li>
+<li>安装小程序开发者工具</li>
+<li>创建和配置小程序</li>
+</ul>
+<h1 id="第一个小程序"><a href="#第一个小程序" class="headerlink" title="第一个小程序"></a>第一个小程序</h1><h2 id="获取AppID"><a href="#获取AppID" class="headerlink" title="获取AppID"></a>获取AppID</h2><p>在小程序的开发-&gt;开发设置里面找到</p>
+<h1 id="代码构成"><a href="#代码构成" class="headerlink" title="代码构成"></a>代码构成</h1><h2 id="pages"><a href="#pages" class="headerlink" title="pages"></a>pages</h2><p>用来存放所有小程序的页面</p>
+<h2 id="utils"><a href="#utils" class="headerlink" title="utils"></a>utils</h2><p>用来存放工具性质的模块</p>
+<h2 id="app-js"><a href="#app-js" class="headerlink" title="app.js"></a>app.js</h2><p>小程序项目的入口文件</p>
+<h2 id="app-json"><a href="#app-json" class="headerlink" title="app.json"></a>app.json</h2><p>小程序的全局配置文件</p>
+<h2 id="app-wxss"><a href="#app-wxss" class="headerlink" title="app.wxss"></a>app.wxss</h2><p>小程序的全局样式文件</p>
+<h2 id="project-config-json"><a href="#project-config-json" class="headerlink" title="project.config.json"></a>project.config.json</h2><p>项目的配置文件</p>
+<h2 id="sitemap-json"><a href="#sitemap-json" class="headerlink" title="sitemap.json"></a>sitemap.json</h2><p>用来配置小程序机器页面是否允许被微信索引</p>
+<h1 id="小程序页面的组成部分"><a href="#小程序页面的组成部分" class="headerlink" title="小程序页面的组成部分"></a>小程序页面的组成部分</h1><p>pages中每个文件夹存放一个页面<br>每个页面有四个基本文件组成</p>
+<ol>
+<li><code>.js</code>页面的脚本文件，存放页面的数据、事件处理函数等</li>
+<li><code>.json</code>当前页面的配置文件，配置窗口的外观，表现</li>
+<li><code>.wxml</code></li>
+<li><code>.wxss</code>页面的模板结构文件当前页面的样式表文件</li>
+</ol>
+<h1 id="json配置文件"><a href="#json配置文件" class="headerlink" title="json配置文件"></a>json配置文件</h1><ol>
+<li>项目根目录中的<code>app.json</code>配置文件</li>
+<li>项目根目录中的<code>project.config.json</code>配置文件</li>
+<li>项目根目录中的<code>sitemap.json</code>配置文件</li>
+<li>每个页面文件夹中的<code>.json</code>配置文件</li>
+</ol>
+<h2 id="app-json配置文件"><a href="#app-json配置文件" class="headerlink" title="app.json配置文件"></a>app.json配置文件</h2><p>包括小程序的页面路径，窗口外观，界面表现，底部tab等</p>
+<h2 id="project-config-json-1"><a href="#project-config-json-1" class="headerlink" title="project.config.json"></a>project.config.json</h2><p>记录对开发工具所做的个性化配置</p>
+<h2 id="sitemap-json-1"><a href="#sitemap-json-1" class="headerlink" title="sitemap.json"></a>sitemap.json</h2><p>配置小程序的页面是否允许微信索引</p>
+<h1 id="WXML模板语法"><a href="#WXML模板语法" class="headerlink" title="WXML模板语法"></a>WXML模板语法</h1><p><code>div</code>&#x3D;&gt;<code>view</code><br><code>text</code>&#x3D;&gt;<code>span</code><br><code>img</code>&#x3D;&gt;<code>image</code><br><code>a</code>&#x3D;&gt;<code>navigator</code><br><code>&lt;navigator url=&quot;/pages/home/home&quot;&gt;&lt;/navigator&gt;</code></p>
+<h2 id="提供了类似于vue中的模板语法"><a href="#提供了类似于vue中的模板语法" class="headerlink" title="提供了类似于vue中的模板语法"></a>提供了类似于vue中的模板语法</h2><h1 id="WXSS"><a href="#WXSS" class="headerlink" title="WXSS"></a>WXSS</h1><p>小程序的样式语言</p>
+<ul>
+<li>新增了rpx尺寸单位</li>
+<li>提供全局样式和局部样式<ul>
+<li>app.WXSS会作用于所有的小程序页面</li>
+<li>局部页面的.WXSS样式仅对当前页面生效</li>
+</ul>
+</li>
+<li>WXSS仅支持部分CSS选择器</li>
+</ul>
+<h1 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h1><ol>
+<li><strong>视图容器</strong></li>
+</ol>
+<ul>
+<li>view</li>
+<li>scroll-view</li>
+<li>swiper和swiper-item</li>
+</ul>
+<ol start="2">
+<li><strong>基础内容</strong></li>
+</ol>
+<ul>
+<li><code>text</code>文本组件，类似于一个<code>span</code>元素。是一个行内元素</li>
+<li><code>rich-text</code>富文本组件，支持把HTML字符串渲染为WXML结构</li>
+</ul>
+<ol start="3">
+<li><strong>表单组件</strong></li>
+<li><strong>导航组件</strong></li>
+<li>媒体组件</li>
+<li>map地图组件</li>
+<li>canvas画布组件</li>
+<li>开放能力</li>
+<li>无障碍访问</li>
+</ol>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><ol>
+<li>事件监听类API</li>
+</ol>
+<ul>
+<li>以<code>on</code>开头，用来监听某些事件的触发</li>
+</ul>
+<ol start="2">
+<li>同步API</li>
+</ol>
+<ul>
+<li>以<code>Sync</code>结尾的API都是同步API</li>
+<li>同步API的执行结果，可以通过函数返回值直接获取，如果执行出错会抛出异常</li>
+</ul>
+<ol start="3">
+<li>异步API</li>
+</ol>
+<h1 id="给data中数据赋值"><a href="#给data中数据赋值" class="headerlink" title="给data中数据赋值"></a>给data中数据赋值</h1><p>通过调用<code>this.setData(dataObject)</code>方法，可以给data中的数据重新赋值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">changeCount</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">        <span class="attr">count</span>: <span class="variable language_">this</span>.<span class="property">data</span>.<span class="property">count</span> + <span class="number">1</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id=""><a href="#" class="headerlink" title="&lt;block&gt;"></a><code>&lt;block&gt;</code></h1><p>不会渲染出来，不会占用内存，可以用来包含多个元素，同时控制他们渲染与否或者存不存在</p>
+<h1 id="事件传参"><a href="#事件传参" class="headerlink" title="事件传参"></a>事件传参</h1><p><code>&lt;button bindtap=&quot;btnHandler&quot; data-info=&quot;&#123;&#123;2&#125;&#125;&quot;&gt;事件传参&lt;/button&gt;</code><br>在<code>js</code>中通过<code>event.target.dataset.参数名</code>即可获取到具体的参数的值</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">btnHandler</span>(<span class="params">e</span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">target</span>.<span class="property">dataset</span>.<span class="property">info</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="input语法"><a href="#input语法" class="headerlink" title="input语法"></a>input语法</h1><p><code>&lt;input bindinput=&quot;inputHandler&quot;&gt;</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">inputHandler</span>(<span class="params">e</span>)&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">detail</span>.<span class="property">value</span>)</span><br><span class="line">&#125;<span class="comment">//获取表单当中的值</span></span><br></pre></td></tr></table></figure>
+
+## 实现数据双向绑定
+`<input value="{{msg}} bindinput="inputHandler"></input>`
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">inputHandler</span>(<span class="params">e</span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">dataSet</span>(&#123;</span><br><span class="line">    <span class="attr">msg</span>: e.<span class="property">detail</span>.<span class="property">value</span></span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+# 列表渲染
+`<view wx:for="{{arr1}}"></view>`
+索引是{{index}}，每一项是{{item}}
+## 手动指定索引和当前项的变量名
+- 使用`wx:for-index="idx（别名）"`可以指定当前循环项的索引
+- 使用`wx:for-item="itemName（别名）"`可以指定当前项的变量名
+## `wx:key`的使用
+渲染出唯一指定的key值来提高渲染效率
+`<view wx:for="{{arr1}} wx:key="id"></view>`
+不使用{{}}语法，直接使用属性的名称来绑定（比较特殊）
+可以使用索引和自定义索引名称来绑定key值
+
+<h1 id="WXSS模板样式"><a href="#WXSS模板样式" class="headerlink" title="WXSS模板样式"></a>WXSS模板样式</h1><h2 id="rpx"><a href="#rpx" class="headerlink" title="rpx"></a>rpx</h2><p>用来解决屏幕适配的尺寸单位<br>rpx把所有屏幕的宽度等分为750份，当前屏幕的总宽度为750rpx（开发微信小程序的时候，设计师可以用iphone6作为视觉稿的标准即1px &#x3D; 2 rpx）</p>
+<h2 id="样式导入"><a href="#样式导入" class="headerlink" title="样式导入"></a>样式导入</h2><p><code>@import &quot;common.wxss&quot;; </code><br>导入非本页面文件夹中的wxss文件</p>
+<h1 id="全局样式"><a href="#全局样式" class="headerlink" title="全局样式"></a>全局样式</h1><p>app.wxss中的样式就是全局样式 </p>
+<h1 id="局部样式"><a href="#局部样式" class="headerlink" title="局部样式"></a>局部样式</h1><p>页面文件.wxss中的样式都是局部样式</p>
+<ol>
+<li>局部样式和全局样式冲突的时候根据就近原则，局部样式就会覆盖全局样式</li>
+<li>当局部样式的权重大于或者等于全局样式的时候，局部样式才会覆盖全局样式</li>
+</ol>
+<h1 id="下拉刷新"><a href="#下拉刷新" class="headerlink" title="下拉刷新"></a>下拉刷新</h1><p>实际开发中哪个页面需要用到下拉刷新再在对应的页面的配置文件里面去配置</p>
+<h1 id="上拉触底距离"><a href="#上拉触底距离" class="headerlink" title="上拉触底距离"></a>上拉触底距离</h1><p>设置距离底部多少像素的时候刷新下一页（onReachBottomDistance）</p>
+<h1 id="tabBar"><a href="#tabBar" class="headerlink" title="tabBar"></a>tabBar</h1><p>最少两个最多五个tab页签</p>
+<ul>
+<li>底部tabBar<ul>
+<li>会显示icon和文本</li>
+</ul>
+</li>
+<li>顶部tabBar<ul>
+<li>只会显示文本不显示icon</li>
+</ul>
+</li>
+</ul>
+<h1 id="网络数据请求"><a href="#网络数据请求" class="headerlink" title="网络数据请求"></a>网络数据请求</h1><ol>
+<li>只能请求https类型的接口</li>
+<li>必须先将接口的域名添加到<strong>信任列表</strong>当中</li>
+</ol>
+<h2 id="配置request合法域名"><a href="#配置request合法域名" class="headerlink" title="配置request合法域名"></a>配置request合法域名</h2><p>登录微信小程序管理后台&#x3D;&gt;开发&#x3D;&gt;开发设置&#x3D;&gt;服务器域名&#x3D;&gt;修改request合法域名</p>
+<h2 id="发起GET请求"><a href="#发起GET请求" class="headerlink" title="发起GET请求"></a>发起GET请求</h2><p>使用<code>wx.request()</code>方法可以发起get数据请求</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wx.<span class="title function_">request</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>:<span class="string">&#x27;接口地址&#x27;</span>，</span><br><span class="line">    <span class="attr">method</span>:<span class="string">&#x27;GET&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;ljl&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>:<span class="number">19</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">success</span>:<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">data</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h2><p>类似</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">wx.<span class="title function_">request</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>:<span class="string">&#x27;接口地址&#x27;</span>，</span><br><span class="line">    <span class="attr">method</span>:<span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;ljl&#x27;</span>,</span><br><span class="line">    <span class="attr">age</span>:<span class="number">19</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">success</span>:<span class="function">(<span class="params">res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(res.<span class="property">data</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="页面刚加载的时候自动请求"><a href="#页面刚加载的时候自动请求" class="headerlink" title="页面刚加载的时候自动请求"></a>页面刚加载的时候自动请求</h2><p>在页面的<code>onLoad</code>事件中调用获取数据的函数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">onLoad</span>:<span class="keyword">function</span>(<span class="params">options</span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">getxxx</span>(),</span><br><span class="line"><span class="variable language_">this</span>.<span class="title function_">getxxx</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="小程序实现页面导航"><a href="#小程序实现页面导航" class="headerlink" title="小程序实现页面导航"></a>小程序实现页面导航</h1><ol>
+<li>声明式导航</li>
+</ol>
+<ul>
+<li>页面上声明一个<code>&lt;navigator&gt;</code>导航组件通过点击实现页面跳转</li>
+</ul>
+<ol start="2">
+<li>编程式导航<br>调用小程序的导航API，实现页面的跳转</li>
+</ol>
+<h2 id="声明式导航"><a href="#声明式导航" class="headerlink" title="声明式导航"></a>声明式导航</h2><h3 id="跳转到tabBar页面"><a href="#跳转到tabBar页面" class="headerlink" title="跳转到tabBar页面"></a>跳转到tabBar页面</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;navigator url=<span class="string">&quot;/pages/index/index&quot;</span> open-type=<span class="string">&quot;switchTab&quot;</span>&gt;&lt;/navigator&gt;</span><br></pre></td></tr></table></figure>
+<p>url必须斜线开头，一定要写<code>open-type=&quot;switchTab&quot;</code></p>
+<h3 id="跳转到非tabBar页面"><a href="#跳转到非tabBar页面" class="headerlink" title="跳转到非tabBar页面"></a>跳转到非tabBar页面</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;navigator url=<span class="string">&quot;/pages/index/index&quot;</span> open-type=<span class="string">&quot;navigate&quot;</span>&gt;&lt;/navigator&gt;</span><br></pre></td></tr></table></figure>
+<p>url必须斜线开头，要写<code>open-type=&quot;navigate&quot;</code>（可以省略不写）</p>
+<h3 id="后退导航"><a href="#后退导航" class="headerlink" title="后退导航"></a>后退导航</h3><ol>
+<li><code>open-type</code>的值必须是<code>navigateBack</code>，表示要进行后退导航</li>
+<li><code>delta</code>的值必须是数字，表示要后退的层级<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">navigator</span> <span class="attr">open-type</span>=<span class="string">&quot;navigateBack&quot;</span> <span class="attr">delta</span>=<span class="string">&#x27;1&#x27;</span>&gt;</span>返回上一页<span class="tag">&lt;/<span class="name">navigator</span>&gt;</span></span><br></pre></td></tr></table></figure>
+delta默认值是1</li>
+</ol>
+<h2 id="编程式导航"><a href="#编程式导航" class="headerlink" title="编程式导航"></a>编程式导航</h2><h3 id="导航到tabBar页面"><a href="#导航到tabBar页面" class="headerlink" title="导航到tabBar页面"></a>导航到tabBar页面</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">gotoIndex</span>(<span class="params"></span>)&#123;</span><br><span class="line">wx.<span class="title function_">switchTab</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>:<span class="string">&#x27;/pages/index/index&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="导航到非tabBar页面"><a href="#导航到非tabBar页面" class="headerlink" title="导航到非tabBar页面"></a>导航到非tabBar页面</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">gotoIndex</span>(<span class="params"></span>)&#123;</span><br><span class="line">wx.<span class="title function_">navigateTo</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>:<span class="string">&#x27;/pages/index/index&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="后退导航-1"><a href="#后退导航-1" class="headerlink" title="后退导航"></a>后退导航</h3><p>使用<code>wx.navigateBack()</code>delta的默认值是1</p>
+<h1 id="导航传参"><a href="#导航传参" class="headerlink" title="导航传参"></a>导航传参</h1><ol>
+<li>声明式导航传参</li>
+</ol>
+<ul>
+<li>参数和路径之间用?分隔</li>
+<li>参数键与参数值用&#x3D;相连</li>
+<li>不同参数用&amp;分隔<br><code>&lt;navigator url=&quot;/pages/index/index?name=joe&amp;age=20&quot;&gt;&lt;/navigator&gt;</code></li>
+</ul>
+<ol start="2">
+<li>编程式导航传参<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">gotoIndex</span>(<span class="params"></span>)&#123;</span><br><span class="line">wx.<span class="title function_">navigateTo</span>(&#123;</span><br><span class="line">    <span class="attr">url</span>:<span class="string">&#x27;/pages/index/index?name=ljl&amp;gender=male&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+无论是声明式还是编程式导航都可以通过<code>onLoad:function(options)</code>获取<br>可以在data中声明一个query<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">onLoad</span>:<span class="keyword">function</span>(<span class="params">options</span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(options)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">setData</span>(&#123;</span><br><span class="line">    <span class="attr">query</span>:options</span><br><span class="line">&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="页面事件"><a href="#页面事件" class="headerlink" title="页面事件"></a>页面事件</h1><h2 id="下拉刷新S"><a href="#下拉刷新S" class="headerlink" title="下拉刷新S"></a>下拉刷新S</h2><h3 id="全局开启下拉刷新"><a href="#全局开启下拉刷新" class="headerlink" title="全局开启下拉刷新"></a>全局开启下拉刷新</h3><p>在app.json的window节点中，将enablePullDownRefresh设置为true</p>
+<h3 id="局部开启下拉刷新"><a href="#局部开启下拉刷新" class="headerlink" title="局部开启下拉刷新"></a>局部开启下拉刷新</h3><p>在页面的.json配置文件中，将enablePullDownRefresh设置为true<br>通过<code>onPullDownRefresh()</code>函数即可监听当前页面的下拉刷新事件</p>
+<h3 id="关闭下拉刷新效果"><a href="#关闭下拉刷新效果" class="headerlink" title="关闭下拉刷新效果"></a>关闭下拉刷新效果</h3><p><code>wx.stopPullDownRefresh()</code>可以关闭下拉刷新效果</p>
+<h2 id="上拉触底"><a href="#上拉触底" class="headerlink" title="上拉触底"></a>上拉触底</h2><p>手指上拉加载更多数据</p>
+<h3 id="监听上拉触底事件"><a href="#监听上拉触底事件" class="headerlink" title="监听上拉触底事件"></a>监听上拉触底事件</h3><p>在页面的.js问价，通过<code>onReachBottom()</code>函数即可监听当前页面的上拉触底事件，实例代码如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">onReachBottom</span>:<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;触发了上拉触底事件&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置上拉触底距离"><a href="#配置上拉触底距离" class="headerlink" title="配置上拉触底距离"></a>配置上拉触底距离</h3><p>通过<code>onReachBottomDistance</code>属性来配置上拉触底的距离</p>
+<h1 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h1><p>通过<code>wx.showLoading</code>来显示加载<br>通过<code>wx.hideLoading</code>来隐藏加载</p>
+<h1 id="组件-1"><a href="#组件-1" class="headerlink" title="组件"></a>组件</h1><h2 id="自定义组件全局引用"><a href="#自定义组件全局引用" class="headerlink" title="自定义组件全局引用"></a>自定义组件全局引用</h2><p>在<code>app.json</code> 中使用<code>usingComponents:&#123;&#125;</code>来实现全局引用</p>
+<h2 id="组件处理函数"><a href="#组件处理函数" class="headerlink" title="组件处理函数"></a>组件处理函数</h2><p>需要定义到<code>methods</code>节点当中</p>
+<h2 id="样式隔离"><a href="#样式隔离" class="headerlink" title="样式隔离"></a>样式隔离</h2><p>在<code>app.wxss</code>当中定义的类的全局样式对组件无效<br>只有class选择器有样式隔离的效果，别的选择器不受样式隔离的影响</p>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/09/22/%E5%9F%B9%E8%AE%AD%E5%89%8D%E9%A1%BB%E7%9F%A5%20(1)/">培训前须知</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/09/22/%E5%AF%92%E5%81%87%E5%AE%9E%E8%AE%AD%E7%BB%8F%E9%AA%8C%E5%9B%9E%E9%A1%BE/">寒假实训经验回顾</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LJL17378</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1">Stellar 1.29.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%92%8C%E6%99%AE%E9%80%9A%E7%BD%91%E9%A1%B5%E7%9A%84%E5%B7%AE%E5%88%AB"><span class="toc-text">和普通网页的差别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-text">运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API%E4%B8%8D%E5%90%8C"><span class="toc-text">API不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-text">开发模式</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="toc-text">第一个小程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96AppID"><span class="toc-text">获取AppID</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%9E%84%E6%88%90"><span class="toc-text">代码构成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pages"><span class="toc-text">pages</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#utils"><span class="toc-text">utils</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app-js"><span class="toc-text">app.js</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app-json"><span class="toc-text">app.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#app-wxss"><span class="toc-text">app.wxss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#project-config-json"><span class="toc-text">project.config.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sitemap-json"><span class="toc-text">sitemap.json</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A1%B5%E9%9D%A2%E7%9A%84%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-text">小程序页面的组成部分</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#json%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">json配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#app-json%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">app.json配置文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#project-config-json-1"><span class="toc-text">project.config.json</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sitemap-json-1"><span class="toc-text">sitemap.json</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WXML%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95"><span class="toc-text">WXML模板语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E4%BA%86%E7%B1%BB%E4%BC%BC%E4%BA%8Evue%E4%B8%AD%E7%9A%84%E6%A8%A1%E6%9D%BF%E8%AF%AD%E6%B3%95"><span class="toc-text">提供了类似于vue中的模板语法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WXSS"><span class="toc-text">WXSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6"><span class="toc-text">组件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API"><span class="toc-text">API</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%99data%E4%B8%AD%E6%95%B0%E6%8D%AE%E8%B5%8B%E5%80%BC"><span class="toc-text">给data中数据赋值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-text">&lt;block&gt;</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E4%BC%A0%E5%8F%82"><span class="toc-text">事件传参</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#input%E8%AF%AD%E6%B3%95"><span class="toc-text">input语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#WXSS%E6%A8%A1%E6%9D%BF%E6%A0%B7%E5%BC%8F"><span class="toc-text">WXSS模板样式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#rpx"><span class="toc-text">rpx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E5%AF%BC%E5%85%A5"><span class="toc-text">样式导入</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E6%A0%B7%E5%BC%8F"><span class="toc-text">全局样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%A0%B7%E5%BC%8F"><span class="toc-text">局部样式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="toc-text">下拉刷新</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E8%B7%9D%E7%A6%BB"><span class="toc-text">上拉触底距离</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tabBar"><span class="toc-text">tabBar</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E6%95%B0%E6%8D%AE%E8%AF%B7%E6%B1%82"><span class="toc-text">网络数据请求</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AErequest%E5%90%88%E6%B3%95%E5%9F%9F%E5%90%8D"><span class="toc-text">配置request合法域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E8%B5%B7GET%E8%AF%B7%E6%B1%82"><span class="toc-text">发起GET请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST%E8%AF%B7%E6%B1%82"><span class="toc-text">POST请求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%88%9A%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%97%B6%E5%80%99%E8%87%AA%E5%8A%A8%E8%AF%B7%E6%B1%82"><span class="toc-text">页面刚加载的时候自动请求</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E9%A1%B5%E9%9D%A2%E5%AF%BC%E8%88%AA"><span class="toc-text">小程序实现页面导航</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA"><span class="toc-text">声明式导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E5%88%B0tabBar%E9%A1%B5%E9%9D%A2"><span class="toc-text">跳转到tabBar页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC%E5%88%B0%E9%9D%9EtabBar%E9%A1%B5%E9%9D%A2"><span class="toc-text">跳转到非tabBar页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%80%80%E5%AF%BC%E8%88%AA"><span class="toc-text">后退导航</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA"><span class="toc-text">编程式导航</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E5%88%B0tabBar%E9%A1%B5%E9%9D%A2"><span class="toc-text">导航到tabBar页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E5%88%B0%E9%9D%9EtabBar%E9%A1%B5%E9%9D%A2"><span class="toc-text">导航到非tabBar页面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E9%80%80%E5%AF%BC%E8%88%AA-1"><span class="toc-text">后退导航</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E4%BC%A0%E5%8F%82"><span class="toc-text">导航传参</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E4%BA%8B%E4%BB%B6"><span class="toc-text">页面事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0S"><span class="toc-text">下拉刷新S</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%BC%80%E5%90%AF%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="toc-text">全局开启下拉刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%BC%80%E5%90%AF%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0"><span class="toc-text">局部开启下拉刷新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD%E4%B8%8B%E6%8B%89%E5%88%B7%E6%96%B0%E6%95%88%E6%9E%9C"><span class="toc-text">关闭下拉刷新效果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95"><span class="toc-text">上拉触底</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E5%90%AC%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E4%BA%8B%E4%BB%B6"><span class="toc-text">监听上拉触底事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E4%B8%8A%E6%8B%89%E8%A7%A6%E5%BA%95%E8%B7%9D%E7%A6%BB"><span class="toc-text">配置上拉触底距离</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD"><span class="toc-text">加载</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6-1"><span class="toc-text">组件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E5%85%A8%E5%B1%80%E5%BC%95%E7%94%A8"><span class="toc-text">自定义组件全局引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%A4%84%E7%90%86%E5%87%BD%E6%95%B0"><span class="toc-text">组件处理函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E5%BC%8F%E9%9A%94%E7%A6%BB"><span class="toc-text">样式隔离</span></a></li></ol></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+<script type="text/javascript">
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+
+<!-- required -->
+<script src="/js/main.js?v=1.29.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    applyThemeToGiscus(theme)
+  }
+
+  const applyThemeToGiscus = (theme) => {
+    theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    }
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+</script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
