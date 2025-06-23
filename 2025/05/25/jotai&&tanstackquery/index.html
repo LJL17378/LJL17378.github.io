@@ -1,0 +1,773 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  
+  <title>jotai和tanstack query入门教程 - M∃RLIN的博客</title>
+
+  
+    <meta name="description" content="1. 为什么选择这些工具？让我们想一下，我们之前在管理状态的时候是怎么做的，我们经常使用localstorage来进行存储，但是当我们需要状态在多个组件或者页面里面使用和修改的时候，如果我们对这个状态进行了更新，那么别的页面该如何及时更新呢？是利用生命周期钩子函数来进行更新还是如何？思考这些问题无疑徒增了我们的心智负担。所以我们要学习如何通过jotai来管理用户的状态。 1.1 Jotai vs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jotai和tanstack query入门教程">
+<meta property="og:url" content="http://example.com/2025/05/25/jotai&&tanstackquery/index.html">
+<meta property="og:site_name" content="M∃RLIN的博客">
+<meta property="og:description" content="1. 为什么选择这些工具？让我们想一下，我们之前在管理状态的时候是怎么做的，我们经常使用localstorage来进行存储，但是当我们需要状态在多个组件或者页面里面使用和修改的时候，如果我们对这个状态进行了更新，那么别的页面该如何及时更新呢？是利用生命周期钩子函数来进行更新还是如何？思考这些问题无疑徒增了我们的心智负担。所以我们要学习如何通过jotai来管理用户的状态。 1.1 Jotai vs">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-24T16:33:56.205Z">
+<meta property="article:modified_time" content="2025-05-24T16:41:31.740Z">
+<meta property="article:author" content="LJL17378">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.29.1">
+
+  
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250405202347157.ico">
+  
+
+  
+
+  
+</head>
+<body>
+
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250405180203544.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">M∃RLIN的博客</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/06/22/Taro%E4%B8%AD%E4%BD%BF%E7%94%A8webview%E7%9A%84%E5%9D%91/"><span class="title">在Taro中使用webview的时候的一些坑</span></a><a class="item title" href="/2025/05/25/jotai&&tanstackquery/"><span class="title">jotai和tanstack query入门教程</span></a><a class="item title" href="/2024/09/22/%E5%89%8D%E7%AB%AF%E5%9F%B9%E8%AE%AD%E4%B8%80/"><span class="title">前端培训一</span></a><a class="item title" href="/2024/09/22/%E5%9F%B9%E8%AE%AD%E5%89%8D%E9%A1%BB%E7%9F%A5%20(1)/"><span class="title">培训前须知</span></a><a class="item title" href="/2024/09/22/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0/"><span class="title">小程序第一次学习</span></a><a class="item title" href="/2024/09/22/%E5%AF%92%E5%81%87%E5%AE%9E%E8%AE%AD%E7%BB%8F%E9%AA%8C%E5%9B%9E%E9%A1%BE/"><span class="title">寒假实训经验回顾</span></a><a class="item title" href="/2024/09/22/%E7%AC%AC%E4%B8%80%E6%AC%A1%E6%AD%A3%E5%BC%8F%E4%BE%8B%E4%BC%9A%E5%AD%A6%E4%B9%A0/"><span class="title">学线前端第一次例会正式学习文档</span></a><a class="item title" href="/2024/09/22/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0%E6%96%87%E6%A1%A3/"><span class="title">第一次自己学vue文档</span></a><a class="item title" href="/2024/09/22/%E4%BF%AE%E9%A5%B0%E7%AC%A6/"><span class="title">修饰符</span></a><a class="item title" href="/2024/09/22/%E7%AC%AC%E4%B8%89%E6%AC%A1%E6%AD%A3%E5%BC%8F%E4%BE%8B%E4%BC%9A/"><span class="title">学线前端第三次例会正式学习文档</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-05-24T16:33:56.205Z">2025-05-25</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-05-24T16:41:31.740Z">2025-05-25</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>jotai和tanstack query入门教程</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="1-为什么选择这些工具？"><a href="#1-为什么选择这些工具？" class="headerlink" title="1. 为什么选择这些工具？"></a>1. 为什么选择这些工具？</h2><p>让我们想一下，我们之前在管理状态的时候是怎么做的，我们经常使用<code>localstorage</code>来进行存储，但是当我们需要状态在多个组件或者页面里面使用和修改的时候，如果我们对这个状态进行了更新，那么别的页面该如何及时更新呢？是利用生命周期钩子函数来进行更新还是如何？思考这些问题无疑徒增了我们的心智负担。所以我们要学习如何通过<code>jotai</code>来管理用户的状态。</p>
+<h3 id="1-1-Jotai-vs-Redux-vs-localStorage"><a href="#1-1-Jotai-vs-Redux-vs-localStorage" class="headerlink" title="1.1 Jotai vs Redux vs localStorage"></a>1.1 Jotai vs Redux vs localStorage</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>Jotai</th>
+<th>Redux</th>
+<th>localStorage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>学习曲线</td>
+<td>简单</td>
+<td>陡峭</td>
+<td>简单</td>
+</tr>
+<tr>
+<td>代码量</td>
+<td>极少</td>
+<td>多</td>
+<td>少</td>
+</tr>
+<tr>
+<td>响应式更新</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>服务端渲染支持</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>状态共享</td>
+<td>自动</td>
+<td>需要connect</td>
+<td>手动</td>
+</tr>
+<tr>
+<td>TypeScript支持</td>
+<td>一流</td>
+<td>良好</td>
+<td>无</td>
+</tr>
+</tbody></table>
+<p><strong>选择理由</strong>：Jotai提供轻量级的原子化状态管理，完美契合React心智模型，无需繁琐的action&#x2F;reducer配置。当改变的时候原子内的数据的时候，别的使用到这个原子的地方也会及时地响应式更新。</p>
+<h3 id="1-2-TanStack-Query"><a href="#1-2-TanStack-Query" class="headerlink" title="1.2 TanStack Query"></a>1.2 TanStack Query</h3><p><strong>TanStack Query</strong>（原名为 React Query）是一个专为现代前端应用设计的强大数据同步库，用于高效管理服务端状态（Server State）。它通过提供声明式、自动化的异步数据管理能力，显著简化了网络请求、缓存、数据更新和错误处理的复杂度。无论是简单的 CRUD 操作还是复杂的分页、无限滚动、实时数据同步场景，TanStack Query 都能提供开箱即用的解决方案。</p>
+<p>以下是其核心优势：</p>
+<ol>
+<li><p><strong>自动化缓存与智能更新</strong>  </p>
+<ul>
+<li>自动缓存请求结果，根据策略（如<code>staleTime</code>、<code>cacheTime</code>）智能复用缓存数据，减少重复请求。</li>
+<li>后台自动重新验证数据（如窗口重新聚焦、网络重连时），确保数据始终新鲜。</li>
+</ul>
+</li>
+<li><p><strong>声明式 API，代码简洁</strong>  </p>
+<ul>
+<li>通过<code>useQuery</code>和<code>useMutation</code>等直观的 Hook，将异步操作转换为同步式代码逻辑，告别冗长的<code>useEffect</code>和手动状态管理。</li>
+</ul>
+</li>
+<li><p><strong>内置错误处理与重试机制</strong>  </p>
+<ul>
+<li>提供统一的错误处理方式，支持自定义重试策略（如指数退避重试），提升应用健壮性。</li>
+</ul>
+</li>
+<li><p><strong>数据同步与乐观更新</strong>  </p>
+<ul>
+<li>支持乐观更新（Optimistic Updates），在请求未完成时预更新 UI，提升用户体验，失败后自动回滚。</li>
+<li>多标签页&#x2F;设备间自动同步数据（通过<code>queryClient.invalidateQueries</code>）。</li>
+</ul>
+</li>
+<li><p><strong>与 UI 框架解耦</strong>  </p>
+<ul>
+<li>核心逻辑不依赖 React，支持 Vue、Solid 等框架（通过<code>@tanstack/vue-query</code>等适配库）。</li>
+</ul>
+</li>
+<li><p><strong>开发者体验友好</strong>  </p>
+<ul>
+<li>内置 Devtools 可视化调试工具，实时查看缓存状态、请求队列和依赖关系。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<p><strong>选择理由：</strong><br>传统方式中，开发者需要手动管理请求的<code>loading</code>、<code>error</code>和<code>data</code>状态，通过<code>useState</code>和<code>useEffect</code>组合处理缓存、竞态条件和数据更新。这种方式不仅代码冗余，还容易引入 Bug（如内存泄漏、陈旧数据）。  </p>
+<p><strong>TanStack Query 的解决方式</strong>：  </p>
+<ul>
+<li><strong>抽象复杂性</strong>：将数据获取、缓存、同步的逻辑封装为通用模式，开发者只需关注「要什么数据」，而非「如何获取和管理」。  </li>
+<li><strong>性能优化</strong>：减少不必要的请求，最大化利用缓存，同时保证数据一致性。  </li>
+<li><strong>统一数据源</strong>：避免组件间状态分散，确保整个应用使用同一份最新数据。</li>
+</ul>
+<h2 id="2-项目环境搭建"><a href="#2-项目环境搭建" class="headerlink" title="2. 项目环境搭建"></a>2. 项目环境搭建</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npx create-next-app@latest jt-demo</span><br><span class="line"><span class="built_in">cd</span> jt-demo</span><br><span class="line">npm install jotai @tanstack/react-query @tanstack/react-query-devtools ua-parser-js</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-Jotai用户信息管理"><a href="#3-Jotai用户信息管理" class="headerlink" title="3. Jotai用户信息管理"></a>3. Jotai用户信息管理</h2><h3 id="3-1-创建原子"><a href="#3-1-创建原子" class="headerlink" title="3.1 创建原子"></a>3.1 创建原子</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store/user.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; atom &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> userAtom = atom&lt;&#123;</span><br><span class="line">  <span class="attr">ip</span>: <span class="built_in">string</span> | <span class="literal">null</span></span><br><span class="line">  <span class="attr">location</span>: <span class="built_in">string</span> | <span class="literal">null</span></span><br><span class="line">  <span class="attr">device</span>: <span class="built_in">string</span> | <span class="literal">null</span></span><br><span class="line">  <span class="attr">os</span>: <span class="built_in">string</span> | <span class="literal">null</span></span><br><span class="line">&#125;&gt;(&#123;</span><br><span class="line">  <span class="attr">ip</span>: <span class="literal">null</span>,</span><br><span class="line">  <span class="attr">location</span>: <span class="literal">null</span>,</span><br><span class="line">  <span class="attr">device</span>: <span class="literal">null</span>,</span><br><span class="line">  <span class="attr">os</span>: <span class="literal">null</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-对于原子的使用"><a href="#3-2-对于原子的使用" class="headerlink" title="3.2 对于原子的使用"></a>3.2 对于原子的使用</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// hooks/useUserInfo.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; useAtom &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; userAtom &#125; <span class="keyword">from</span> <span class="string">&#x27;../store/user&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">useUserInfo</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [user, setUser] = <span class="title function_">useAtom</span>(userAtom)</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">getLocation</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">      navigator.<span class="property">geolocation</span>.<span class="title function_">getCurrentPosition</span>(<span class="function"><span class="params">pos</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setUser</span>(<span class="function"><span class="params">prev</span> =&gt;</span> (&#123;</span><br><span class="line">          ...prev,</span><br><span class="line">          <span class="attr">location</span>: <span class="string">`<span class="subst">$&#123;pos.coords.latitude&#125;</span>, <span class="subst">$&#123;pos.coords.longitude&#125;</span>`</span></span><br><span class="line">        &#125;))</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="title function_">getLocation</span>()</span><br><span class="line">  &#125;, [setUser])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> user</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当你只想修改原子内的数据或者读取原子内的数据的时候，你可以像下面这样做：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="title function_">useAtomValue</span>(userAtom)</span><br><span class="line"><span class="keyword">const</span> setUser = <span class="title function_">useSetAtom</span>(userAtom)</span><br></pre></td></tr></table></figure>
+<p>我们还可以利用<code>Jotai</code>里的<code>jotai/utils</code>包中的<code>atomWithStorage</code>来持久化一个<code>atom</code><br>belike:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; atomWithStorage &#125; <span class="keyword">from</span> <span class="string">&#x27;jotai/utils&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> darkModeAtom = <span class="title function_">atomWithStorage</span>(<span class="string">&#x27;darkMode&#x27;</span>, <span class="literal">false</span>)</span><br></pre></td></tr></table></figure>
+<p>随后在组件或者页面当中可以像这样使用</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">Page</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> [darkMode, setDarkMode] = <span class="title function_">useAtom</span>(darkModeAtom)</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">toggleDarkMode</span> = (<span class="params"></span>) =&gt; <span class="title function_">setDarkMode</span>(!darkMode)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to &#123;darkMode ? &#x27;dark&#x27; : &#x27;light&#x27;&#125; mode!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;toggleDarkMode&#125;</span>&gt;</span>toggle theme<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以打开本地存储去查看便能看到持久化存储之后的值了</p>
+<h2 id="4-数据获取与缓存：TanStack-Query核心应用"><a href="#4-数据获取与缓存：TanStack-Query核心应用" class="headerlink" title="4. 数据获取与缓存：TanStack Query核心应用"></a>4. 数据获取与缓存：TanStack Query核心应用</h2><h3 id="4-1-QueryClient配置"><a href="#4-1-QueryClient配置" class="headerlink" title="4.1 QueryClient配置"></a>4.1 QueryClient配置</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app/providers.tsx</span></span><br><span class="line"><span class="string">&#x27;use client&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">QueryClient</span>, <span class="title class_">QueryClientProvider</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@tanstack/react-query&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryClient = <span class="keyword">new</span> <span class="title class_">QueryClient</span>(&#123;</span><br><span class="line">  <span class="attr">defaultOptions</span>: &#123;</span><br><span class="line">    <span class="attr">queries</span>: &#123;</span><br><span class="line">      <span class="attr">staleTime</span>: <span class="number">5</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="comment">// 5分钟</span></span><br><span class="line">      <span class="attr">gcTime</span>: <span class="number">15</span> * <span class="number">60</span> * <span class="number">1000</span> <span class="comment">// 15分钟</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">Providers</span>(<span class="params">&#123; children &#125;: &#123; children: React.ReactNode &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">QueryClientProvider</span> <span class="attr">client</span>=<span class="string">&#123;queryClient&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;children&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">QueryClientProvider</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-简单应用"><a href="#4-2-简单应用" class="headerlink" title="4.2 简单应用"></a>4.2 简单应用</h3><h4 id="1-自动缓存管理"><a href="#1-自动缓存管理" class="headerlink" title="1. 自动缓存管理"></a>1. 自动缓存管理</h4><p><strong>概念</strong>：自动将API响应存储于内存缓存，根据<code>staleTime</code>决定何时标记为陈旧数据<br><strong>配置示例</strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> queryClient = <span class="keyword">new</span> <span class="title class_">QueryClient</span>(&#123;</span><br><span class="line">  <span class="attr">defaultOptions</span>: &#123;</span><br><span class="line">    <span class="attr">queries</span>: &#123;</span><br><span class="line">      <span class="attr">staleTime</span>: <span class="number">5</span> * <span class="number">60</span> * <span class="number">1000</span>, <span class="comment">// 5分钟后标记为陈旧</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-后台数据刷新"><a href="#2-后台数据刷新" class="headerlink" title="2. 后台数据刷新"></a>2. 后台数据刷新</h4><p><strong>概念</strong>：当窗口重新聚焦或网络重连时，自动在后台更新陈旧数据，保持UI数据新鲜</p>
+<p><strong>体验方式</strong>：</p>
+<ol>
+<li>打开React Query Devtools</li>
+<li>等待数据过期</li>
+<li>切换到其他浏览器标签</li>
+<li>返回当前页面</li>
+<li>观察网络请求的自动触发</li>
+</ol>
+<h4 id="3-请求去重"><a href="#3-请求去重" class="headerlink" title="3. 请求去重"></a>3. 请求去重</h4><p><strong>概念</strong>：自动合并同时发起的相同请求，避免重复查询</p>
+<p><strong>场景演示</strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在两个组件中同时调用</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">fetchHello</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/hello&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line">  <span class="keyword">if</span> (!res.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;数据获取失败&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> res.<span class="title function_">json</span>()</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123;<span class="attr">data</span>:helloData&#125; = <span class="title function_">useQuery</span>(&#123;</span><br><span class="line">    <span class="attr">queryKey</span>: [<span class="string">&#x27;hello&#x27;</span>],</span><br><span class="line">    <span class="attr">queryFn</span>: fetchHello,</span><br><span class="line">    <span class="attr">retry</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">staleTime</span>: <span class="number">1000</span> * <span class="number">60</span> * <span class="number">3</span> <span class="comment">// 3分钟缓存</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 网络请求仅发生1次</span></span><br></pre></td></tr></table></figure>
+<h4 id="4-使用自带的请求状态"><a href="#4-使用自带的请求状态" class="headerlink" title="4. 使用自带的请求状态"></a>4. 使用自带的请求状态</h4><table>
+<thead>
+<tr>
+<th>状态名</th>
+<th>说明</th>
+<th>典型使用场景</th>
+<th>代码示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>isLoading</code></td>
+<td><strong>首次加载</strong>状态（无缓存数据）</td>
+<td>初始加载时的加载提示</td>
+<td><code>&#123; isLoading &amp;&amp; &lt;Loader /&gt; &#125;</code></td>
+</tr>
+<tr>
+<td><code>isError</code></td>
+<td>查询失败状态</td>
+<td>显示错误信息</td>
+<td><code>&#123; isError &amp;&amp; &lt;ErrorMsg /&gt; &#125;</code></td>
+</tr>
+<tr>
+<td><code>isSuccess</code></td>
+<td>查询成功状态</td>
+<td>成功后的数据渲染</td>
+<td><code>&#123; isSuccess &amp;&amp; &lt;DataView /&gt; &#125;</code></td>
+</tr>
+<tr>
+<td><code>isFetching</code></td>
+<td><strong>任何获取</strong>进行中</td>
+<td>全局加载指示器</td>
+<td><code>&#123; isFetching &amp;&amp; &lt;Spinner /&gt; &#125;</code></td>
+</tr>
+</tbody></table>
+<p><strong>示例代码：</strong></p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; data, isLoading, isError, isFetching &#125; = <span class="title function_">useQuery</span>(&#123;</span><br><span class="line">  <span class="attr">queryKey</span>: [<span class="string">&#x27;todos&#x27;</span>],</span><br><span class="line">  <span class="attr">queryFn</span>: fetchTodos</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;isLoading &amp;&amp; <span class="tag">&lt;<span class="name">p</span>&gt;</span>首次加载中...<span class="tag">&lt;/<span class="name">p</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    &#123;isError &amp;&amp; <span class="tag">&lt;<span class="name">p</span>&gt;</span>加载失败<span class="tag">&lt;/<span class="name">p</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    &#123;isFetching &amp;&amp; <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;global-spinner&quot;</span> /&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">    </span></span><br><span class="line"><span class="language-xml">    &#123;data?.map(todo =&gt; (</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">TodoItem</span> <span class="attr">key</span>=<span class="string">&#123;todo.id&#125;</span> &#123;<span class="attr">...todo</span>&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">    ))&#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-分页-无限加载"><a href="#5-分页-无限加载" class="headerlink" title="5. 分页&#x2F;无限加载"></a>5. 分页&#x2F;无限加载</h4><p><strong>实现示例</strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后端分页模拟</span></span><br><span class="line"><span class="comment">// app/api/messages/route.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NextResponse</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;next/server&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 模拟数据库数据</span></span><br><span class="line"><span class="keyword">const</span> mockMessages = <span class="title class_">Array</span>.<span class="title function_">from</span>(&#123; <span class="attr">length</span>: <span class="number">100</span> &#125;, <span class="function">(<span class="params">_, i</span>) =&gt;</span> (&#123;</span><br><span class="line">  <span class="attr">id</span>: i + <span class="number">1</span>,</span><br><span class="line">  <span class="attr">content</span>: <span class="string">`消息内容 <span class="subst">$&#123;i + <span class="number">1</span>&#125;</span>`</span>,</span><br><span class="line">  <span class="attr">timestamp</span>: <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">toISOString</span>()</span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">GET</span>(<span class="params"><span class="attr">request</span>: <span class="title class_">Request</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; searchParams &#125; = <span class="keyword">new</span> <span class="title function_">URL</span>(request.<span class="property">url</span>)</span><br><span class="line">  <span class="keyword">const</span> page = <span class="title class_">Number</span>(searchParams.<span class="title function_">get</span>(<span class="string">&#x27;page&#x27;</span>)) || <span class="number">1</span></span><br><span class="line">  <span class="keyword">const</span> pageSize = <span class="number">10</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 模拟延迟</span></span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> <span class="built_in">setTimeout</span>(resolve, <span class="number">500</span>))</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">const</span> data = mockMessages.<span class="title function_">slice</span>(</span><br><span class="line">    (page - <span class="number">1</span>) * pageSize,</span><br><span class="line">    page * pageSize</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">NextResponse</span>.<span class="title function_">json</span>(&#123;</span><br><span class="line">    data,</span><br><span class="line">    <span class="attr">currentPage</span>: page,</span><br><span class="line">    <span class="attr">totalPages</span>: <span class="title class_">Math</span>.<span class="title function_">ceil</span>(mockMessages.<span class="property">length</span> / pageSize),</span><br><span class="line">    <span class="attr">hasNextPage</span>: page &lt; <span class="title class_">Math</span>.<span class="title function_">ceil</span>(mockMessages.<span class="property">length</span> / pageSize)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//组件</span></span><br><span class="line"><span class="comment">// app/components/InfiniteMessages.tsx</span></span><br><span class="line"><span class="string">&#x27;use client&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; useInfiniteQuery &#125; <span class="keyword">from</span> <span class="string">&#x27;@tanstack/react-query&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Loading</span> <span class="keyword">from</span> <span class="string">&#x27;./Loading&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">ErrorAlert</span> <span class="keyword">from</span> <span class="string">&#x27;./ErrorAlert&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchMessages</span> = <span class="keyword">async</span> (<span class="params">&#123; pageParam = <span class="number">1</span> &#125;</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`/api/messages?page=<span class="subst">$&#123;pageParam&#125;</span>`</span>)</span><br><span class="line">  <span class="keyword">if</span> (!res.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;获取消息失败&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> res.<span class="title function_">json</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">InfiniteMessages</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;</span><br><span class="line">    data,</span><br><span class="line">    fetchNextPage,</span><br><span class="line">    hasNextPage,</span><br><span class="line">    isFetchingNextPage,</span><br><span class="line">    error,</span><br><span class="line">    status,</span><br><span class="line">  &#125; = <span class="title function_">useInfiniteQuery</span>(&#123;</span><br><span class="line">    <span class="attr">queryKey</span>: [<span class="string">&#x27;messages&#x27;</span>],</span><br><span class="line">    <span class="attr">queryFn</span>: fetchMessages,</span><br><span class="line">    <span class="attr">getNextPageParam</span>: <span class="function">(<span class="params">lastPage</span>) =&gt;</span> </span><br><span class="line">      lastPage.<span class="property">hasNextPage</span> ? lastPage.<span class="property">currentPage</span> + <span class="number">1</span> : <span class="literal">undefined</span>,</span><br><span class="line">    <span class="attr">initialPageParam</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">staleTime</span>: <span class="number">5</span> * <span class="number">60</span> * <span class="number">1000</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;mt-8 space-y-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span> <span class="attr">className</span>=<span class="string">&quot;text-xl font-semibold text-gray-800&quot;</span>&gt;</span>消息列表<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      </span></span><br><span class="line"><span class="language-xml">      &#123;status === &#x27;pending&#x27; &amp;&amp; <span class="tag">&lt;<span class="name">Loading</span> /&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">      </span></span><br><span class="line"><span class="language-xml">      &#123;status === &#x27;error&#x27; &amp;&amp; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ErrorAlert</span> <span class="attr">message</span>=<span class="string">&#123;error?.message</span> || &#x27;<span class="attr">未知错误</span>&#x27;&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">      )&#125;</span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">      &#123;status === &#x27;success&#x27; &amp;&amp; (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;space-y-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            &#123;data.pages.map((page, i) =&gt; (</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;i&#125;</span> <span class="attr">className</span>=<span class="string">&quot;space-y-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                &#123;page.data.map((message: any) =&gt; (</span></span><br><span class="line"><span class="language-xml">                  <span class="tag">&lt;<span class="name">div</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                    <span class="attr">key</span>=<span class="string">&#123;message.id&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                    <span class="attr">className</span>=<span class="string">&quot;p-4 bg-white rounded-lg shadow-sm border&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                  &gt;</span></span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&quot;text-gray-800&quot;</span>&gt;</span>&#123;message.content&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&quot;text-sm text-gray-500 mt-1&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                      &#123;new Date(message.timestamp).toLocaleString()&#125;</span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                ))&#125;</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            ))&#125;</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;flex flex-col items-center gap-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            &#123;hasNextPage ? (</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">                <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> fetchNextPage()&#125;</span></span><br><span class="line"><span class="language-xml">                disabled=&#123;isFetchingNextPage&#125;</span></span><br><span class="line"><span class="language-xml">                className=&quot;px-4 py-2 bg-blue-500 text-white rounded-lg </span></span><br><span class="line"><span class="language-xml">                         hover:bg-blue-600 disabled:opacity-50 </span></span><br><span class="line"><span class="language-xml">                         disabled:cursor-not-allowed transition-colors&quot;</span></span><br><span class="line"><span class="language-xml">              &gt;</span></span><br><span class="line"><span class="language-xml">                &#123;isFetchingNextPage ? (</span></span><br><span class="line"><span class="language-xml">                  <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&quot;flex items-center gap-2&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                    <span class="tag">&lt;<span class="name">span</span> <span class="attr">className</span>=<span class="string">&quot;animate-spin inline-block w-4 h-4 border-2 </span></span></span></span><br><span class="line"><span class="string"><span class="tag"><span class="language-xml">                                   border-current border-t-transparent rounded-full&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">                    加载中...</span></span><br><span class="line"><span class="language-xml">                  <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                ) : (</span></span><br><span class="line"><span class="language-xml">                  &#x27;加载更多消息&#x27;</span></span><br><span class="line"><span class="language-xml">                )&#125;</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            ) : (</span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">p</span> <span class="attr">className</span>=<span class="string">&quot;text-gray-500 py-2&quot;</span>&gt;</span>已经到底了<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            )&#125;</span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">      )&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="6-错误重试机制"><a href="#6-错误重试机制" class="headerlink" title="6. 错误重试机制"></a>6. 错误重试机制</h4><p><strong>配置策略</strong>：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">useQuery</span>(&#123;</span><br><span class="line">  <span class="attr">queryKey</span>: [<span class="string">&#x27;criticalData&#x27;</span>],</span><br><span class="line">  <span class="attr">queryFn</span>: fetchCriticalData,</span><br><span class="line">  <span class="attr">retry</span>: <span class="number">3</span>, <span class="comment">// 最多重试3次</span></span><br><span class="line">  <span class="attr">retryDelay</span>: <span class="function"><span class="params">attemptIndex</span> =&gt;</span> <span class="title class_">Math</span>.<span class="title function_">min</span>(<span class="number">1000</span> * <span class="number">2</span> ** attemptIndex, <span class="number">30000</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="7-使用useMutation钩子更新数据"><a href="#7-使用useMutation钩子更新数据" class="headerlink" title="7. 使用useMutation钩子更新数据"></a>7. 使用<code>useMutation</code>钩子更新数据</h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">addTodo</span> = <span class="keyword">async</span> (<span class="params"><span class="attr">todo</span>: <span class="built_in">string</span></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/todo&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">title</span>: todo&#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">if</span> (!res.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;添加待办事项失败&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> res.<span class="title function_">json</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [todo, setTodo] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> queryClient = <span class="title function_">useQueryClient</span>()</span><br><span class="line">  <span class="keyword">const</span> &#123; mutate &#125; = <span class="title function_">useMutation</span>(&#123;</span><br><span class="line">    <span class="attr">mutationFn</span>: addTodo,</span><br><span class="line">    <span class="attr">onSuccess</span>: <span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;添加待办事项成功:&#x27;</span>, data)</span><br><span class="line">      queryClient.<span class="title function_">invalidateQueries</span>(&#123; <span class="attr">queryKey</span>: [<span class="string">&#x27;todoData&#x27;</span>] &#125;) <span class="comment">// 此时将对应的查询非法化，这个时候就会自动重新查询</span></span><br><span class="line">      <span class="title function_">setTodo</span>(<span class="string">&#x27;&#x27;</span>) <span class="comment">// 成功提交后清空输入</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">onError</span>: <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;添加待办事项失败:&#x27;</span>, error)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleSubmit</span> = (<span class="params"><span class="attr">e</span>: <span class="title class_">React</span>.<span class="title class_">FormEvent</span></span>) =&gt; &#123;</span><br><span class="line">    e.<span class="title function_">preventDefault</span>()</span><br><span class="line">    <span class="keyword">if</span> (todo.<span class="title function_">trim</span>()) &#123;</span><br><span class="line">      <span class="title function_">mutate</span>(todo) <span class="comment">// 这里调用mutate方法</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="4-3-增强型用户信息示例"><a href="#4-3-增强型用户信息示例" class="headerlink" title="4.3 增强型用户信息示例"></a>4.3 增强型用户信息示例</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 带错误处理和重试的增强版本</span></span><br><span class="line"><span class="keyword">const</span> &#123; data, isLoading, error &#125; = <span class="title function_">useQuery</span>(&#123;</span><br><span class="line">  <span class="attr">queryKey</span>: [<span class="string">&#x27;userData&#x27;</span>, user.<span class="property">ip</span>], <span class="comment">// 根据IP缓存不同用户数据</span></span><br><span class="line">  <span class="attr">queryFn</span>: <span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">`/api/user-info?ip=<span class="subst">$&#123;user.ip&#125;</span>`</span>)</span><br><span class="line">    <span class="keyword">if</span> (!res.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;获取失败&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">json</span>()</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">enabled</span>: !!user.<span class="property">ip</span>, <span class="comment">// 有IP时自动触发</span></span><br><span class="line">  <span class="attr">retry</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">onError</span>: <span class="function">(<span class="params">err</span>) =&gt;</span> <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;用户数据获取错误:&#x27;</span>, err)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 显示缓存状态</span></span><br><span class="line">&lt;&gt;</span><br><span class="line">  &#123;data &amp;&amp; <span class="language-xml"><span class="tag">&lt;<span class="name">UserCard</span> &#123;<span class="attr">...data</span>&#125; /&gt;</span></span>&#125;</span><br><span class="line">  &#123;isLoading &amp;&amp; <span class="language-xml"><span class="tag">&lt;<span class="name">SkeletonLoader</span> /&gt;</span></span>&#125;</span><br><span class="line">  &#123;error &amp;&amp; <span class="language-xml"><span class="tag">&lt;<span class="name">ErrorAlert</span> <span class="attr">message</span>=<span class="string">&#123;error.message&#125;</span> /&gt;</span></span>&#125;</span><br><span class="line">&lt;/&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="4-4缓存生命周期示意图"><a href="#4-4缓存生命周期示意图" class="headerlink" title="4.4缓存生命周期示意图"></a>4.4缓存生命周期示意图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[请求发起] → [新鲜状态] → [陈旧状态] → [垃圾回收]</span><br><span class="line">           ↗ 立即返回    ↗ 后台更新</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5最佳实践配置方案"><a href="#4-5最佳实践配置方案" class="headerlink" title="4.5最佳实践配置方案"></a>4.5最佳实践配置方案</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">QueryClient</span>(&#123;</span><br><span class="line">  <span class="attr">defaultOptions</span>: &#123;</span><br><span class="line">    <span class="attr">queries</span>: &#123;</span><br><span class="line">      <span class="attr">refetchOnWindowFocus</span>: <span class="literal">true</span>,  <span class="comment">// 窗口聚焦刷新</span></span><br><span class="line">      <span class="attr">refetchOnReconnect</span>: <span class="literal">true</span>,    <span class="comment">// 网络重连刷新</span></span><br><span class="line">      <span class="attr">refetchOnMount</span>: <span class="literal">true</span>,        <span class="comment">// 组件挂载刷新</span></span><br><span class="line">      <span class="attr">retry</span>: <span class="number">3</span>,                    <span class="comment">// 失败重试次数</span></span><br><span class="line">      <span class="attr">retryDelay</span>: <span class="number">1000</span>,            <span class="comment">// 重试间隔</span></span><br><span class="line">      <span class="attr">suspense</span>: <span class="literal">false</span>,             <span class="comment">// 是否启用Suspense模式</span></span><br><span class="line">      <span class="attr">useErrorBoundary</span>: <span class="literal">true</span>       <span class="comment">// 使用错误边界</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-前后端协作实现"><a href="#5-前后端协作实现" class="headerlink" title="5. 前后端协作实现"></a>5. 前后端协作实现</h2><h3 id="5-1-Next-js-API路由（后端）"><a href="#5-1-Next-js-API路由（后端）" class="headerlink" title="5.1 Next.js API路由（后端）"></a>5.1 Next.js API路由（后端）</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/api/user-info.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">NextApiRequest</span>, <span class="title class_">NextApiResponse</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;next&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">UAParser</span> <span class="keyword">from</span> <span class="string">&#x27;ua-parser-js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">handler</span>(<span class="params"><span class="attr">req</span>: <span class="title class_">NextApiRequest</span>, <span class="attr">res</span>: <span class="title class_">NextApiResponse</span></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> parser = <span class="keyword">new</span> <span class="title class_">UAParser</span>(req.<span class="property">headers</span>[<span class="string">&#x27;user-agent&#x27;</span>])</span><br><span class="line">  <span class="keyword">const</span> ip = req.<span class="property">headers</span>[<span class="string">&#x27;x-forwarded-for&#x27;</span>] || req.<span class="property">socket</span>.<span class="property">remoteAddress</span></span><br><span class="line">  </span><br><span class="line">  res.<span class="title function_">status</span>(<span class="number">200</span>).<span class="title function_">json</span>(&#123;</span><br><span class="line">    ip,</span><br><span class="line">    <span class="attr">device</span>: parser.<span class="title function_">getDevice</span>().<span class="property">type</span> || <span class="string">&#x27;desktop&#x27;</span>,</span><br><span class="line">    <span class="attr">os</span>: parser.<span class="title function_">getOS</span>().<span class="property">name</span>,</span><br><span class="line">    <span class="attr">browser</span>: parser.<span class="title function_">getBrowser</span>().<span class="property">name</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-前端数据获取"><a href="#5-2-前端数据获取" class="headerlink" title="5.2 前端数据获取"></a>5.2 前端数据获取</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// components/UserDashboard.tsx</span></span><br><span class="line"><span class="keyword">import</span> &#123; useQuery &#125; <span class="keyword">from</span> <span class="string">&#x27;@tanstack/react-query&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useUserInfo &#125; <span class="keyword">from</span> <span class="string">&#x27;../hooks/useUserInfo&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">fetchUserData</span> = <span class="keyword">async</span> (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> res = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/user-info&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> res.<span class="title function_">json</span>()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> <span class="title function_">UserDashboard</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="title function_">useUserInfo</span>()</span><br><span class="line">  <span class="keyword">const</span> &#123; data, isLoading &#125; = <span class="title function_">useQuery</span>(&#123;</span><br><span class="line">    <span class="attr">queryKey</span>: [<span class="string">&#x27;userData&#x27;</span>],</span><br><span class="line">    <span class="attr">queryFn</span>: fetchUserData</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>用户信息<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;isLoading ? (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>Loading...<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      ) : (</span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">li</span>&gt;</span>IP地址：&#123;data?.ip&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">li</span>&gt;</span>地理位置：&#123;user.location&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">li</span>&gt;</span>设备类型：&#123;data?.device&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">li</span>&gt;</span>操作系统：&#123;data?.os&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      )&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-总结与最佳实践"><a href="#6-总结与最佳实践" class="headerlink" title="6. 总结与最佳实践"></a>6. 总结与最佳实践</h2><p><strong>技术组合优势</strong>：</p>
+<ul>
+<li>Jotai处理客户端状态（UI状态、用户偏好）</li>
+<li>TanStack Query管理服务端状态（API数据）</li>
+<li>Next.js统一全栈开发体验</li>
+</ul>
+<p>完整代码示例可访问：<a target="_blank" rel="noopener" href="https://github.com/LJL17378/jotai-rq-demo">GitHub仓库链接</a></p>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2025/06/22/Taro%E4%B8%AD%E4%BD%BF%E7%94%A8webview%E7%9A%84%E5%9D%91/">在Taro中使用webview的时候的一些坑</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/09/22/%E5%89%8D%E7%AB%AF%E5%9F%B9%E8%AE%AD%E4%B8%80/">前端培训一</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LJL17378</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1">Stellar 1.29.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E8%BF%99%E4%BA%9B%E5%B7%A5%E5%85%B7%EF%BC%9F"><span class="toc-text">1. 为什么选择这些工具？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Jotai-vs-Redux-vs-localStorage"><span class="toc-text">1.1 Jotai vs Redux vs localStorage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-TanStack-Query"><span class="toc-text">1.2 TanStack Query</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%A1%B9%E7%9B%AE%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">2. 项目环境搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Jotai%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%AE%A1%E7%90%86"><span class="toc-text">3. Jotai用户信息管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%88%9B%E5%BB%BA%E5%8E%9F%E5%AD%90"><span class="toc-text">3.1 创建原子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%AF%B9%E4%BA%8E%E5%8E%9F%E5%AD%90%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">3.2 对于原子的使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96%E4%B8%8E%E7%BC%93%E5%AD%98%EF%BC%9ATanStack-Query%E6%A0%B8%E5%BF%83%E5%BA%94%E7%94%A8"><span class="toc-text">4. 数据获取与缓存：TanStack Query核心应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-QueryClient%E9%85%8D%E7%BD%AE"><span class="toc-text">4.1 QueryClient配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%AE%80%E5%8D%95%E5%BA%94%E7%94%A8"><span class="toc-text">4.2 简单应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%87%AA%E5%8A%A8%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-text">1. 自动缓存管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%90%8E%E5%8F%B0%E6%95%B0%E6%8D%AE%E5%88%B7%E6%96%B0"><span class="toc-text">2. 后台数据刷新</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%AF%B7%E6%B1%82%E5%8E%BB%E9%87%8D"><span class="toc-text">3. 请求去重</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%BD%BF%E7%94%A8%E8%87%AA%E5%B8%A6%E7%9A%84%E8%AF%B7%E6%B1%82%E7%8A%B6%E6%80%81"><span class="toc-text">4. 使用自带的请求状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E5%88%86%E9%A1%B5-%E6%97%A0%E9%99%90%E5%8A%A0%E8%BD%BD"><span class="toc-text">5. 分页&#x2F;无限加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-%E9%94%99%E8%AF%AF%E9%87%8D%E8%AF%95%E6%9C%BA%E5%88%B6"><span class="toc-text">6. 错误重试机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E4%BD%BF%E7%94%A8useMutation%E9%92%A9%E5%AD%90%E6%9B%B4%E6%96%B0%E6%95%B0%E6%8D%AE"><span class="toc-text">7. 使用useMutation钩子更新数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%A2%9E%E5%BC%BA%E5%9E%8B%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF%E7%A4%BA%E4%BE%8B"><span class="toc-text">4.3 增强型用户信息示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4%E7%BC%93%E5%AD%98%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">4.4缓存生命周期示意图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88"><span class="toc-text">4.5最佳实践配置方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%89%8D%E5%90%8E%E7%AB%AF%E5%8D%8F%E4%BD%9C%E5%AE%9E%E7%8E%B0"><span class="toc-text">5. 前后端协作实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Next-js-API%E8%B7%AF%E7%94%B1%EF%BC%88%E5%90%8E%E7%AB%AF%EF%BC%89"><span class="toc-text">5.1 Next.js API路由（后端）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%89%8D%E7%AB%AF%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96"><span class="toc-text">5.2 前端数据获取</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">6. 总结与最佳实践</span></a></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+<script type="text/javascript">
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+
+<!-- required -->
+<script src="/js/main.js?v=1.29.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    applyThemeToGiscus(theme)
+  }
+
+  const applyThemeToGiscus = (theme) => {
+    theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    }
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+</script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
