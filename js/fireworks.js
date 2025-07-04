@@ -19,47 +19,25 @@ window.addEventListener('DOMContentLoaded', function() {
       ctx.beginPath(), ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0), ctx.fillStyle = a.color, ctx.fill()
     }, a
   }
-  function createCircle(e, t) {
-    var a = {};
-    return a.x = e, a.y = t, a.color = "#F00", a.radius = 0.1, a.alpha = 0.5, a.lineWidth = 6, a.draw = function() {
-      ctx.globalAlpha = a.alpha, ctx.beginPath(), ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0), ctx.lineWidth = a.lineWidth, ctx.strokeStyle = a.color, ctx.stroke(), ctx.globalAlpha = 1
-    }, a
-  }
   function renderParticule(e) {
     for (var t = 0; t < e.animatables.length; t++) {
       e.animatables[t].target.draw()
     }
   }
   function animateParticules(e, t) {
-    for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++) {
-      n.push(createParticule(e, t))
+    var n = [];
+    for (var i = 0; i < numberOfParticules; i++) {
+      n.push(createParticule(e, t));
     }
-    anime.timeline().add({
+    anime({
       targets: n,
-      x: function(e) {
-        return e.endPos.x
-      },
-      y: function(e) {
-        return e.endPos.y
-      },
+      x: function(e) { return e.endPos.x },
+      y: function(e) { return e.endPos.y },
       radius: 0.1,
       duration: anime.random(1200, 1800),
       easing: "easeOutExpo",
       update: renderParticule
-    }).add({
-      targets: a,
-      radius: anime.random(80, 120),
-      lineWidth: 0,
-      alpha: {
-        value: 0,
-        easing: "linear",
-        duration: anime.random(600, 800)
-      },
-      duration: anime.random(1200, 1800),
-      easing: "easeOutExpo",
-      update: renderParticule,
-      offset: 0
-    })
+    });
   }
   function debounce(e, t) {
     var a;
