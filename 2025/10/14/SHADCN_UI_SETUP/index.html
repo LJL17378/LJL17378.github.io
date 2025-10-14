@@ -1,0 +1,774 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1" theme-name="Stellar" theme-version="1.29.1">
+  
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  
+  <title>shadcn/ui 配置指南（AI写的，自用） - M∃RLIN的博客</title>
+
+  
+    <meta name="description" content="shadcn&#x2F;ui 配置指南1. 前置要求在配置 shadcn&#x2F;ui 之前，确保你的项目满足以下要求：  ✅ React 项目 ✅ TypeScript 项目 ✅ Tailwind CSS 已配置 ✅ 支持 CSS 变量  2. 安装依赖2.1 安装 Tailwind CSS 及相关依赖123456# 安装 Tailwind CSS 和相关依赖pnpm add -D tailw">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shadcn&#x2F;ui 配置指南（AI写的，自用）">
+<meta property="og:url" content="http://example.com/2025/10/14/SHADCN_UI_SETUP/index.html">
+<meta property="og:site_name" content="M∃RLIN的博客">
+<meta property="og:description" content="shadcn&#x2F;ui 配置指南1. 前置要求在配置 shadcn&#x2F;ui 之前，确保你的项目满足以下要求：  ✅ React 项目 ✅ TypeScript 项目 ✅ Tailwind CSS 已配置 ✅ 支持 CSS 变量  2. 安装依赖2.1 安装 Tailwind CSS 及相关依赖123456# 安装 Tailwind CSS 和相关依赖pnpm add -D tailw">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-14T09:28:14.612Z">
+<meta property="article:modified_time" content="2025-10-14T15:09:59.578Z">
+<meta property="article:author" content="LJL17378">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.29.1">
+
+  
+    <link rel="shortcut icon" href="https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250405202347157.ico">
+  
+
+  
+
+  <style>
+  @font-face {
+    font-family: 'myfont';
+    src: url('/fonts/LXGWWenKaiMono-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  body {
+    font-family: 'myfont', "Microsoft YaHei", "Segoe UI", "Helvetica Neue", Arial, "WenQuanYi Micro Hei", sans-serif;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: url('https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250622190626666.jpg') no-repeat center center;
+    background-size: cover;
+    filter: blur(2px);
+    opacity: 0.7;
+  }
+  /* 正文磨砂玻璃圆角效果，按实际主题类名调整 */
+  .md-text.content {
+    background: rgba(255,255,255,0.6);
+    border-radius: 18px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2em;
+    margin: 2em 0;
+  }
+  /* blockquote 美化 */
+  blockquote {
+    background: rgba(135,206,235,0.7);
+    border-left: 5px solid #7ec4e5;
+    border-radius: 12px;
+    color: #333;
+    padding: 1em 1.5em;
+    margin: 1.5em 0;
+  }
+  .widget-wrapper.toc {
+    background: rgba(255,255,255,0.8);
+    border-radius: 12px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.1);
+    padding: 1em;
+  }
+  .navbar {
+    background: rgba(255,255,255,0.8);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+</style>
+<canvas class="fireworks" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;"></canvas><script src="https://unpkg.com/animejs@3.2.1/lib/anime.min.js"></script><script src="/js/fireworks.js"></script>
+</head>
+<body>
+
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250405180203544.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">M∃RLIN的博客</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/10/14/PRETTIER_ESLINT_SETUP/"><span class="title">Prettier + ESLint 自动格式化配置手册（AI写的，自用）</span></a><a class="item title" href="/2025/10/14/SHADCN_UI_SETUP/"><span class="title">shadcn/ui 配置指南（AI写的，自用）</span></a><a class="item title" href="/2025/08/09/Taro%E6%A0%B7%E5%BC%8F%E4%B8%A2%E5%A4%B1%E8%B8%A9%E5%9D%91/"><span class="title">Taro样式丢失踩坑</span></a><a class="item title" href="/2025/07/06/react%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85%E5%92%8C%E5%89%AF%E4%BD%9C%E7%94%A8%E7%9A%84%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83/"><span class="title">我对于react中的闭包和副作用的一些思考</span></a><a class="item title" href="/2025/07/03/WebExtensions/"><span class="title">WebExtensions入门and实战</span></a><a class="item title" href="/2025/06/22/Taro%E4%B8%AD%E4%BD%BF%E7%94%A8webview%E7%9A%84%E5%9D%91/"><span class="title">在Taro中使用webview的时候的一些坑</span></a><a class="item title" href="/2025/05/25/jotai&&tanstackquery/"><span class="title">jotai和tanstack query入门教程</span></a><a class="item title" href="/2025/04/05/%E5%89%8D%E7%AB%AF%E5%9F%B9%E8%AE%AD%E4%B8%80/"><span class="title">前端培训一</span></a><a class="item title" href="/2025/04/05/%E5%9F%B9%E8%AE%AD%E5%89%8D%E9%A1%BB%E7%9F%A5%20(1)/"><span class="title">培训前须知</span></a><a class="item title" href="/2024/09/22/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%AD%A6%E4%B9%A0/"><span class="title">小程序第一次学习</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-10-14T09:28:14.612Z">2025-10-14</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-10-14T15:09:59.578Z">2025-10-14</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>shadcn/ui 配置指南（AI写的，自用）</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="shadcn-ui-配置指南"><a href="#shadcn-ui-配置指南" class="headerlink" title="shadcn&#x2F;ui 配置指南"></a>shadcn&#x2F;ui 配置指南</h1><h2 id="1-前置要求"><a href="#1-前置要求" class="headerlink" title="1. 前置要求"></a>1. 前置要求</h2><p>在配置 shadcn&#x2F;ui 之前，确保你的项目满足以下要求：</p>
+<ul>
+<li>✅ React 项目</li>
+<li>✅ TypeScript 项目</li>
+<li>✅ Tailwind CSS 已配置</li>
+<li>✅ 支持 CSS 变量</li>
+</ul>
+<h2 id="2-安装依赖"><a href="#2-安装依赖" class="headerlink" title="2. 安装依赖"></a>2. 安装依赖</h2><h3 id="2-1-安装-Tailwind-CSS-及相关依赖"><a href="#2-1-安装-Tailwind-CSS-及相关依赖" class="headerlink" title="2.1 安装 Tailwind CSS 及相关依赖"></a>2.1 安装 Tailwind CSS 及相关依赖</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 Tailwind CSS 和相关依赖</span></span><br><span class="line">pnpm add -D tailwindcss postcss autoprefixer</span><br><span class="line">pnpm add @tailwindcss/typography</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 Tailwind 配置</span></span><br><span class="line">pnpx tailwindcss init -p</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-安装-shadcn-ui-CLI"><a href="#2-2-安装-shadcn-ui-CLI" class="headerlink" title="2.2 安装 shadcn&#x2F;ui CLI"></a>2.2 安装 shadcn&#x2F;ui CLI</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 dlx 运行 shadcn/ui 初始化</span></span><br><span class="line">pnpm dlx shadcn@latest init</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-配置步骤"><a href="#3-配置步骤" class="headerlink" title="3. 配置步骤"></a>3. 配置步骤</h2><h3 id="3-1-Tailwind-CSS-配置"><a href="#3-1-Tailwind-CSS-配置" class="headerlink" title="3.1 Tailwind CSS 配置"></a>3.1 Tailwind CSS 配置</h3><h4 id="修改-tailwind-config-js"><a href="#修改-tailwind-config-js" class="headerlink" title="修改 tailwind.config.js"></a>修改 <code>tailwind.config.js</code></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@type</span> &#123;<span class="type">import(&#x27;tailwindcss&#x27;).Config</span>&#125; */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">darkMode</span>: [<span class="string">&quot;class&quot;</span>],</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="string">&#x27;./pages/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;./components/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;./app/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;./src/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">prefix</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">theme</span>: &#123;</span><br><span class="line">    <span class="attr">container</span>: &#123;</span><br><span class="line">      <span class="attr">center</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">padding</span>: <span class="string">&quot;2rem&quot;</span>,</span><br><span class="line">      <span class="attr">screens</span>: &#123;</span><br><span class="line">        <span class="string">&quot;2xl&quot;</span>: <span class="string">&quot;1400px&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">extend</span>: &#123;</span><br><span class="line">      <span class="attr">colors</span>: &#123;</span><br><span class="line">        <span class="attr">border</span>: <span class="string">&quot;hsl(var(--border))&quot;</span>,</span><br><span class="line">        <span class="attr">input</span>: <span class="string">&quot;hsl(var(--input))&quot;</span>,</span><br><span class="line">        <span class="attr">ring</span>: <span class="string">&quot;hsl(var(--ring))&quot;</span>,</span><br><span class="line">        <span class="attr">background</span>: <span class="string">&quot;hsl(var(--background))&quot;</span>,</span><br><span class="line">        <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--foreground))&quot;</span>,</span><br><span class="line">        <span class="attr">primary</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--primary))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--primary-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">secondary</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--secondary))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--secondary-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">destructive</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--destructive))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--destructive-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">muted</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--muted))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--muted-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">accent</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--accent))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--accent-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">popover</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--popover))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--popover-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">card</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--card))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--card-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">borderRadius</span>: &#123;</span><br><span class="line">        <span class="attr">lg</span>: <span class="string">&quot;var(--radius)&quot;</span>,</span><br><span class="line">        <span class="attr">md</span>: <span class="string">&quot;calc(var(--radius) - 2px)&quot;</span>,</span><br><span class="line">        <span class="attr">sm</span>: <span class="string">&quot;calc(var(--radius) - 4px)&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">keyframes</span>: &#123;</span><br><span class="line">        <span class="string">&quot;accordion-down&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">from</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;0&quot;</span> &#125;,</span><br><span class="line">          <span class="attr">to</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;var(--radix-accordion-content-height)&quot;</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;accordion-up&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">from</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;var(--radix-accordion-content-height)&quot;</span> &#125;,</span><br><span class="line">          <span class="attr">to</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;0&quot;</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">animation</span>: &#123;</span><br><span class="line">        <span class="string">&quot;accordion-down&quot;</span>: <span class="string">&quot;accordion-down 0.2s ease-out&quot;</span>,</span><br><span class="line">        <span class="string">&quot;accordion-up&quot;</span>: <span class="string">&quot;accordion-up 0.2s ease-out&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="built_in">require</span>(<span class="string">&quot;tailwindcss-animate&quot;</span>)],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-src-index-css"><a href="#修改-src-index-css" class="headerlink" title="修改 src/index.css"></a>修改 <code>src/index.css</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@tailwind</span> base;</span><br><span class="line"><span class="keyword">@tailwind</span> components;</span><br><span class="line"><span class="keyword">@tailwind</span> utilities;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@layer</span> base &#123;</span><br><span class="line">  <span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    <span class="attr">--background</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">    <span class="attr">--foreground</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--card</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">    <span class="attr">--card-foreground</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--popover</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">    <span class="attr">--popover-foreground</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--primary</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--primary-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--secondary</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">96%</span>;</span><br><span class="line">    <span class="attr">--secondary-foreground</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--muted</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">96%</span>;</span><br><span class="line">    <span class="attr">--muted-foreground</span>: <span class="number">215.4</span> <span class="number">16.3%</span> <span class="number">46.9%</span>;</span><br><span class="line">    <span class="attr">--accent</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">96%</span>;</span><br><span class="line">    <span class="attr">--accent-foreground</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--destructive</span>: <span class="number">0</span> <span class="number">84.2%</span> <span class="number">60.2%</span>;</span><br><span class="line">    <span class="attr">--destructive-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--border</span>: <span class="number">214.3</span> <span class="number">31.8%</span> <span class="number">91.4%</span>;</span><br><span class="line">    <span class="attr">--input</span>: <span class="number">214.3</span> <span class="number">31.8%</span> <span class="number">91.4%</span>;</span><br><span class="line">    <span class="attr">--ring</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--radius</span>: <span class="number">0.5rem</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.dark</span> &#123;</span><br><span class="line">    <span class="attr">--background</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--card</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--card-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--popover</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--popover-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--primary</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--primary-foreground</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--secondary</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--secondary-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--muted</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--muted-foreground</span>: <span class="number">215</span> <span class="number">20.2%</span> <span class="number">65.1%</span>;</span><br><span class="line">    <span class="attr">--accent</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--accent-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--destructive</span>: <span class="number">0</span> <span class="number">62.8%</span> <span class="number">30.6%</span>;</span><br><span class="line">    <span class="attr">--destructive-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--border</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--input</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--ring</span>: <span class="number">212.7</span> <span class="number">26.8%</span> <span class="number">83.9%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@layer</span> base &#123;</span><br><span class="line">  * &#123;</span><br><span class="line">    <span class="keyword">@apply</span> border-border;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="keyword">@apply</span> bg-background text-foreground;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-shadcn-ui-初始化配置"><a href="#3-2-shadcn-ui-初始化配置" class="headerlink" title="3.2 shadcn&#x2F;ui 初始化配置"></a>3.2 shadcn&#x2F;ui 初始化配置</h3><p>运行初始化命令后，会创建以下文件：</p>
+<h4 id="components-json"><a href="#components-json" class="headerlink" title="components.json"></a><code>components.json</code></h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://ui.shadcn.com/schema.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;default&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;rsc&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tsx&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tailwind&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;config&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tailwind.config.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;css&quot;</span><span class="punctuation">:</span> <span class="string">&quot;src/index.css&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;baseColor&quot;</span><span class="punctuation">:</span> <span class="string">&quot;slate&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;cssVariables&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;aliases&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;components&quot;</span><span class="punctuation">:</span> <span class="string">&quot;@/components&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;utils&quot;</span><span class="punctuation">:</span> <span class="string">&quot;@/lib/utils&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="src-lib-utils-ts"><a href="#src-lib-utils-ts" class="headerlink" title="src/lib/utils.ts"></a><code>src/lib/utils.ts</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">type</span> <span class="title class_">ClassValue</span>, clsx &#125; <span class="keyword">from</span> <span class="string">&quot;clsx&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; twMerge &#125; <span class="keyword">from</span> <span class="string">&quot;tailwind-merge&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">cn</span>(<span class="params">...<span class="attr">inputs</span>: <span class="title class_">ClassValue</span>[]</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">twMerge</span>(<span class="title function_">clsx</span>(inputs))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-架构说明：为什么使用-Radix-UI？"><a href="#3-架构说明：为什么使用-Radix-UI？" class="headerlink" title="3. 架构说明：为什么使用 Radix UI？"></a>3. 架构说明：为什么使用 Radix UI？</h2><h3 id="3-1-shadcn-ui-与-Radix-UI-的关系"><a href="#3-1-shadcn-ui-与-Radix-UI-的关系" class="headerlink" title="3.1 shadcn&#x2F;ui 与 Radix UI 的关系"></a>3.1 shadcn&#x2F;ui 与 Radix UI 的关系</h3><p>shadcn&#x2F;ui 不是一个独立的组件库，而是建立在 <strong>Radix UI</strong> 之上的配置和样式层。理解这种架构关系对于正确使用 shadcn&#x2F;ui 至关重要。</p>
+<h3 id="3-2-样式工具说明：clsx-和-tailwind-merge"><a href="#3-2-样式工具说明：clsx-和-tailwind-merge" class="headerlink" title="3.2 样式工具说明：clsx 和 tailwind-merge"></a>3.2 样式工具说明：clsx 和 tailwind-merge</h3><h4 id="🎯-clsx-条件类名管理"><a href="#🎯-clsx-条件类名管理" class="headerlink" title="🎯 clsx - 条件类名管理"></a>🎯 clsx - 条件类名管理</h4><p><code>clsx</code> 是一个轻量级的工具库，用于处理条件类名组合：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本用法</span></span><br><span class="line"><span class="title function_">clsx</span>(<span class="string">&#x27;btn&#x27;</span>, <span class="string">&#x27;btn-primary&#x27;</span>) <span class="comment">// =&gt; &#x27;btn btn-primary&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 条件类名</span></span><br><span class="line"><span class="title function_">clsx</span>(<span class="string">&#x27;btn&#x27;</span>, &#123;</span><br><span class="line">  <span class="string">&#x27;btn-primary&#x27;</span>: isPrimary,</span><br><span class="line">  <span class="string">&#x27;btn-disabled&#x27;</span>: isDisabled,</span><br><span class="line">  <span class="string">&#x27;btn-large&#x27;</span>: size === <span class="string">&#x27;large&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 数组和嵌套对象</span></span><br><span class="line"><span class="title function_">clsx</span>([<span class="string">&#x27;btn&#x27;</span>, <span class="string">&#x27;btn-primary&#x27;</span>], &#123; <span class="string">&#x27;btn-disabled&#x27;</span>: <span class="literal">true</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>在 shadcn&#x2F;ui 中的作用</strong>：</p>
+<ul>
+<li>处理组件的条件样式（如 <code>variant</code>、<code>size</code> 等属性）</li>
+<li>合并用户传入的 <code>className</code> 和组件默认样式</li>
+<li>提供类型安全的类名组合</li>
+</ul>
+<h4 id="🎨-tailwind-merge-Tailwind-类名冲突解决"><a href="#🎨-tailwind-merge-Tailwind-类名冲突解决" class="headerlink" title="🎨 tailwind-merge - Tailwind 类名冲突解决"></a>🎨 tailwind-merge - Tailwind 类名冲突解决</h4><p><code>tailwind-merge</code> 专门用于解决 Tailwind CSS 类名冲突问题：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 冲突示例</span></span><br><span class="line"><span class="keyword">const</span> classes = <span class="string">&#x27;bg-red-500 bg-blue-500&#x27;</span></span><br><span class="line"><span class="comment">// 期望结果：&#x27;bg-blue-500&#x27;（后者覆盖前者）</span></span><br><span class="line"></span><br><span class="line"><span class="title function_">twMerge</span>(<span class="string">&#x27;bg-red-500 bg-blue-500&#x27;</span>) <span class="comment">// =&gt; &#x27;bg-blue-500&#x27;</span></span><br><span class="line"><span class="title function_">twMerge</span>(<span class="string">&#x27;px-2 py-4 p-3&#x27;</span>) <span class="comment">// =&gt; &#x27;p-3&#x27;</span></span><br><span class="line"><span class="title function_">twMerge</span>(<span class="string">&#x27;text-sm text-lg&#x27;</span>) <span class="comment">// =&gt; &#x27;text-lg&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>在 shadcn&#x2F;ui 中的作用</strong>：</p>
+<ul>
+<li>防止 Tailwind 类名冲突</li>
+<li>确保样式优先级正确</li>
+<li>优化最终的 CSS 输出</li>
+</ul>
+<h4 id="🔧-cn-工具函数"><a href="#🔧-cn-工具函数" class="headerlink" title="🔧 cn 工具函数"></a>🔧 cn 工具函数</h4><p><code>cn</code> 函数结合了 <code>clsx</code> 和 <code>tailwind-merge</code> 的最佳特性：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 实际使用示例</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">Button</span> = (<span class="params">&#123; variant, size, className, ...props &#125;</span>) =&gt; (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">button</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">className</span>=<span class="string">&#123;cn(</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">buttonVariants</span>(&#123; <span class="attr">variant</span>, <span class="attr">size</span> &#125;), // <span class="attr">基础样式</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className</span> // <span class="attr">用户自定义样式</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    )&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    &#123;<span class="attr">...props</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  /&gt;</span></span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用示例</span></span><br><span class="line">&lt;<span class="title class_">Button</span> variant=<span class="string">&quot;primary&quot;</span> size=<span class="string">&quot;lg&quot;</span> className=<span class="string">&quot;my-custom-class&quot;</span> /&gt;</span><br><span class="line"><span class="comment">// 结果：合并基础样式和自定义样式，并解决可能的冲突</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>工作流程</strong>：</p>
+<ol>
+<li><code>clsx</code> 处理条件逻辑和类名组合</li>
+<li><code>tailwind-merge</code> 解决 Tailwind 类名冲突</li>
+<li>返回优化后的类名字符串</li>
+</ol>
+<h4 id="三层架构模型："><a href="#三层架构模型：" class="headerlink" title="三层架构模型："></a>三层架构模型：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">graph TD</span><br><span class="line">    A[Radix UI] --&gt; B[功能层：无样式组件]</span><br><span class="line">    B --&gt; C[Tailwind CSS]</span><br><span class="line">    C --&gt; D[样式层：工具类和设计系统]</span><br><span class="line">    D --&gt; E[shadcn/ui]</span><br><span class="line">    E --&gt; F[应用层：预配置的样式组件]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-Radix-UI-的核心价值"><a href="#3-3-Radix-UI-的核心价值" class="headerlink" title="3.3 Radix UI 的核心价值"></a>3.3 Radix UI 的核心价值</h3><h4 id="🎯-可访问性-a11y-保证"><a href="#🎯-可访问性-a11y-保证" class="headerlink" title="🎯 可访问性 (a11y) 保证"></a>🎯 可访问性 (a11y) 保证</h4><ul>
+<li><strong>完整的键盘导航</strong> - 所有组件都支持键盘操作</li>
+<li><strong>屏幕阅读器优化</strong> - 自动管理 ARIA 属性</li>
+<li><strong>焦点管理</strong> - 复杂的焦点陷阱和焦点恢复</li>
+</ul>
+<h4 id="🎨-无头设计-Headless"><a href="#🎨-无头设计-Headless" class="headerlink" title="🎨 无头设计 (Headless)"></a>🎨 无头设计 (Headless)</h4><ul>
+<li><strong>零样式依赖</strong> - 不强制任何设计语言</li>
+<li><strong>完全可控</strong> - 你可以完全控制组件外观</li>
+<li><strong>无样式冲突</strong> - 不会与你的设计系统冲突</li>
+</ul>
+<h4 id="🔧-功能完整性"><a href="#🔧-功能完整性" class="headerlink" title="🔧 功能完整性"></a>🔧 功能完整性</h4><ul>
+<li><strong>复杂交互模式</strong> - 下拉菜单、对话框、弹出框等</li>
+<li><strong>状态管理</strong> - 内置的状态和事件处理</li>
+<li><strong>类型安全</strong> - 完整的 TypeScript 支持</li>
+</ul>
+<h3 id="3-4-实际工作流程示例"><a href="#3-4-实际工作流程示例" class="headerlink" title="3.4 实际工作流程示例"></a>3.4 实际工作流程示例</h3><p>以按钮组件为例：</p>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Radix UI 提供功能（无样式）</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> <span class="title class_">ButtonPrimitive</span> <span class="keyword">from</span> <span class="string">&quot;@radix-ui/react-button&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// shadcn/ui 提供样式（基于 Tailwind）</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Button</span> = <span class="title class_">React</span>.<span class="property">forwardRef</span>&lt;</span><br><span class="line">  <span class="title class_">React</span>.<span class="property">ElementRef</span>&lt;<span class="keyword">typeof</span> <span class="title class_">ButtonPrimitive</span>.<span class="property">Root</span>&gt;,</span><br><span class="line">  <span class="title class_">React</span>.<span class="property">ComponentPropsWithoutRef</span>&lt;<span class="keyword">typeof</span> <span class="title class_">ButtonPrimitive</span>.<span class="property">Root</span>&gt;</span><br><span class="line">&gt;(<span class="function">(<span class="params">&#123; className, variant, size, ...props &#125;, ref</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">ButtonPrimitive.Root</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">className</span>=<span class="string">&#123;cn(buttonVariants(&#123;</span> <span class="attr">variant</span>, <span class="attr">size</span>, <span class="attr">className</span> &#125;))&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">ref</span>=<span class="string">&#123;ref&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      &#123;<span class="attr">...props</span>&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    /&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-为什么选择这种架构？"><a href="#3-5-为什么选择这种架构？" class="headerlink" title="3.5 为什么选择这种架构？"></a>3.5 为什么选择这种架构？</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Radix UI + shadcn&#x2F;ui</strong></td>
+<td>✅ 最佳可访问性<br>✅ 完全样式控制<br>✅ 类型安全<br>✅ 无样式冲突</td>
+<td>⚠️ 需要额外配置</td>
+</tr>
+<tr>
+<td><strong>传统 UI 库</strong></td>
+<td>✅ 开箱即用</td>
+<td>❌ 样式耦合<br>❌ 定制困难<br>❌ 可访问性问题</td>
+</tr>
+<tr>
+<td><strong>完全自定义</strong></td>
+<td>✅ 完全控制</td>
+<td>❌ 开发成本高<br>❌ 可访问性难保证</td>
+</tr>
+</tbody></table>
+<h3 id="3-6-安装必要的依赖"><a href="#3-6-安装必要的依赖" class="headerlink" title="3.6 安装必要的依赖"></a>3.6 安装必要的依赖</h3><h4 id="🎯-核心依赖（必须安装）"><a href="#🎯-核心依赖（必须安装）" class="headerlink" title="🎯 核心依赖（必须安装）"></a>🎯 核心依赖（必须安装）</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装基础工具库</span></span><br><span class="line">pnpm add clsx tailwind-merge</span><br><span class="line"></span><br><span class="line"><span class="comment"># 初始化 shadcn/ui</span></span><br><span class="line">pnpm dlx shadcn@latest init</span><br></pre></td></tr></table></figure>
+
+<h4 id="🔄-Radix-UI-的安装说明"><a href="#🔄-Radix-UI-的安装说明" class="headerlink" title="🔄 Radix UI 的安装说明"></a>🔄 Radix UI 的安装说明</h4><p><strong>重要</strong>：你<strong>不需要</strong>手动安装 Radix UI 组件！当使用 shadcn&#x2F;ui 添加组件时，对应的 Radix UI 包会自动安装。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例：添加按钮组件</span></span><br><span class="line">pnpm dlx shadcn@latest add button</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这会自动：</span></span><br><span class="line"><span class="comment"># 1. 安装 @radix-ui/react-button</span></span><br><span class="line"><span class="comment"># 2. 创建 src/components/ui/button.tsx</span></span><br><span class="line"><span class="comment"># 3. 配置好样式和类型</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="⚠️-何时需要手动安装-Radix-UI？"><a href="#⚠️-何时需要手动安装-Radix-UI？" class="headerlink" title="⚠️ 何时需要手动安装 Radix UI？"></a>⚠️ 何时需要手动安装 Radix UI？</h4><p>只有在以下特殊情况下才需要手动安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 情况1：直接使用 Radix UI 原语（不使用 shadcn/ui 包装）</span></span><br><span class="line">pnpm add @radix-ui/react-dialog</span><br><span class="line"></span><br><span class="line"><span class="comment"># 情况2：使用 shadcn/ui 不包含的 Radix UI 组件</span></span><br><span class="line">pnpm add @radix-ui/react-toast</span><br><span class="line"></span><br><span class="line"><span class="comment"># 情况3：需要特定版本的 Radix UI</span></span><br><span class="line">pnpm add @radix-ui/react-dialog@1.0.0</span><br></pre></td></tr></table></figure>
+
+<h4 id="🎁-可选依赖"><a href="#🎁-可选依赖" class="headerlink" title="🎁 可选依赖"></a>🎁 可选依赖</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 图标库（可选）</span></span><br><span class="line">pnpm add lucide-react</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-配置步骤"><a href="#4-配置步骤" class="headerlink" title="4. 配置步骤"></a>4. 配置步骤</h2><h3 id="4-1-Tailwind-CSS-配置"><a href="#4-1-Tailwind-CSS-配置" class="headerlink" title="4.1 Tailwind CSS 配置"></a>4.1 Tailwind CSS 配置</h3><h4 id="修改-tailwind-config-js-1"><a href="#修改-tailwind-config-js-1" class="headerlink" title="修改 tailwind.config.js"></a>修改 <code>tailwind.config.js</code></h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** <span class="doctag">@type</span> &#123;<span class="type">import(&#x27;tailwindcss&#x27;).Config</span>&#125; */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">darkMode</span>: [<span class="string">&quot;class&quot;</span>],</span><br><span class="line">  <span class="attr">content</span>: [</span><br><span class="line">    <span class="string">&#x27;./pages/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;./components/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;./app/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;./src/**/*.&#123;ts,tsx&#125;&#x27;</span>,</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">prefix</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">  <span class="attr">theme</span>: &#123;</span><br><span class="line">    <span class="attr">container</span>: &#123;</span><br><span class="line">      <span class="attr">center</span>: <span class="literal">true</span>,</span><br><span class="line">      <span class="attr">padding</span>: <span class="string">&quot;2rem&quot;</span>,</span><br><span class="line">      <span class="attr">screens</span>: &#123;</span><br><span class="line">        <span class="string">&quot;2xl&quot;</span>: <span class="string">&quot;1400px&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">extend</span>: &#123;</span><br><span class="line">      <span class="attr">colors</span>: &#123;</span><br><span class="line">        <span class="attr">border</span>: <span class="string">&quot;hsl(var(--border))&quot;</span>,</span><br><span class="line">        <span class="attr">input</span>: <span class="string">&quot;hsl(var(--input))&quot;</span>,</span><br><span class="line">        <span class="attr">ring</span>: <span class="string">&quot;hsl(var(--ring))&quot;</span>,</span><br><span class="line">        <span class="attr">background</span>: <span class="string">&quot;hsl(var(--background))&quot;</span>,</span><br><span class="line">        <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--foreground))&quot;</span>,</span><br><span class="line">        <span class="attr">primary</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--primary))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--primary-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">secondary</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--secondary))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--secondary-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">destructive</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--destructive))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--destructive-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">muted</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--muted))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--muted-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">accent</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--accent))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--accent-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">popover</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--popover))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--popover-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">card</span>: &#123;</span><br><span class="line">          <span class="attr">DEFAULT</span>: <span class="string">&quot;hsl(var(--card))&quot;</span>,</span><br><span class="line">          <span class="attr">foreground</span>: <span class="string">&quot;hsl(var(--card-foreground))&quot;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">borderRadius</span>: &#123;</span><br><span class="line">        <span class="attr">lg</span>: <span class="string">&quot;var(--radius)&quot;</span>,</span><br><span class="line">        <span class="attr">md</span>: <span class="string">&quot;calc(var(--radius) - 2px)&quot;</span>,</span><br><span class="line">        <span class="attr">sm</span>: <span class="string">&quot;calc(var(--radius) - 4px)&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">keyframes</span>: &#123;</span><br><span class="line">        <span class="string">&quot;accordion-down&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">from</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;0&quot;</span> &#125;,</span><br><span class="line">          <span class="attr">to</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;var(--radix-accordion-content-height)&quot;</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="string">&quot;accordion-up&quot;</span>: &#123;</span><br><span class="line">          <span class="attr">from</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;var(--radix-accordion-content-height)&quot;</span> &#125;,</span><br><span class="line">          <span class="attr">to</span>: &#123; <span class="attr">height</span>: <span class="string">&quot;0&quot;</span> &#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">animation</span>: &#123;</span><br><span class="line">        <span class="string">&quot;accordion-down&quot;</span>: <span class="string">&quot;accordion-down 0.2s ease-out&quot;</span>,</span><br><span class="line">        <span class="string">&quot;accordion-up&quot;</span>: <span class="string">&quot;accordion-up 0.2s ease-out&quot;</span>,</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="built_in">require</span>(<span class="string">&quot;tailwindcss-animate&quot;</span>)],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="修改-src-index-css-1"><a href="#修改-src-index-css-1" class="headerlink" title="修改 src/index.css"></a>修改 <code>src/index.css</code></h4><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@tailwind</span> base;</span><br><span class="line"><span class="keyword">@tailwind</span> components;</span><br><span class="line"><span class="keyword">@tailwind</span> utilities;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@layer</span> base &#123;</span><br><span class="line">  <span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">    <span class="attr">--background</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">    <span class="attr">--foreground</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--card</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">    <span class="attr">--card-foreground</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--popover</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">    <span class="attr">--popover-foreground</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--primary</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--primary-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--secondary</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">96%</span>;</span><br><span class="line">    <span class="attr">--secondary-foreground</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--muted</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">96%</span>;</span><br><span class="line">    <span class="attr">--muted-foreground</span>: <span class="number">215.4</span> <span class="number">16.3%</span> <span class="number">46.9%</span>;</span><br><span class="line">    <span class="attr">--accent</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">96%</span>;</span><br><span class="line">    <span class="attr">--accent-foreground</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--destructive</span>: <span class="number">0</span> <span class="number">84.2%</span> <span class="number">60.2%</span>;</span><br><span class="line">    <span class="attr">--destructive-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--border</span>: <span class="number">214.3</span> <span class="number">31.8%</span> <span class="number">91.4%</span>;</span><br><span class="line">    <span class="attr">--input</span>: <span class="number">214.3</span> <span class="number">31.8%</span> <span class="number">91.4%</span>;</span><br><span class="line">    <span class="attr">--ring</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--radius</span>: <span class="number">0.5rem</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-class">.dark</span> &#123;</span><br><span class="line">    <span class="attr">--background</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--card</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--card-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--popover</span>: <span class="number">222.2</span> <span class="number">84%</span> <span class="number">4.9%</span>;</span><br><span class="line">    <span class="attr">--popover-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--primary</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--primary-foreground</span>: <span class="number">222.2</span> <span class="number">47.4%</span> <span class="number">11.2%</span>;</span><br><span class="line">    <span class="attr">--secondary</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--secondary-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--muted</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--muted-foreground</span>: <span class="number">215</span> <span class="number">20.2%</span> <span class="number">65.1%</span>;</span><br><span class="line">    <span class="attr">--accent</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--accent-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--destructive</span>: <span class="number">0</span> <span class="number">62.8%</span> <span class="number">30.6%</span>;</span><br><span class="line">    <span class="attr">--destructive-foreground</span>: <span class="number">210</span> <span class="number">40%</span> <span class="number">98%</span>;</span><br><span class="line">    <span class="attr">--border</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--input</span>: <span class="number">217.2</span> <span class="number">32.6%</span> <span class="number">17.5%</span>;</span><br><span class="line">    <span class="attr">--ring</span>: <span class="number">212.7</span> <span class="number">26.8%</span> <span class="number">83.9%</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@layer</span> base &#123;</span><br><span class="line">  * &#123;</span><br><span class="line">    <span class="keyword">@apply</span> border-border;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">body</span> &#123;</span><br><span class="line">    <span class="keyword">@apply</span> bg-background text-foreground;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-shadcn-ui-初始化配置"><a href="#4-2-shadcn-ui-初始化配置" class="headerlink" title="4.2 shadcn&#x2F;ui 初始化配置"></a>4.2 shadcn&#x2F;ui 初始化配置</h3><p>运行初始化命令后，会创建以下文件：</p>
+<h4 id="components-json-1"><a href="#components-json-1" class="headerlink" title="components.json"></a><code>components.json</code></h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;$schema&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://ui.shadcn.com/schema.json&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;style&quot;</span><span class="punctuation">:</span> <span class="string">&quot;default&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;rsc&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tsx&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;tailwind&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;config&quot;</span><span class="punctuation">:</span> <span class="string">&quot;tailwind.config.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;css&quot;</span><span class="punctuation">:</span> <span class="string">&quot;src/index.css&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;baseColor&quot;</span><span class="punctuation">:</span> <span class="string">&quot;slate&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;cssVariables&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;prefix&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;aliases&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;components&quot;</span><span class="punctuation">:</span> <span class="string">&quot;@/components&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;utils&quot;</span><span class="punctuation">:</span> <span class="string">&quot;@/lib/utils&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="src-lib-utils-ts-1"><a href="#src-lib-utils-ts-1" class="headerlink" title="src/lib/utils.ts"></a><code>src/lib/utils.ts</code></h4><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="keyword">type</span> <span class="title class_">ClassValue</span>, clsx &#125; <span class="keyword">from</span> <span class="string">&quot;clsx&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; twMerge &#125; <span class="keyword">from</span> <span class="string">&quot;tailwind-merge&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">cn</span>(<span class="params">...<span class="attr">inputs</span>: <span class="title class_">ClassValue</span>[]</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">twMerge</span>(<span class="title function_">clsx</span>(inputs))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-添加组件"><a href="#5-添加组件" class="headerlink" title="5. 添加组件"></a>5. 添加组件</h2><h3 id="5-1-添加基础组件"><a href="#5-1-添加基础组件" class="headerlink" title="5.1 添加基础组件"></a>5.1 添加基础组件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加按钮组件</span></span><br><span class="line">pnpm dlx shadcn@latest add button</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加输入框组件</span></span><br><span class="line">pnpm dlx shadcn@latest add input</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加卡片组件</span></span><br><span class="line">pnpm dlx shadcn@latest add card</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加表单组件</span></span><br><span class="line">pnpm dlx shadcn@latest add form</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加表格组件</span></span><br><span class="line">pnpm dlx shadcn@latest add table</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-常用组件列表"><a href="#4-2-常用组件列表" class="headerlink" title="4.2 常用组件列表"></a>4.2 常用组件列表</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 布局组件</span></span><br><span class="line">pnpm dlx shadcn@latest add avatar</span><br><span class="line">pnpm dlx shadcn@latest add badge</span><br><span class="line">pnpm dlx shadcn@latest add progress</span><br><span class="line">pnpm dlx shadcn@latest add skeleton</span><br><span class="line"></span><br><span class="line"><span class="comment"># 导航组件</span></span><br><span class="line">pnpm dlx shadcn@latest add navigation-menu</span><br><span class="line">pnpm dlx shadcn@latest add tabs</span><br><span class="line">pnpm dlx shadcn@latest add breadcrumb</span><br><span class="line"></span><br><span class="line"><span class="comment"># 表单组件</span></span><br><span class="line">pnpm dlx shadcn@latest add checkbox</span><br><span class="line">pnpm dlx shadcn@latest add radio-group</span><br><span class="line">pnpm dlx shadcn@latest add <span class="keyword">select</span></span><br><span class="line">pnpm dlx shadcn@latest add switch</span><br><span class="line">pnpm dlx shadcn@latest add textarea</span><br><span class="line"></span><br><span class="line"><span class="comment"># 交互组件</span></span><br><span class="line">pnpm dlx shadcn@latest add alert-dialog</span><br><span class="line">pnpm dlx shadcn@latest add dialog</span><br><span class="line">pnpm dlx shadcn@latest add dropdown-menu</span><br><span class="line">pnpm dlx shadcn@latest add popover</span><br><span class="line">pnpm dlx shadcn@latest add tooltip</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据展示</span></span><br><span class="line">pnpm dlx shadcn@latest add accordion</span><br><span class="line">pnpm dlx shadcn@latest add carousel</span><br><span class="line">pnpm dlx shadcn@latest add collapsible</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-项目结构调整"><a href="#5-项目结构调整" class="headerlink" title="5. 项目结构调整"></a>5. 项目结构调整</h2><p>配置完成后，项目结构应该如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src/</span><br><span class="line">├── components/</span><br><span class="line">│   ├── ui/</span><br><span class="line">│   │   ├── button.tsx</span><br><span class="line">│   │   ├── input.tsx</span><br><span class="line">│   │   ├── card.tsx</span><br><span class="line">│   │   └── ...</span><br><span class="line">│   └── ...</span><br><span class="line">├── lib/</span><br><span class="line">│   └── utils.ts</span><br><span class="line">└── ...</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-使用示例"><a href="#6-使用示例" class="headerlink" title="6. 使用示例"></a>6. 使用示例</h2><h3 id="6-1-在组件中使用"><a href="#6-1-在组件中使用" class="headerlink" title="6.1 在组件中使用"></a>6.1 在组件中使用</h3><figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Button</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@/components/ui/button&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Input</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@/components/ui/input&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Card</span>, <span class="title class_">CardContent</span>, <span class="title class_">CardDescription</span>, <span class="title class_">CardHeader</span>, <span class="title class_">CardTitle</span> &#125; <span class="keyword">from</span> <span class="string">&quot;@/components/ui/card&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">ExampleComponent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Card</span> <span class="attr">className</span>=<span class="string">&quot;w-[350px]&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">CardHeader</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">CardTitle</span>&gt;</span>创建项目<span class="tag">&lt;/<span class="name">CardTitle</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">CardDescription</span>&gt;</span>开始你的新项目<span class="tag">&lt;/<span class="name">CardDescription</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">CardHeader</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">CardContent</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">form</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;grid w-full items-center gap-4&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;flex flex-col space-y-1.5&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">              <span class="tag">&lt;<span class="name">Input</span> <span class="attr">id</span>=<span class="string">&quot;name&quot;</span> <span class="attr">placeholder</span>=<span class="string">&quot;项目名称&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">Button</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span>&gt;</span>创建<span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">          <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">CardContent</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">Card</span>&gt;</span></span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-自定义主题"><a href="#7-自定义主题" class="headerlink" title="7. 自定义主题"></a>7. 自定义主题</h2><h3 id="7-1-修改颜色主题"><a href="#7-1-修改颜色主题" class="headerlink" title="7.1 修改颜色主题"></a>7.1 修改颜色主题</h3><p>在 <code>src/index.css</code> 中修改 CSS 变量：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="attr">--background</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">100%</span>;</span><br><span class="line">  <span class="attr">--foreground</span>: <span class="number">240</span> <span class="number">10%</span> <span class="number">3.9%</span>;</span><br><span class="line">  <span class="attr">--primary</span>: <span class="number">240</span> <span class="number">5.9%</span> <span class="number">10%</span>;</span><br><span class="line">  <span class="attr">--primary-foreground</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">98%</span>;</span><br><span class="line">  <span class="comment">/* 其他颜色变量... */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dark</span> &#123;</span><br><span class="line">  <span class="attr">--background</span>: <span class="number">240</span> <span class="number">10%</span> <span class="number">3.9%</span>;</span><br><span class="line">  <span class="attr">--foreground</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">98%</span>;</span><br><span class="line">  <span class="attr">--primary</span>: <span class="number">0</span> <span class="number">0%</span> <span class="number">98%</span>;</span><br><span class="line">  <span class="attr">--primary-foreground</span>: <span class="number">240</span> <span class="number">5.9%</span> <span class="number">10%</span>;</span><br><span class="line">  <span class="comment">/* 其他颜色变量... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="8-注意事项"><a href="#8-注意事项" class="headerlink" title="8. 注意事项"></a>8. 注意事项</h2><h3 id="8-1-路径别名配置"><a href="#8-1-路径别名配置" class="headerlink" title="8.1 路径别名配置"></a>8.1 路径别名配置</h3><p>确保 <code>tsconfig.json</code> 中有正确的路径别名：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;compilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;baseUrl&quot;</span><span class="punctuation">:</span> <span class="string">&quot;.&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;paths&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;@/*&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;./src/*&quot;</span><span class="punctuation">]</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="8-2-Vite-配置"><a href="#8-2-Vite-配置" class="headerlink" title="8.2 Vite 配置"></a>8.2 Vite 配置</h3><p>在 <code>vite.config.ts</code> 中添加路径别名：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineConfig &#125; <span class="keyword">from</span> <span class="string">&#x27;vite&#x27;</span></span><br><span class="line"><span class="keyword">import</span> react <span class="keyword">from</span> <span class="string">&#x27;@vitejs/plugin-react-swc&#x27;</span></span><br><span class="line"><span class="keyword">import</span> path <span class="keyword">from</span> <span class="string">&#x27;path&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">plugins</span>: [<span class="title function_">react</span>()],</span><br><span class="line">  <span class="attr">resolve</span>: &#123;</span><br><span class="line">    <span class="attr">alias</span>: &#123;</span><br><span class="line">      <span class="string">&quot;@&quot;</span>: path.<span class="title function_">resolve</span>(__dirname, <span class="string">&quot;./src&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-与现有样式兼容"><a href="#8-3-与现有样式兼容" class="headerlink" title="8.3 与现有样式兼容"></a>8.3 与现有样式兼容</h3><p>如果项目已有自定义样式，确保 Tailwind 的 <code>@layer</code> 指令正确使用，避免样式冲突。</p>
+<h2 id="9-验证配置"><a href="#9-验证配置" class="headerlink" title="9. 验证配置"></a>9. 验证配置</h2><p>配置完成后，运行以下命令验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 检查 TypeScript 类型</span></span><br><span class="line">pnpm tsc --noEmit</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动开发服务器</span></span><br><span class="line">pnpm dev</span><br></pre></td></tr></table></figure>
+
+<p>如果一切正常，你应该能够在浏览器中看到应用正常启动，并且可以使用 shadcn&#x2F;ui 组件。</p>
+<hr>
+<p>这个配置指南包含了从零开始配置 shadcn&#x2F;ui 的所有必要步骤。根据你的项目需求，可以选择性地安装和使用不同的组件。</p>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/10/14/PRETTIER_ESLINT_SETUP/">Prettier + ESLint 自动格式化配置手册（AI写的，自用）</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">LJL17378</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.29.1">Stellar 1.29.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#shadcn-ui-%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97"><span class="toc-text">shadcn&#x2F;ui 配置指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%89%8D%E7%BD%AE%E8%A6%81%E6%B1%82"><span class="toc-text">1. 前置要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="toc-text">2. 安装依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%89%E8%A3%85-Tailwind-CSS-%E5%8F%8A%E7%9B%B8%E5%85%B3%E4%BE%9D%E8%B5%96"><span class="toc-text">2.1 安装 Tailwind CSS 及相关依赖</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%89%E8%A3%85-shadcn-ui-CLI"><span class="toc-text">2.2 安装 shadcn&#x2F;ui CLI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">3. 配置步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Tailwind-CSS-%E9%85%8D%E7%BD%AE"><span class="toc-text">3.1 Tailwind CSS 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-tailwind-config-js"><span class="toc-text">修改 tailwind.config.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-src-index-css"><span class="toc-text">修改 src&#x2F;index.css</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-shadcn-ui-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-text">3.2 shadcn&#x2F;ui 初始化配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#components-json"><span class="toc-text">components.json</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#src-lib-utils-ts"><span class="toc-text">src&#x2F;lib&#x2F;utils.ts</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8-Radix-UI%EF%BC%9F"><span class="toc-text">3. 架构说明：为什么使用 Radix UI？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-shadcn-ui-%E4%B8%8E-Radix-UI-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">3.1 shadcn&#x2F;ui 与 Radix UI 的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%A0%B7%E5%BC%8F%E5%B7%A5%E5%85%B7%E8%AF%B4%E6%98%8E%EF%BC%9Aclsx-%E5%92%8C-tailwind-merge"><span class="toc-text">3.2 样式工具说明：clsx 和 tailwind-merge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%AF-clsx-%E6%9D%A1%E4%BB%B6%E7%B1%BB%E5%90%8D%E7%AE%A1%E7%90%86"><span class="toc-text">🎯 clsx - 条件类名管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%A8-tailwind-merge-Tailwind-%E7%B1%BB%E5%90%8D%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3"><span class="toc-text">🎨 tailwind-merge - Tailwind 类名冲突解决</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%A7-cn-%E5%B7%A5%E5%85%B7%E5%87%BD%E6%95%B0"><span class="toc-text">🔧 cn 工具函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%9E%8B%EF%BC%9A"><span class="toc-text">三层架构模型：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Radix-UI-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC"><span class="toc-text">3.3 Radix UI 的核心价值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%AF-%E5%8F%AF%E8%AE%BF%E9%97%AE%E6%80%A7-a11y-%E4%BF%9D%E8%AF%81"><span class="toc-text">🎯 可访问性 (a11y) 保证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%A8-%E6%97%A0%E5%A4%B4%E8%AE%BE%E8%AE%A1-Headless"><span class="toc-text">🎨 无头设计 (Headless)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%A7-%E5%8A%9F%E8%83%BD%E5%AE%8C%E6%95%B4%E6%80%A7"><span class="toc-text">🔧 功能完整性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%AE%9E%E9%99%85%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%A4%BA%E4%BE%8B"><span class="toc-text">3.4 实际工作流程示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E8%BF%99%E7%A7%8D%E6%9E%B6%E6%9E%84%EF%BC%9F"><span class="toc-text">3.5 为什么选择这种架构？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E5%AE%89%E8%A3%85%E5%BF%85%E8%A6%81%E7%9A%84%E4%BE%9D%E8%B5%96"><span class="toc-text">3.6 安装必要的依赖</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%AF-%E6%A0%B8%E5%BF%83%E4%BE%9D%E8%B5%96%EF%BC%88%E5%BF%85%E9%A1%BB%E5%AE%89%E8%A3%85%EF%BC%89"><span class="toc-text">🎯 核心依赖（必须安装）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%84-Radix-UI-%E7%9A%84%E5%AE%89%E8%A3%85%E8%AF%B4%E6%98%8E"><span class="toc-text">🔄 Radix UI 的安装说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E4%BD%95%E6%97%B6%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85-Radix-UI%EF%BC%9F"><span class="toc-text">⚠️ 何时需要手动安装 Radix UI？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%8E%81-%E5%8F%AF%E9%80%89%E4%BE%9D%E8%B5%96"><span class="toc-text">🎁 可选依赖</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE%E6%AD%A5%E9%AA%A4"><span class="toc-text">4. 配置步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Tailwind-CSS-%E9%85%8D%E7%BD%AE"><span class="toc-text">4.1 Tailwind CSS 配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-tailwind-config-js-1"><span class="toc-text">修改 tailwind.config.js</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9-src-index-css-1"><span class="toc-text">修改 src&#x2F;index.css</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-shadcn-ui-%E5%88%9D%E5%A7%8B%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-text">4.2 shadcn&#x2F;ui 初始化配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#components-json-1"><span class="toc-text">components.json</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#src-lib-utils-ts-1"><span class="toc-text">src&#x2F;lib&#x2F;utils.ts</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%B7%BB%E5%8A%A0%E7%BB%84%E4%BB%B6"><span class="toc-text">5. 添加组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%B7%BB%E5%8A%A0%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6"><span class="toc-text">5.1 添加基础组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%B8%B8%E7%94%A8%E7%BB%84%E4%BB%B6%E5%88%97%E8%A1%A8"><span class="toc-text">4.2 常用组件列表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84%E8%B0%83%E6%95%B4"><span class="toc-text">5. 项目结构调整</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-text">6. 使用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%9C%A8%E7%BB%84%E4%BB%B6%E4%B8%AD%E4%BD%BF%E7%94%A8"><span class="toc-text">6.1 在组件中使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%BB%E9%A2%98"><span class="toc-text">7. 自定义主题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E4%BF%AE%E6%94%B9%E9%A2%9C%E8%89%B2%E4%B8%BB%E9%A2%98"><span class="toc-text">7.1 修改颜色主题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">8. 注意事项</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E8%B7%AF%E5%BE%84%E5%88%AB%E5%90%8D%E9%85%8D%E7%BD%AE"><span class="toc-text">8.1 路径别名配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-Vite-%E9%85%8D%E7%BD%AE"><span class="toc-text">8.2 Vite 配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E4%B8%8E%E7%8E%B0%E6%9C%89%E6%A0%B7%E5%BC%8F%E5%85%BC%E5%AE%B9"><span class="toc-text">8.3 与现有样式兼容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%AA%8C%E8%AF%81%E9%85%8D%E7%BD%AE"><span class="toc-text">9. 验证配置</span></a></li></ol></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+<script type="text/javascript">
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js`,
+    marked: `https://cdn.jsdelivr.net/npm/marked@13.0.1/lib/marked.umd.min.js`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+
+<!-- required -->
+<script src="/js/main.js?v=1.29.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    applyThemeToGiscus(theme)
+  }
+
+  const applyThemeToGiscus = (theme) => {
+    theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    }
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@19.1.3/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+</script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
