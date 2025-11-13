@@ -1,0 +1,57 @@
+/* 修复深色模式下的半透明背景和文字问题 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 增加背景不透明度 */
+    --block: rgba(33, 33, 33, 0.98) !important;
+    --card: rgba(44, 44, 44, 0.98) !important;
+    --leftbar-bg: rgba(44, 44, 44, 0.98) !important;
+
+    /* 提高文字对比度 */
+    --text-p1: #ffffff !important;    /* 主要文字 */
+    --text-p2: #e0e0e0 !important;    /* 次要文字 */
+    --text-meta: #b0b0b0 !important;  /* 元数据文字 */
+  }
+}
+
+:root[data-theme="dark"] {
+  /* 增加背景不透明度 */
+  --block: rgba(33, 33, 33, 0.98) !important;
+  --card: rgba(44, 44, 44, 0.98) !important;
+  --leftbar-bg: rgba(44, 44, 44, 0.98) !important;
+
+  /* 提高文字对比度 */
+  --text-p1: #ffffff !important;    /* 主要文字 */
+  --text-p2: #e0e0e0 !important;    /* 次要文字 */
+  --text-meta: #b0b0b0 !important;  /* 元数据文字 */
+}
+
+/* 优化主题切换按钮的显示 */
+.menubar-item[data-id="theme"] {
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.menubar-item[data-id="theme"]:hover {
+  opacity: 0.7;
+}
+
+/* 确保按钮和链接样式一致 */
+nav.menu button.nav-item {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-size: inherit;
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+nav.menu button.nav-item:hover {
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}

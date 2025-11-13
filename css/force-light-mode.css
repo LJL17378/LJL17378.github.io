@@ -1,0 +1,53 @@
+/* 强制禁用深色模式 - 覆盖所有深色模式样式 */
+:root[data-theme="dark"],
+@media (prefers-color-scheme: dark) {
+  :root,
+  :root[data-theme="dark"] {
+    /* 背景颜色 */
+    --block: #ffffff !important;
+    --card: #ffffff !important;
+    --site-bg: #ffffff !important;
+    --leftbar-bg: #fafafa !important;
+    --modal-bg: #ffffff !important;
+
+    /* 文字颜色 */
+    --text: #333333 !important;
+    --text-p1: #333333 !important;
+    --text-p2: #666666 !important;
+    --text-p3: #555555 !important;
+    --text-meta: #999999 !important;
+    --text-code: #e83e8c !important;
+    --text-link: #007bff !important;
+
+    /* 边框和其他样式 */
+    --block-border: #e0e0e0 !important;
+    --block-hover: #f5f5f5 !important;
+    --theme-link: #007bff !important;
+    --theme-link-opa: rgba(0, 123, 255, 0.1) !important;
+
+    /* 特殊元素 */
+    --header-bg: #ffffff !important;
+    --footer-bg: #ffffff !important;
+    --input-bg: #ffffff !important;
+    --btn-bg: #f8f9fa !important;
+    --btn-text: #333333 !important;
+    --highlight-bg: #fff3cd !important;
+  }
+
+  /* 确保文章标题和左侧列表颜色正常 */
+  .post-title,
+  .post-meta,
+  .post-item-title,
+  .post-item-meta,
+  .nav-item,
+  .menu a,
+  .menu button {
+    color: #333333 !important;
+  }
+
+  /* 确保顶部标题颜色正常 */
+  .site-title,
+  .site-subtitle {
+    color: #333333 !important;
+  }
+}
