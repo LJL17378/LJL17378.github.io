@@ -1,0 +1,185 @@
+---
+title: 第一次自己学vue文档
+slug: di-yi-ci-xue-xi-wen-dang
+publishedAt: '2024-09-21'
+updatedAt: '2024-09-21'
+summary: >-
+  项目结构 目前需要了解的 - package.json 文件中包含的是项目的依赖列表 - index.html vue应用会通过这个文件进行运行 - src
+  是vue应用的核心代码目录 - main.js :会初始化vue应用并决定将什么应用挂载到哪个HTML元素上面 - App.vue ：是vue
+tags:
+  - Vue
+  - JavaScript
+  - CSS
+draft: false
+sourceFile: 第一次学习文档.md
+---
+# 项目结构
+## 目前需要了解的
+- `package.json`文件中包含的是项目的依赖列表
+- `index.html`vue应用会通过这个文件进行运行
+- `src`是vue应用的核心代码目录
+  - `main.js`:会初始化vue应用并决定将什么应用挂载到哪个HTML元素上面
+  - `App.vue`：是vue应用的根节点组件
+  - `components`：用来存放自定义的组件的目录
+  - `assets`：这个目录用来存放css和图片的静态资源
+
+## App.vue
+`App.vue`中能看到`<template>`,`<script>`,`<style>`三部分，分别包含了组件的模板，脚本和样式相关内容。
+
+`<template>`包含了所有的标记结构和组件的展示结构，可以包含任何合法的HTML以及vue特定的语法。
+
+`<script>`包含了组件中的非现实逻辑，但是最重要的是，这个标签要默认导出一个js对象。该对象是你在本地**注册组件**、**定义属性**、**处理本地状态**、**定义方法**的地方。
+
+## main.js
+```javascript
+import { createApp } from 'vue'//起手式，无需多言，主要是我不知道怎么说
+import App from './App.vue'//从一个单文件组件导入根组件
+import "./assets/reset.css";//导入css文件
+
+createApp(App).mount('#app')//创建一个vue应用并且并且将其挂载起来供HTML使用
+```
+
+## 组件中`<script>`内的内容
+```javascript
+import ToDoForm from "./components/ToDoForm.vue";
+//在注册组件之前需要导入
+
+//以下是组件的默认导出内容
+export default {
+    name: 'App'//App填写的是组件的
+    components: {
+    ToDoForm//用来注册组件，和vue文件名称一致
+  },
+    data(){
+    return {
+        ToDoItem:''//需要使用到数据，在：对其进行赋值
+        },
+    };
+    methods :{
+    //这里写方法和逻辑
+    }
+    //还有props和钩子函数以及计算等，等待后面的学习ing
+}
+```
+## 自定义元素
+要在应用程序中实际展示 ToDoItem 组件，你需要在 `<template> `模板内添加一个 `<to-do-item></to-do-item>` 元素。请注意，组件文件名及其在 JavaScript 中的表示方式总是用大写驼色（例如 ToDoList），而等价的自定义元素总是用连字符小写（例如 `<to-do-list>`）。
+
+## 模板语法
+### 文本插值
+`<span>Message: {{ msg }}</span>`双大括号标签中的 `msg`会被替成**相应组件实例**中的`msg`的值，而且每次msg属性改变它也会**同步更行**~~这么一想还怪好用的嘞~~
+### v-html
+双大括号会将数据解释为纯文本，而不是HTML。可以使用`v-html`指令进行插入：
+```
+<p>Using text interpolation: {{ rawHtml }}</p>
+<p>Using v-html directive: <span v-html="rawHtml"></span></p>
+```
+### Attribute
+如果想要响应式地绑定一个attribute可以通过`v-bind`进行
+```
+<div v-bind:id="dynamicId"></div>
+```
+通过`v-bind`指令将`id`和`dynamicId`保持一致，实现响应式的绑定
+#### 简写
+```
+<div :id="dynamicId"></div>
+```
+用`:`来代替`v-bind:`
+#### 布尔型Attribute
+布尔型Attribute依据true/false决定该attribute是否应该存在在这个元素上
+```<button :disabled="isButtonDisabled">Button</button>```
+当`isButtonDisabled`为真值或者一个字符串的时候，元素会包含这个attribute。而当为其他或者假值时该attribute将会被忽略
+#### 动态绑定多个值
+```javascript
+data() {
+  return {
+    objectOfAttrs: {
+      id: 'container',
+      class: 'wrapper'
+    }
+  }
+}
+```
+这是一个包含有多个Attribute的javascript对象
+可以通过不带参数的`v-bind`来将其绑定到单个元素上：
+`<div v-bind="objectOfAttrs"></div>`
+### 使用javascript表达式
+vue在数据绑定还支持完整的javascript表达式：
+```javascript
+{{ number + 1 }}
+
+{{ ok ? 'YES' : 'NO' }}
+
+{{ message.split('').reverse().join('') }}
+
+<div :id="`list-${id}`"></div>
+```
+vue模板中在以下场景可以使用JavaScript表达式：
+- 在文本插值中
+- 在以`v-`为开头的特殊attribute值中。
+
+#### 仅支持表达式
+```javascript
+<!-- 这是一个语句，而非表达式 -->
+{{ var a = 1 }}
+
+<!-- 条件控制也不支持，请使用三元表达式 -->
+{{ if (ok) { return message } }}
+```
+#### 可以调用函数
+```javascript
+<time :title="toTitleDate(date)" :datetime="date">
+  {{ formatDate(date) }}
+</time>
+```
+### 内置指令
+指令|期望的绑定值类型|作用
+---|---|---
+v-text|string|等同于`{{}}`对文本进行插值
+v-html|string|作为HTML值进行插入（最好不用）
+v-show|any|基于表达式的真假性来改变元素的可见性（不会对元素有删除操作）
+v-if|any|基于表达式的真假性来有条件地对元素或者模板片段进行渲染（会对元素有删除操作）
+v-else|无需输入值|表示`v-if`或者`v-if`/`v-else-if`链式调用的else块，上一兄弟元素必须有`v-if`或者`v-else-if`
+v-else-if|any|作为else if块被调用，上接`v-if`或者`v-else-if`
+v-for|Array/Object/number/string/Iterable|基于原始数据地多次渲染元素或者模板快
+v-on|Function/Inline Statements/Object|给元素绑定事件监听器(缩写@)
+v-bind|any/Object（不带参数）|动态绑定attribute
+v-model|根据表单的输入元素和组建的输出值而改变|在表单输入元素或组件上创建双向绑定。
+#### 多次渲染实例
+```javascript
+<div v-for="item in items">
+  {{ item.text }}
+</div>
+```
+
+#### 监听实例
+```javascript
+$emit("todo-added",this.data)//子组件向父组件传值，其中"todo-added"可以在父组件中绑定事件，this.data则为传递的数据
+<to-do-form @todo-added="addToDo"></to-do-form>
+methods:{
+    addToDo(Data){
+运行代码//其中Data就是this.data传输来的数据
+},
+};
+```
+实例其二
+```javascript
+ <button type="submit" v-on:click="$emit('deleted')" class="btn-del">Delete</button>//子组件
+@deleted="deleteItem(item.id)"//在父组件的自定义标签中添加
+deleteItem(toDoId){
+    let toDoToUpdate = this.ToDoItems.find((item) => item.id === toDoId);
+    toDoToUpdate.show = !toDoToUpdate.show;
+    localStorage.setItem('ToDoItems', JSON.stringify(this.ToDoItems));
+  },//script中的方法
+```
+
+
+
+
+# 下一次学习目标:
+1. props以及更多组件实例
+2. v-slot以及更多vue的内置指令
+3. 插槽
+4. 动态参数
+5. 修饰符
+6. 计算属性
+7. 生命周期钩子函数

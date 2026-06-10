@@ -1,0 +1,275 @@
+---
+title: （自用）前端技术移动技术映射
+slug: zi-yong-qian-duan-ji-shu-yi-dong-ji-shu-ying-she
+publishedAt: '2026-04-10'
+updatedAt: '2026-04-11'
+summary: >-
+  一、 语言层映射：TypeScript ↔ Dart | 特性 | TypeScript | Dart | 核心差异 / 备注 | | :--- |
+  :--- | :--- | :--- | | 类型系统 | interface , type | class , abstract class , t
+tags:
+  - React
+  - JavaScript
+  - Flutter
+  - 面试
+draft: false
+sourceFile: （自用）前端技术移动技术映射.md
+---
+### 一、 语言层映射：TypeScript ↔ Dart
+
+| 特性 | TypeScript | Dart | 核心差异 / 备注 |
+| :--- | :--- | :--- | :--- |
+| **类型系统** | `interface`, `type` | `class`, `abstract class`, `typedef` | Dart 没有像 TS 那样灵活的鸭子类型和结构化类型（Union Types 等），Dart 是严格的面向对象。 |
+| **空安全** | `strictNullChecks` (`?`) | Sound Null Safety (`?`, `!`, `late`) | Dart 的空安全在编译期和运行期都是绝对安全的（Sound）。 |
+| **异步编程** | `Promise`, `async/await` | `Future`, `async/await` | 概念完全对应。 |
+| **异步数据流**| `RxJS` / `AsyncIterators` | `Stream`, `async*` / `yield` | Dart 原生对流（Stream）的支持非常强大，不需要额外引入库。 |
+| **访问修饰符**| `public`, `private`, `protected` | 默认公开，加下划线 `_` 表示私有 | Dart 没有 `private` 关键字，变量或方法名以 `_` 开头即代表库级别的私有。 |
+| **并发模型** | Web Workers | `Isolate` | 两者都是单线程+事件循环模型。Dart 通过 Isolate 实现真正的多线程，Isolate 之间内存隔离，通过消息传递通信。 |
+| **代码复用** | 多重继承/Mixin (通过特定模式) | `mixin` 和 `with` 关键字 | Dart 原生支持 Mixin，这是 Dart 八股文必考点。 |
+
+---
+
+
+
+
+### 二、 TypeScript ↔ Dart 代码对比
+
+#### 1. 定义数据结构（Interface vs Class）
+在 TS 中，我们常用来描述数据结构的是鸭子类型 `interface`。在 Dart 中，一切皆对象，通常用 `class` 配合构造函数来实现。
+
+**TypeScript:**
+```typescript
+interface User {
+  id: number;
+  name: string;
+  avatarUrl?: string; // 可选属性
+}
+
+const user: User = {
+  id: 1,
+  name: "React Developer"
+  // avatarUrl 不传也不会报错
+};
+```
+
+**Dart:**
+```dart
+class User {
+  final int id;
+  final String name;
+  final String? avatarUrl; // ? 表示可以为空 (Sound Null Safety)
+
+  // Dart 特有的构造函数语法：{required ...} 表示命名参数，没加 required 的就是可选的
+  User({
+    required this.id, 
+    required this.name, 
+    this.avatarUrl
+  });
+}
+
+final user = User(
+  id: 1, 
+  name: "Flutter Developer"
+);
+```
+> **核心认知：** Dart 没有 TS 那种纯粹的数据形状约束（结构化类型），你需要老老实实写 Class 和构造函数。`final` 对应 JS/TS 的 `const`（用于变量）或 `readonly`（用于属性）。
+
+#### 2. 异步请求 (Promise vs Future)
+两者的异步思想完全一样，连 `async/await` 关键字都一模一样。
+
+**TypeScript:**
+```typescript
+async function fetchUserData(id: number): Promise<string> {
+  const response = await fetch(`/api/users/${id}`);
+  const data = await response.json();
+  return data.name;
+}
+```
+
+**Dart:**
+```dart
+// 引入 http 库
+import 'package:http/http.dart' as http;
+
+Future<String> fetchUserData(int id) async {
+  final response = await http.get(Uri.parse('/api/users/$id'));
+  // 假设解析 JSON 的过程
+  return "Parsed Name"; 
+}
+```
+> **核心认知：** 看到 `Promise` 就想到 `Future`。
+
+#### 3. 逻辑复用 (组合 vs Mixin)
+这是 Dart 的特色。TS 中想要复用类方法通常靠继承或组合，而 Dart 原生支持“混入”。
+
+Dart 特有语法：
+
+```dart
+// 定义一个 Mixin（它不能被实例化）
+mixin Logger {
+  void log(String message) {
+    print('[LOG]: $message');
+  }
+}
+
+// 使用 with 关键字混入
+class MyService with Logger {
+  void doSomething() {
+    log('Action started!'); // 直接调用 Mixin 里的方法
+  }
+}
+```
+---
+### 三、 框架层映射：React ↔ Flutter
+
+在 UI 层面，你可以把 Flutter 想象成一个**“完全不需要写 CSS，全用组件堆砌”的 React**。
+
+| 概念 | React | Flutter | 核心差异 / 备注 |
+| :--- | :--- | :--- | :--- |
+| **核心单元** | Component | Widget | “万物皆 Widget”。 |
+| **无状态组件**| Function Component | `StatelessWidget` | 都是接收参数并返回 UI。 |
+| **有状态组件**| Component + `useState` | `StatefulWidget` + `State` 类 | Flutter 依然保留了基于类的状态管理体系，调用 `setState()` 触发重建。 |
+| **组件入参** | Props | 构造函数参数 | 概念完全一致。 |
+| **生命周期** | `useEffect` | `initState`, `dispose` 等 | Flutter 的 State 类拥有完整的生命周期钩子，类似 React Class Component。 |
+| **DOM 元素** | `<div>`, `<span>`, `<img>` | `Container`, `Text`, `Image` | Flutter 没有 DOM，所有 UI 都是通过 Canvas 直接绘制的。 |
+| **布局 (Flexbox)**| `display: flex` | `Row`, `Column`, `Flex` | Flutter 的布局系统受 Flexbox 启发极深，`Row` 对应横向 Flex，`Column` 对应纵向 Flex。 |
+| **样式 (CSS)** | `className`, `style={{}}` | Widget 的属性 (如 `decoration`) | Flutter 没有 CSS，样式是通过 Widget 层层嵌套或者直接传参来实现的。 |
+| **上下文数据**| `Context` API | `InheritedWidget` | 思想完全一致，用于跨层级透传数据。 |
+| **列表渲染** | `.map(item => <Component key={id}/>)` | `ListView.builder` | Flutter 的 Builder 模式可以实现列表的懒加载（类似虚拟列表）。 |
+| **标识符** | `key` | `Key` (`ValueKey`, `GlobalKey`) | 作用一样，用于在 Widget 树重建时复用状态或保持元素身份。 |
+
+---
+
+### 四、 React ↔ Flutter 代码对比
+
+#### 1. 无状态组件 (Function Component vs StatelessWidget)
+接收参数，渲染静态 UI。
+
+**React:**
+```tsx
+interface Props {
+  title: string;
+}
+
+const Header: React.FC<Props> = ({ title }) => {
+  return (
+    <div style={{ padding: 16, backgroundColor: 'blue' }}>
+      <span style={{ color: 'white', fontSize: 20 }}>{title}</span>
+    </div>
+  );
+};
+```
+
+**Flutter:**
+```dart
+import 'package:flutter/material.dart';
+
+class Header extends StatelessWidget {
+  final String title;
+
+  // 构造函数接收参数，super.key 对应 React 的 key
+  const Header({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    // 没有 div 和 span，全部替换为语义化的 Widget
+    return Container(
+      padding: const EdgeInsets.all(16),
+      color: Colors.blue,
+      child: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 20),
+      ),
+    );
+  }
+}
+```
+
+#### 2. 有状态组件 (useState vs StatefulWidget)
+实现一个最简单的点击计数器。
+
+**React:**
+```tsx
+import { useState } from 'react';
+
+const Counter = () => {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Clicked {count} times
+    </button>
+  );
+};
+```
+
+**Flutter:**
+```dart
+import 'package:flutter/material.dart';
+
+// 1. 定义 StatefulWidget (本身是不可变的)
+class Counter extends StatefulWidget {
+  const Counter({super.key});
+
+  @override
+  State<Counter> createState() => _CounterState();
+}
+
+// 2. 定义配套的 State 类 (管理可变状态)
+class _CounterState extends State<Counter> {
+  int _count = 0;
+
+  void _increment() {
+    // 必须调用 setState 通知 Flutter 重新执行 build 方法
+    setState(() {
+      _count++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: _increment, // 绑定点击事件
+      child: Text('Clicked $_count times'),
+    );
+  }
+}
+```
+> **核心认知：** Flutter 依然在大量使用面向对象的“类组件”模式。修改状态**必须**包裹在 `setState(() { ... })` 中，这和 React Class Component 的 `this.setState()` 非常像。
+
+#### 3. 列表渲染 (Array.map vs ListView.builder)
+
+**React:**
+```tsx
+const NameList = ({ names }: { names: string[] }) => {
+  return (
+    <ul>
+      {names.map((name, index) => (
+        <li key={index}>{name}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+**Flutter:**
+```dart
+class NameList extends StatelessWidget {
+  final List<String> names;
+
+  const NameList({super.key, required this.names});
+
+  @override
+  Widget build(BuildContext context) {
+    // ListView.builder 是按需懒加载的，类似 React 的 Virtual List，性能极佳
+    return ListView.builder(
+      itemCount: names.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text(names[index]),
+        );
+      },
+    );
+  }
+}
+```
+> **核心认知：** 在 Flutter 中，如果列表元素很少，你也可以用 `names.map(...).toList()` 塞进一个 `Column` 里。但只要涉及到长列表，**永远**优先使用自带懒加载特性的 `ListView.builder`。

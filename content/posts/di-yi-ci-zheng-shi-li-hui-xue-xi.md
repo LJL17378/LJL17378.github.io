@@ -1,0 +1,90 @@
+---
+title: 学线前端第一次例会正式学习文档
+slug: di-yi-ci-zheng-shi-li-hui-xue-xi
+publishedAt: '2024-09-22'
+updatedAt: '2024-09-22'
+summary: >-
+  有关vue 组合式API 由于自学的时候我学的是选项式API，所以现在需要学习组合式，组合式简单了许多，甚至不需要 default export
+  ，真方便挺多的，牛魔的 在组合式API中，使用 ref 函数来声明响应式状态 用 ref 函数接收参数，将其包裹在一个带有 .value 属性的ref对象
+tags:
+  - Vue
+  - JavaScript
+draft: false
+sourceFile: 第一次正式例会学习.md
+---
+# 有关vue
+## 组合式API
+> 由于自学的时候我学的是选项式API，所以现在需要学习组合式，组合式简单了许多，甚至不需要`default export`，真方便挺多的，牛魔的
+
+在组合式API中，使用`ref()`函数来声明响应式状态
+```javascript
+<script setup>//在script中添加一个`setup`以实现响应式
+import { ref } from 'vue'
+
+const count = ref(0);
+```
+用`ref()`函数接收参数，将其包裹在一个带有`.value`属性的ref对象中返回：
+```javascript
+console.log(count) // { value: 0 }
+console.log(count.value) // 0
+
+count.value++
+console.log(count.value) // 1
+```
+所以当使用了`ref()`时，要使用这个值**一定要记得加`.value`**
+而方法等可以直接使用js中的语法，不需要通过`methods :`包裹
+在`<script setup>...</script>`中可以用`import Component from './components/Component.vue'`语句来引用组件，不需要再注册了。
+而且在父组件之中可以把一个子组件的名字当作标签来使用，此时这个子组件的内容就可以正常显示出来。
+
+## 计算属性以及解析赋值语法
+在`<script setup>...</script>`中记得`import { computed } from 'vue'`而当有别的需要通过从vue引用时，例如生命周期钩子函数时，可以一并写成:
+```javascript
+import { ref, computed, onMounted } from 'vue'
+```
+以下是使用计算属性的一个实例：
+```javascript
+const fullName = computed({
+  // getter
+  get() {
+    return firstName.value + ' ' + lastName.value
+  },
+  // setter
+  set(newValue) {
+    // 注意：我们这里使用的是解构赋值语法
+    const arr = newValue.split(' ')
+    firstName.value = arr[0]
+    lastName.value = arr[arr.length - 1]
+  }
+})
+```
+注意：
+1. 这里的`get()`和`set()`在使用时不需要另外加上，在调用`fullName`即自动调用了`get()`函数，而在`fullName = 'Tony Stark'`时就会自动调用`set()`函数，这里的`'Tony Stark'`可以是任何文本。
+2. 解构赋值法：通过`.split()`函数将一段字符串分开储存在一个数组之中，并赋值给`firstName`和`lastName`，而后在`set()`中就会将数据处理然后返回，强调一下需要`const firstName = ref('John')
+const lastName = ref('Doe')`来实现响应式。
+3. 计算属性一般是只读的，但是当我们添加了一个`get()`之后可以通过`fullName = 'Tony Stark'`来进行修改。
+## 生命周期钩子函数
+每个vue组件实例在被创建的时候都会经历一系列的初始化步骤，在此过程中就会运行被称为生命周期钩子的函数，让开发者可以在特定阶段运行自己的代码。
+### 注册周期钩子
+```javascript
+<script setup>
+import { onMounted } from 'vue'//可以和ref,computed等放在一起
+
+onMounted(() => {
+  console.log(`the component is now mounted.`)
+})
+</script>
+```
+### 一些现在不懂但是应该很重要的东西
+当调用 `onMounted `时，`Vue `会自动将回调函数注册到当前正被初始化的组件实例上。这意味着这些钩子应当在组件初始化时被同步注册。例如，请不要这样做：
+```javascript
+setTimeout(() => {
+  onMounted(() => {
+    // 异步注册时当前组件实例已丢失
+    // 这将不会正常工作
+  })
+}, 100)
+```
+注意这并不意味着对 `onMounted `的调用必须放在` setup()` 或 `<script setup> `内的词法上下文中。`onMounted()` 也可以在一个外部函数中调用，只要调用栈是同步的，且最终起源自 `setup()` 就可以。
+# 有关npm
+在一个项目中需要使用到各种依赖包，我们可以在npm官网查看依赖的名字，作用，还能通过学习官方文档来使用依赖
+因为一般使用的是vscode，所以这里直接用vscode来举例，进入到项目的文件夹过后，点开**查看**>**终端**，然后输入命令行`npm install 文件名`来下载依赖，在vue项目中可以在`package.json`中看到我们使用的依赖。

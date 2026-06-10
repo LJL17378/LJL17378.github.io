@@ -1,0 +1,559 @@
+---
+title: 培训前须知
+slug: pei-xun-qian-xu-zhi-1
+publishedAt: '2025-04-05'
+updatedAt: '2025-04-05'
+summary: >-
+  培训前须知 前端组成部分 - HTML ：前端页面的骨架 - CSS ：前端页面的外观 - JavaScript ：前端页面的行为 培训将围绕这些主题展开。
+  https://raw.githubusercontent.com/LJL17378/my-img/main/img/202504052028
+tags:
+  - JavaScript
+  - CSS
+draft: false
+sourceFile: 培训前须知 (1).md
+---
+# 培训前须知
+## 前端组成部分
+
+- `HTML`：前端页面的骨架
+- `CSS`：前端页面的外观
+- `JavaScript`：前端页面的行为
+
+培训将围绕这些主题展开。
+
+![](https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250405202840137.png)
+
+## 你需要准备的工具
+> 工欲善其事，必先利其器。
+
+### 编辑器
+~~你完全可以不安装任何软件，就用记事本罢~~
+😡😡😡千万不要像上面说的那样干，不然你会十分痛苦，但是作为刚入门的前端并不需要安装太多的软件。`VSCode`是前端开发最常用的代码编辑器（轻量、强大、免费），提供自动补全、提示、快捷编辑等十分方便的功能。[下载教程](https://blog.csdn.net/msdcp/article/details/127033151)
+
+#### VSCode里面那些好使的插件
+- `Chinese`:中文汉化，虽说英语可以说是码农最需要学习的一门语言，但是没事，英语不好的时候咱就汉化呗。
+- `Open in browser`：安装之后在vscode里面可以直接右键打开html网页
+- `Live Server`：打开网页之后可以实时检测网页的修改，不用每次修改之后都保存再刷新了
+- `Code Runner`: 可以在vscode里面直接运行js，java等代码，并且可以实时输出结果
+- `Code Spell Checker`: 检查单词拼写是否正确
+
+这个时候可能就有同学要问了：
+
+> 欸，学长，vscode上面要怎么安装插件啊？🤓
+
+很简单，打开`vscode`之后，在菜单里面找到`扩展`，然后搜索你需要安装的插件，然后点击`安装`即可。
+
+![](https://raw.githubusercontent.com/LJL17378/my-img/main/img/20250405202904463.png)
+
+### 浏览器
+如果你的电脑已经预装了`Edge`浏览器，那就不用额外安装别的浏览器了；如果没有的话，可以安装[`Chrome`浏览器](https://www.google.com/chrome/)，或者[`Firefox`浏览器](https://www.firefox.com.cn/)
+
+### MarkDown（推荐掌握）
+文档格式，用于编写文档，并且markdown有很多便利的功能，例如代码高亮，代码块，表格等等。`MarkDown`可以让文档写作者专注于文档写作上，不用担心格式的问题，让你的手在文档写作过程中不再需要离开键盘。[MarkDown教程](https://markdown.com.cn/basic-syntax/)
+
+## 如何自学
+
+> 说好的包教包会呢？为什么现在还要我自学了？取关了！退群！😡😡😡
+
+咳咳，我们确实是说过包教包会，但是编程本身就非常需要自学，在课上不可能涵盖前端需要学习的所有东西，我们课程的重点还是带同学们认识前端和一些重要概念，在课上的一些东西你只要认知到它的存在就好，在具体使用的时候再去上网查就好了，毕竟开发从来不是闭卷考试，你要是让一个程序员不上网那是真的完蛋了。（免责声明免责声明）
+
+> 学长学长，我们有哪些学习资源呢？🤓
+
+1. 文档，如[MDN](https://developer.mozilla.org/zh-CN/)（推荐）和[菜鸟教程](https://www.runoob.com/)，类似的资源网上还有很多，可以自行查找
+2. `Bilibili`，在这上面你几乎可以找到任何东西的教程
+3. `AI`，都什么年代还在用传统学习方法，只要你想，你随时都可以向`AI`提出疑问，这就需要你去描述问题了，这可以很有效地锻炼你提炼问题关键的能力，在后面的开发沟通中起着十分重要的作用。
+4. 学长，有啥问题你都可以问学长，就算学长不懂，学长也会帮你去问他们的学长的（~~什么递归~~），有问题欢迎询问前端总监，请自行在纳新群中搜索`蓝色空间`（梁建麟）和`rr`（李俊煊）
+
+## 结语
+培训课程会在军训结束后才正式开始，大家可以多享受一下军训的欢乐时光（bushi），在培训前同学们可以自己预习预习，多去思考前端各个组成部分的作用。前端开发更像是搭积木，充满趣味，能够实现同学们的各种天马行空。相信同学们一定能轻松愉悦地完成培训，加入我们！😊😊😊
+
+```css
+<style>
+@import 'vue/fonts.css';
+
+:root {
+    --side-bar-bg-color: #fff;
+    --control-text-color: #777;
+    --font-sans-serif: 'Ubuntu', 'Source Sans Pro', sans-serif !important;
+    --font-monospace: 'Fira Code', 'Roboto Mono', monospace !important;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: var(--font-sans-serif);
+    color: #34495e;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6rem;
+    letter-spacing: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+#write {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 30px 100px;
+}
+
+#write p {
+    line-height: 1.6rem;
+    word-spacing: .05rem;
+}
+
+#write ol li {
+    padding-left: 0.5rem;
+}
+
+#write > ul:first-child,
+#write > ol:first-child {
+    margin-top: 30px;
+}
+
+body > *:first-child {
+    margin-top: 0 !important;
+}
+
+body > *:last-child {
+    margin-bottom: 0 !important;
+}
+
+a {
+    color: #42b983;
+    font-weight: 600;
+    padding: 0 2px;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+    line-height: 1.4;
+    cursor: text;
+}
+
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+
+h1 tt,
+h1 code {
+    font-size: inherit !important;
+}
+
+h2 tt,
+h2 code {
+    font-size: inherit !important;
+}
+
+h3 tt,
+h3 code {
+    font-size: inherit !important;
+}
+
+h4 tt,
+h4 code {
+    font-size: inherit !important;
+}
+
+h5 tt,
+h5 code {
+    font-size: inherit !important;
+}
+
+h6 tt,
+h6 code {
+    font-size: inherit !important;
+}
+
+h2 a,
+h3 a {
+    color: #34495e;
+}
+
+h1 {
+    padding-bottom: .4rem;
+    font-size: 2.2rem;
+    line-height: 1.3;
+}
+
+h2 {
+    font-size: 1.75rem;
+    line-height: 1.225;
+    margin: 35px 0 15px;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #ddd;
+}
+
+h3 {
+    font-size: 1.4rem;
+    line-height: 1.43;
+    margin: 20px 0 7px;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
+h6 {
+    font-size: 1rem;
+    color: #777;
+}
+
+p,
+blockquote,
+ul,
+ol,
+dl,
+table {
+    margin: 0.8em 0;
+}
+
+li > ol,
+li > ul {
+    margin: 0 0;
+}
+
+hr {
+    height: 2px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+body > h2:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body > h1:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body > h1:first-child + h2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+body > h3:first-child,
+body > h4:first-child,
+body > h5:first-child,
+body > h6:first-child {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+a:first-child h1,
+a:first-child h2,
+a:first-child h3,
+a:first-child h4,
+a:first-child h5,
+a:first-child h6 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+h1 p,
+h2 p,
+h3 p,
+h4 p,
+h5 p,
+h6 p {
+    margin-top: 0;
+}
+
+li p.first {
+    display: inline-block;
+}
+
+ul,
+ol {
+    padding-left: 30px;
+}
+
+ul:first-child,
+ol:first-child {
+    margin-top: 0;
+}
+
+ul:last-child,
+ol:last-child {
+    margin-bottom: 0;
+}
+
+blockquote {
+    border-left: 4px solid #42b983;
+    padding: 10px 15px;
+    color: #777;
+    background-color: rgba(66, 185, 131, .1);
+}
+
+table {
+    padding: 0;
+    word-break: initial;
+}
+
+table tr {
+    border-top: 1px solid #dfe2e5;
+    margin: 0;
+    padding: 0;
+}
+
+table tr:nth-child(2n),
+thead {
+    background-color: #fafafa;
+}
+
+table tr th {
+    font-weight: bold;
+    border: 1px solid #dfe2e5;
+    border-bottom: 0;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr td {
+    border: 1px solid #dfe2e5;
+    text-align: left;
+    margin: 0;
+    padding: 6px 13px;
+}
+
+table tr th:first-child,
+table tr td:first-child {
+    margin-top: 0;
+}
+
+table tr th:last-child,
+table tr td:last-child {
+    margin-bottom: 0;
+}
+
+#write strong {
+    padding: 0 1px;
+}
+
+#write em {
+    padding: 0 5px 0 2px;
+}
+
+#write table thead th {
+    background-color: #f2f2f2;
+}
+
+#write .CodeMirror-gutters {
+    border-right: none;
+}
+
+#write .md-fences {
+    border: 1px solid #F4F4F4;
+    -webkit-font-smoothing: initial;
+    margin: 0.8rem 0 !important;
+    padding: 0.3rem 0 !important;
+    line-height: 1.43rem;
+    background-color: #F8F8F8 !important;
+    border-radius: 2px;
+    font-family: var(--font-monospace);
+    font-size: 0.85rem;
+    word-wrap: normal;
+}
+
+#write .CodeMirror-wrap .CodeMirror-code pre {
+    padding-left: 12px;
+}
+
+#write code, tt {
+    padding: 2px 4px;
+    border-radius: 2px;
+    font-family: var(--font-monospace);
+    font-size: 0.92rem;
+    color: #e96900;
+    background-color: #f8f8f8;
+}
+
+tt {
+    margin: 0 2px;
+}
+
+#write .md-footnote {
+    background-color: #f8f8f8;
+    color: #e96900;
+}
+
+/* heighlight. */
+#write mark {
+    background-color: #EBFFEB;
+    border-radius: 2px;
+    padding: 2px 4px;
+    margin: 0 2px;
+    color: #222;
+    font-weight: 500;
+}
+
+#write del {
+    padding: 1px 2px;
+}
+
+.cm-s-inner .cm-link,
+.cm-s-inner.cm-link {
+    color: #22a2c9;
+}
+
+.cm-s-inner .cm-string {
+    color: #22a2c9;
+}
+
+.md-task-list-item > input {
+    margin-left: -1.3em;
+}
+
+@media print {
+    html {
+        font-size: 13px;
+    }
+
+    table,
+    pre {
+        page-break-inside: avoid;
+    }
+
+    pre {
+        word-wrap: break-word;
+    }
+}
+
+.md-fences {
+    background-color: #f8f8f8;
+}
+
+.md-diagram-panel {
+    position: static !important;
+}
+
+#write pre.md-meta-block {
+    padding: 1rem;
+    font-size: 85%;
+    line-height: 1.45;
+    background-color: #f7f7f7;
+    border: 0;
+    border-radius: 3px;
+    color: #777777;
+    margin-top: 0 !important;
+}
+
+.mathjax-block > .code-tooltip {
+    bottom: .375rem;
+}
+
+#write > h3.md-focus:before {
+    left: -1.5625rem;
+    top: .375rem;
+}
+
+#write > h4.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+#write > h5.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+#write > h6.md-focus:before {
+    left: -1.5625rem;
+    top: .285714286rem;
+}
+
+.md-image > .md-meta {
+    border-radius: 3px;
+    font-family: var(--font-monospace);
+    padding: 2px 0 0 4px;
+    font-size: 0.9em;
+    color: inherit;
+}
+
+.md-tag {
+    color: inherit;
+}
+
+.md-toc {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+}
+
+#typora-quick-open-item {
+    background-color: #FAFAFA;
+    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
+    border-style: solid;
+    border-width: 1px;
+}
+
+#md-notification:before {
+    top: 10px;
+}
+
+/** focus mode */
+
+.on-focus-mode blockquote {
+    border-left-color: rgba(85, 85, 85, 0.12);
+}
+
+header,
+.context-menu,
+.megamenu-content,
+footer {
+    font-family: var(--font-sans-serif);
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: var(--side-bar-bg-color);
+}
+
+.md-lang {
+    color: #b4654d;
+}
+
+.html-for-mac .context-menu {
+    --item-hover-bg-color: #E6F0FE;
+}
+
+</style>
+```

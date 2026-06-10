@@ -1,0 +1,309 @@
+---
+title: 小程序第一次学习
+slug: xiao-cheng-xu-di-yi-ci-xue-xi
+publishedAt: '2024-09-22'
+updatedAt: '2024-09-22'
+summary: >-
+  和普通网页的差别 运行环境 小程序运行在微信环境 API不同 无法调用DOM或者BOM的API 可以使用微信环境的API 开发模式 - 申请小程序开发账号
+  - 安装小程序开发者工具 - 创建和配置小程序 第一个小程序 获取AppID 在小程序的开发- 开发设置里面找到 代码构成 pages 用来存放
+tags:
+  - Vue
+  - JavaScript
+  - CSS
+  - Taro
+draft: false
+sourceFile: 小程序第一次学习.md
+---
+# 和普通网页的差别
+ ## 运行环境 
+ 小程序运行在微信环境
+ ## API不同
+ 无法调用DOM或者BOM的API
+ 可以使用微信环境的API
+ ## 开发模式
+ - 申请小程序开发账号
+ - 安装小程序开发者工具
+ - 创建和配置小程序
+# 第一个小程序
+## 获取AppID
+在小程序的开发->开发设置里面找到
+# 代码构成
+## pages
+用来存放所有小程序的页面
+## utils
+用来存放工具性质的模块
+## app.js
+小程序项目的入口文件
+## app.json
+小程序的全局配置文件
+## app.wxss
+小程序的全局样式文件
+## project.config.json
+项目的配置文件
+## sitemap.json
+用来配置小程序机器页面是否允许被微信索引
+# 小程序页面的组成部分
+pages中每个文件夹存放一个页面
+每个页面有四个基本文件组成
+1. `.js`页面的脚本文件，存放页面的数据、事件处理函数等
+2. `.json`当前页面的配置文件，配置窗口的外观，表现
+3. `.wxml`
+4. `.wxss`页面的模板结构文件当前页面的样式表文件
+# json配置文件
+1. 项目根目录中的`app.json`配置文件
+2. 项目根目录中的`project.config.json`配置文件
+3. 项目根目录中的`sitemap.json`配置文件
+4. 每个页面文件夹中的`.json`配置文件
+## app.json配置文件
+包括小程序的页面路径，窗口外观，界面表现，底部tab等
+## project.config.json
+记录对开发工具所做的个性化配置
+## sitemap.json
+配置小程序的页面是否允许微信索引
+# WXML模板语法
+`div`=>`view`
+`text`=>`span`
+`img`=>`image`
+`a`=>`navigator`
+`<navigator url="/pages/home/home"></navigator>`
+## 提供了类似于vue中的模板语法
+# WXSS
+小程序的样式语言
+- 新增了rpx尺寸单位
+- 提供全局样式和局部样式
+  - app.WXSS会作用于所有的小程序页面
+  - 局部页面的.WXSS样式仅对当前页面生效
+- WXSS仅支持部分CSS选择器
+# 组件
+1. **视图容器**
+ - view
+ - scroll-view
+ - swiper和swiper-item
+2. **基础内容**
+ - `text`文本组件，类似于一个`span`元素。是一个行内元素
+ - `rich-text`富文本组件，支持把HTML字符串渲染为WXML结构
+3. **表单组件**
+4. **导航组件**
+5. 媒体组件
+6. map地图组件
+7. canvas画布组件
+8. 开放能力
+9.  无障碍访问
+# API
+1. 事件监听类API
+- 以`on`开头，用来监听某些事件的触发
+2. 同步API
+- 以`Sync`结尾的API都是同步API
+- 同步API的执行结果，可以通过函数返回值直接获取，如果执行出错会抛出异常
+3. 异步API
+# 给data中数据赋值
+通过调用`this.setData(dataObject)`方法，可以给data中的数据重新赋值
+```javascript
+changeCount(){
+    this.setData({
+        count: this.data.count + 1
+    })
+}
+```
+# `<block>`
+不会渲染出来，不会占用内存，可以用来包含多个元素，同时控制他们渲染与否或者存不存在
+# 事件传参
+`<button bindtap="btnHandler" data-info="{{2}}">事件传参</button>`
+在`js`中通过`event.target.dataset.参数名`即可获取到具体的参数的值
+```javascript
+btnHandler(e){
+  console.log(e.target.dataset.info)
+}
+```
+# input语法
+`<input bindinput="inputHandler">`
+```javascript
+inputHandler(e){
+  console.log(e.detail.value)
+}//获取表单当中的值
+```
+{% raw %}
+## 实现数据双向绑定
+`<input value="{{msg}} bindinput="inputHandler"></input>`
+```javascript
+inputHandler(e){
+    this.dataSet({
+    msg: e.detail.value
+})
+}
+```
+# 列表渲染
+`<view wx:for="{{arr1}}"></view>`
+索引是{{index}}，每一项是{{item}}
+## 手动指定索引和当前项的变量名
+- 使用`wx:for-index="idx（别名）"`可以指定当前循环项的索引
+- 使用`wx:for-item="itemName（别名）"`可以指定当前项的变量名
+## `wx:key`的使用
+渲染出唯一指定的key值来提高渲染效率
+`<view wx:for="{{arr1}} wx:key="id"></view>`
+不使用{{}}语法，直接使用属性的名称来绑定（比较特殊）
+可以使用索引和自定义索引名称来绑定key值
+{% endraw %}
+# WXSS模板样式
+## rpx
+用来解决屏幕适配的尺寸单位
+rpx把所有屏幕的宽度等分为750份，当前屏幕的总宽度为750rpx（开发微信小程序的时候，设计师可以用iphone6作为视觉稿的标准即1px = 2 rpx）
+## 样式导入
+`@import "common.wxss"; `
+导入非本页面文件夹中的wxss文件
+# 全局样式
+app.wxss中的样式就是全局样式 
+# 局部样式
+页面文件.wxss中的样式都是局部样式
+1. 局部样式和全局样式冲突的时候根据就近原则，局部样式就会覆盖全局样式
+2. 当局部样式的权重大于或者等于全局样式的时候，局部样式才会覆盖全局样式
+# 下拉刷新
+实际开发中哪个页面需要用到下拉刷新再在对应的页面的配置文件里面去配置
+# 上拉触底距离
+设置距离底部多少像素的时候刷新下一页（onReachBottomDistance）
+# tabBar
+最少两个最多五个tab页签
+- 底部tabBar
+  - 会显示icon和文本
+- 顶部tabBar
+  - 只会显示文本不显示icon
+# 网络数据请求
+1. 只能请求https类型的接口
+2. 必须先将接口的域名添加到**信任列表**当中
+## 配置request合法域名
+登录微信小程序管理后台=>开发=>开发设置=>服务器域名=>修改request合法域名
+## 发起GET请求
+使用`wx.request()`方法可以发起get数据请求
+```javascript
+wx.request({
+    url:'接口地址'，
+    method:'GET',
+    data:{
+    name:'ljl',
+    age:19
+    },
+    success:(res) => {
+    console.log(res.data)
+    }
+})
+```
+## POST请求
+类似
+```javascript
+wx.request({
+    url:'接口地址'，
+    method:'POST',
+    data:{
+    name:'ljl',
+    age:19
+    },
+    success:(res) => {
+    console.log(res.data)
+    }
+})
+```
+## 页面刚加载的时候自动请求
+在页面的`onLoad`事件中调用获取数据的函数
+```javascript
+onLoad:function(options){
+this.getxxx(),
+this.getxxx()
+}
+```
+# 小程序实现页面导航
+1. 声明式导航
+- 页面上声明一个`<navigator>`导航组件通过点击实现页面跳转
+2. 编程式导航
+调用小程序的导航API，实现页面的跳转
+## 声明式导航
+### 跳转到tabBar页面
+```javascript
+<navigator url="/pages/index/index" open-type="switchTab"></navigator>
+```
+url必须斜线开头，一定要写`open-type="switchTab"`
+### 跳转到非tabBar页面
+```javascript
+<navigator url="/pages/index/index" open-type="navigate"></navigator>
+```
+url必须斜线开头，要写`open-type="navigate"`（可以省略不写）
+### 后退导航
+1. `open-type`的值必须是`navigateBack`，表示要进行后退导航
+2. `delta`的值必须是数字，表示要后退的层级
+```html
+<navigator open-type="navigateBack" delta='1'>返回上一页</navigator>
+```
+delta默认值是1
+## 编程式导航
+### 导航到tabBar页面
+```javascript
+gotoIndex(){
+wx.switchTab({
+    url:'/pages/index/index'
+})
+}
+```
+### 导航到非tabBar页面
+```javascript
+gotoIndex(){
+wx.navigateTo({
+    url:'/pages/index/index'
+})
+}
+```
+### 后退导航
+使用`wx.navigateBack()`delta的默认值是1
+# 导航传参
+1. 声明式导航传参
+- 参数和路径之间用?分隔
+- 参数键与参数值用=相连
+- 不同参数用&分隔
+`<navigator url="/pages/index/index?name=joe&age=20"></navigator>`
+2. 编程式导航传参
+```javascript
+gotoIndex(){
+wx.navigateTo({
+    url:'/pages/index/index?name=ljl&gender=male'
+})
+}
+```
+无论是声明式还是编程式导航都可以通过`onLoad:function(options)`获取
+可以在data中声明一个query
+```javascript
+onLoad:function(options){
+    console.log(options)
+    this.setData({
+    query:options
+})
+}
+```
+# 页面事件
+## 下拉刷新S
+### 全局开启下拉刷新
+在app.json的window节点中，将enablePullDownRefresh设置为true
+### 局部开启下拉刷新
+在页面的.json配置文件中，将enablePullDownRefresh设置为true
+通过`onPullDownRefresh()`函数即可监听当前页面的下拉刷新事件
+### 关闭下拉刷新效果
+`wx.stopPullDownRefresh()`可以关闭下拉刷新效果
+## 上拉触底
+手指上拉加载更多数据
+### 监听上拉触底事件
+在页面的.js问价，通过`onReachBottom()`函数即可监听当前页面的上拉触底事件，实例代码如下
+```javascript
+onReachBottom:function(){
+    console.log('触发了上拉触底事件')
+}
+```
+### 配置上拉触底距离
+通过`onReachBottomDistance`属性来配置上拉触底的距离
+# 加载
+通过`wx.showLoading`来显示加载
+通过`wx.hideLoading`来隐藏加载
+# 组件
+## 自定义组件全局引用
+在`app.json` 中使用`usingComponents:{}`来实现全局引用
+## 组件处理函数
+需要定义到`methods`节点当中
+## 样式隔离
+在`app.wxss`当中定义的类的全局样式对组件无效
+只有class选择器有样式隔离的效果，别的选择器不受样式隔离的影响
