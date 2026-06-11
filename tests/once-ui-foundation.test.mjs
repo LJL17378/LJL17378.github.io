@@ -28,9 +28,13 @@ test('keeps Chinese tag routes readable and decodes route params before matching
 
 test('article table of contents follows reading position and keeps the active item visible', async () => {
   const toc = await readFile('src/components/TableOfContents.tsx', 'utf8')
+  const styles = await readFile('src/resources/custom.css', 'utf8')
 
   assert.match(toc, /IntersectionObserver/)
   assert.match(toc, /aria-current/)
   assert.match(toc, /nav\.scrollTo/)
   assert.doesNotMatch(toc, /scrollIntoView/)
+  assert.match(styles, /\.toc-heading\s*\{[^}]*padding:\s*16px 12px 12px 20px/)
+  assert.match(styles, /\.toc \.depth-3\s*\{[^}]*margin-left:\s*14px/)
+  assert.match(styles, /\.toc \.depth-4\s*\{[^}]*margin-left:\s*28px/)
 })

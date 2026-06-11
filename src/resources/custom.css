@@ -105,16 +105,17 @@ main { min-height: 70vh; }
 .article-body th { background: var(--neutral-alpha-weak); color: var(--neutral-on-background-strong); }
 .article-body details { margin: 15px 0; padding: 14px 16px; border: 1px solid var(--site-line); border-radius: 13px; background: var(--glass); }
 .article-body summary { cursor: pointer; color: var(--neutral-on-background-strong); font-weight: 700; }
-.toc-shell { position: sticky; top: 96px; min-width: 0; border-left: 1px solid var(--site-line); background: linear-gradient(var(--glass-strong), transparent 14%, transparent 86%, var(--glass-strong)); }
-.toc-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 12px 12px 20px; font-size: 13px; }
+.toc-shell { position: sticky; top: 96px; min-width: 0; border-left: 1px solid var(--site-line); border-radius: 0 14px 14px 0; background: linear-gradient(var(--glass-strong), transparent 14%, transparent 86%, var(--glass-strong)); }
+.toc-heading { display: flex; align-items: center; justify-content: space-between; padding: 16px 12px 12px 20px; font-size: 13px; }
 .toc-heading span { min-width: 24px; padding: 2px 7px; border-radius: 999px; background: var(--neutral-alpha-weak); color: var(--neutral-on-background-weak); text-align: center; font-size: 11px; }
 .toc { display: flex; max-height: calc(100vh - 158px); overflow: auto; padding: 3px 10px 22px 20px; flex-direction: column; gap: 3px; scrollbar-width: thin; scroll-padding-block: 28px; }
 .toc a { position: relative; padding: 6px 8px; border-radius: 8px; color: var(--neutral-on-background-weak); line-height: 1.45; transition: color .18s ease, background .18s ease, transform .18s ease; }
 .toc a:hover { color: var(--brand-on-background-strong); }
 .toc a.active { background: var(--brand-alpha-weak); color: var(--brand-on-background-strong); transform: translateX(3px); }
 .toc a.active::before { content: ""; position: absolute; top: 8px; bottom: 8px; left: -21px; width: 2px; border-radius: 2px; background: var(--brand-background-strong); }
-.toc .depth-3 { padding-left: 12px; }
-.toc .depth-4 { padding-left: 24px; }
+.toc .depth-2 { font-weight: 600; }
+.toc .depth-3 { margin-left: 14px; }
+.toc .depth-4 { margin-left: 28px; font-size: 12px; }
 
 .about-layout { display: grid; grid-template-columns: 290px minmax(0, var(--reading-width)); justify-content: center; gap: 52px; padding: 90px 0; align-items: start; }
 .about-card { position: sticky; top: 100px; padding: 28px; border-radius: 24px; }
