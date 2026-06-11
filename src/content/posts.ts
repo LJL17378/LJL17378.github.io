@@ -75,6 +75,86 @@ function nodeText(node: any): string {
   return Array.isArray(node.children) ? node.children.map(nodeText).join("") : "";
 }
 
+const languageLabels: Record<string, string> = {
+  bash: "Bash",
+  css: "CSS",
+  dart: "Dart",
+  gitignore: "Git",
+  html: "HTML",
+  javascript: "JavaScript",
+  js: "JavaScript",
+  json: "JSON",
+  markdown: "Markdown",
+  mermaid: "Mermaid",
+  python: "Python",
+  text: "Text",
+  ts: "TypeScript",
+  tsx: "TSX",
+  typescript: "TypeScript",
+  yaml: "YAML",
+};
+
+function enhanceCodeBlocks() {
+  return (tree: any) => {
+    visit(tree, "element", (node: any, index: number | undefined, parent: any) => {
+      if (
+        node.tagName !== "pre" ||
+        node.properties?.dataEnhanced ||
+        typeof index !== "number" ||
+        !parent
+      ) {
+        return;
+      }
+
+      const code = node.children?.find((child: any) => child.tagName === "code");
+      if (!code) return;
+
+      const classes = Array.isArray(code.properties?.className)
+        ? code.properties.className.map(String)
+        : [];
+      const languageClass = classes.find((name: string) =>
+        name.startsWith("language-"),
+      );
+      const language = languageClass?.slice("language-".length) || "text";
+      const label = languageLabels[language.toLowerCase()] || language.toUpperCase();
+      node.properties = { ...node.properties, dataEnhanced: true };
+
+      parent.children[index] = {
+        type: "element",
+        tagName: "div",
+        properties: { className: ["code-block"], dataLanguage: language },
+        children: [
+          {
+            type: "element",
+            tagName: "div",
+            properties: { className: ["code-block-toolbar"] },
+            children: [
+              {
+                type: "element",
+                tagName: "span",
+                properties: { className: ["code-block-language"] },
+                children: [{ type: "text", value: label }],
+              },
+              {
+                type: "element",
+                tagName: "button",
+                properties: {
+                  type: "button",
+                  className: ["code-copy-button"],
+                  dataCopyCode: "",
+                  ariaLabel: `复制 ${label} 代码`,
+                },
+                children: [{ type: "text", value: "复制" }],
+              },
+            ],
+          },
+          node,
+        ],
+      };
+    });
+  };
+}
+
 export async function renderMarkdown(markdown: string) {
   const toc: TocItem[] = [];
   const slugger = new GithubSlugger();
@@ -108,6 +188,7 @@ export async function renderMarkdown(markdown: string) {
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: "wrap" })
     .use(rehypeHighlight, { detect: false })
+    .use(enhanceCodeBlocks)
     .use(rehypeStringify)
     .process(markdown);
 

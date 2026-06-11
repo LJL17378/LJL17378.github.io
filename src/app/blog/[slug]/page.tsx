@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { TableOfContents } from "@/components";
+import { ArticleContent, TableOfContents } from "@/components";
 import { getAllPosts, getPost, renderMarkdown } from "@/content/posts";
 
 export function generateStaticParams() {
@@ -30,7 +30,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <div className="tag-row">{post.tags.map((tag) => <Link className="tag" href={`/tags/${tag}`} key={tag}>{tag}</Link>)}</div>
       </header>
       <div className="article-columns">
-        <div className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
+        <ArticleContent html={html} />
         {toc.length > 0 && <TableOfContents items={toc} />}
       </div>
     </article>

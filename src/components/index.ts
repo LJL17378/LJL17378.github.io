@@ -1,3 +1,4 @@
+export { ArticleContent } from "./ArticleContent";
 export { Footer } from "./Footer";
 export { Header } from "./Header";
 export { PostCard } from "./PostCard";

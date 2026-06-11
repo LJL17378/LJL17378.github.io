@@ -41,3 +41,20 @@ test('article table of contents follows reading position and keeps the active it
   assert.match(styles, /\.toc \.depth-3\s*\{[^}]*margin-left:\s*14px/)
   assert.match(styles, /\.toc \.depth-4\s*\{[^}]*margin-left:\s*28px/)
 })
+
+test('code blocks expose language labels, syntax highlighting, and copy controls', async () => {
+  const posts = await readFile('src/content/posts.ts', 'utf8')
+  const article = await readFile('src/components/ArticleContent.tsx', 'utf8')
+  const postPage = await readFile('src/app/blog/[slug]/page.tsx', 'utf8')
+  const styles = await readFile('src/resources/custom.css', 'utf8')
+
+  assert.match(posts, /rehypeHighlight/)
+  assert.match(posts, /enhanceCodeBlocks/)
+  assert.match(posts, /dataCopyCode/)
+  assert.match(posts, /code-block-language/)
+  assert.match(article, /navigator\.clipboard\.writeText/)
+  assert.match(article, /已复制/)
+  assert.match(postPage, /<ArticleContent html=\{html\}/)
+  assert.match(styles, /\.code-block-toolbar/)
+  assert.match(styles, /\.code-copy-button/)
+})
