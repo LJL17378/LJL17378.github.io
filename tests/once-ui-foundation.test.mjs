@@ -31,5 +31,6 @@ test('article table of contents follows reading position and keeps the active it
 
   assert.match(toc, /IntersectionObserver/)
   assert.match(toc, /aria-current/)
-  assert.match(toc, /scrollIntoView/)
+  assert.match(toc, /nav\.scrollTo/)
+  assert.doesNotMatch(toc, /scrollIntoView/)
 })

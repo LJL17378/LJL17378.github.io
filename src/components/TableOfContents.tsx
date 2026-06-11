@@ -43,9 +43,27 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
   }, [items]);
 
   useEffect(() => {
+    const nav = navRef.current;
     const activeLink =
-      navRef.current?.querySelector<HTMLElement>('[aria-current="location"]');
-    activeLink?.scrollIntoView({ block: "center", behavior: "smooth" });
+      nav?.querySelector<HTMLElement>('[aria-current="location"]');
+    if (!nav || !activeLink) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const linkRect = activeLink.getBoundingClientRect();
+    const isVisible =
+      linkRect.top >= navRect.top + 24 && linkRect.bottom <= navRect.bottom - 24;
+
+    if (!isVisible) {
+      nav.scrollTo({
+        top:
+          nav.scrollTop +
+          linkRect.top -
+          navRect.top -
+          nav.clientHeight / 2 +
+          linkRect.height / 2,
+        behavior: "smooth",
+      });
+    }
   }, [activeId]);
 
   return (
