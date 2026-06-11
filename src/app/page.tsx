@@ -13,8 +13,8 @@ export default function Home() {
       <section className="hero">
         <div>
           <div className="eyebrow">Frontend · AI · Engineering</div>
-          <h1>把踩过的坑，<br />写成路标。</h1>
-          <p>前端工程、AI Agent、跨端开发与真实项目记录。这里不追求正确答案的幻觉，只记录真正解决问题的过程。</p>
+          <h1>良机，<br />就在你的眼前。</h1>
+          <p>《四叠半神话大系》 · 前端工程、AI Agent、跨端开发与真实项目记录。</p>
         </div>
         <aside className="author-card">
           <Image src="/avatar.png" alt="LJL17378" width={68} height={68} priority />
@@ -39,7 +39,7 @@ export default function Home() {
       <section className="home-tags">
         <div className="section-heading"><h2>主题索引</h2><Link href="/tags">全部标签</Link></div>
         <div className="tag-cloud">
-          {tags.map(([tag, count]) => <Link href={`/tags/${encodeURIComponent(tag)}`} key={tag}>{tag}<small>{count}</small></Link>)}
+          {tags.map(([tag, count]) => <Link href={`/tags/${tag}`} key={tag}>{tag}<small>{count}</small></Link>)}
         </div>
       </section>
     </>

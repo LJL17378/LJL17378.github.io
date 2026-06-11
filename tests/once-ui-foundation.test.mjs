@@ -15,3 +15,21 @@ test('exports a root-domain static GitHub Pages site', async () => {
   assert.match(nextConfig, /trailingSlash:\s*true/)
   assert.doesNotMatch(nextConfig, /basePath/)
 })
+
+test('keeps Chinese tag routes readable and decodes route params before matching', async () => {
+  const home = await readFile('src/app/page.tsx', 'utf8')
+  const tags = await readFile('src/app/tags/page.tsx', 'utf8')
+  const tagPage = await readFile('src/app/tags/[tag]/page.tsx', 'utf8')
+
+  assert.doesNotMatch(home, /encodeURIComponent\(tag\)/)
+  assert.doesNotMatch(tags, /encodeURIComponent\(tag\)/)
+  assert.match(tagPage, /decodeTagParam\(tag\)/)
+})
+
+test('article table of contents follows reading position and keeps the active item visible', async () => {
+  const toc = await readFile('src/components/TableOfContents.tsx', 'utf8')
+
+  assert.match(toc, /IntersectionObserver/)
+  assert.match(toc, /aria-current/)
+  assert.match(toc, /scrollIntoView/)
+})

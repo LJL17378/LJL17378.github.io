@@ -15,12 +15,11 @@ a { color: inherit; text-decoration: none; }
 .background-grid {
   position: fixed; inset: 0; z-index: -2; pointer-events: none;
   background:
-    radial-gradient(circle at 14% 0%, var(--brand-alpha-medium), transparent 34rem),
-    radial-gradient(circle at 92% 8%, var(--accent-alpha-weak), transparent 30rem),
-    radial-gradient(var(--neutral-alpha-weak) .7px, transparent .7px);
-  background-size: auto, auto, 28px 28px;
-  mask-image: linear-gradient(to bottom, #000, transparent 78%);
-  opacity: .72;
+    linear-gradient(to bottom, color-mix(in srgb, var(--page-background) 24%, transparent), var(--page-background) 96%),
+    linear-gradient(115deg, color-mix(in srgb, var(--page-background) 62%, transparent), transparent 58%),
+    url("/blog-background.jpg") center 30% / cover no-repeat;
+  filter: saturate(.82);
+  opacity: .78;
 }
 
 .site-shell { width: min(var(--site-width), 93vw); margin: 0 auto; }
@@ -37,7 +36,7 @@ a { color: inherit; text-decoration: none; }
 main { min-height: 70vh; }
 .hero { display: grid; grid-template-columns: 1.25fr .75fr; gap: 44px; align-items: end; padding: 92px 18px 64px; }
 .eyebrow { color: var(--brand-on-background-strong); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
-.hero h1 { margin: 14px 0 22px; max-width: 800px; font-size: clamp(48px, 7.4vw, 94px); line-height: .98; letter-spacing: -.07em; }
+.hero h1 { margin: 14px 0 22px; max-width: 850px; font-size: clamp(46px, 6.8vw, 86px); line-height: 1.02; letter-spacing: -.065em; text-shadow: 0 3px 22px var(--page-background); }
 .hero > div > p { max-width: 680px; margin: 0; color: var(--neutral-on-background-medium); font-size: 18px; line-height: 1.8; }
 .author-card, .post-card, .about-card, .article-header {
   border: 1px solid var(--site-line); background: var(--glass); backdrop-filter: blur(18px); box-shadow: 0 22px 70px rgba(0,0,0,.12);
@@ -106,10 +105,14 @@ main { min-height: 70vh; }
 .article-body th { background: var(--neutral-alpha-weak); color: var(--neutral-on-background-strong); }
 .article-body details { margin: 15px 0; padding: 14px 16px; border: 1px solid var(--site-line); border-radius: 13px; background: var(--glass); }
 .article-body summary { cursor: pointer; color: var(--neutral-on-background-strong); font-weight: 700; }
-.toc { position: sticky; top: 96px; display: flex; max-height: calc(100vh - 120px); overflow: auto; padding-left: 20px; border-left: 1px solid var(--site-line); flex-direction: column; gap: 10px; font-size: 13px; }
-.toc strong { margin-bottom: 5px; }
-.toc a { color: var(--neutral-on-background-weak); line-height: 1.45; }
+.toc-shell { position: sticky; top: 96px; min-width: 0; border-left: 1px solid var(--site-line); background: linear-gradient(var(--glass-strong), transparent 14%, transparent 86%, var(--glass-strong)); }
+.toc-heading { display: flex; align-items: center; justify-content: space-between; padding: 0 12px 12px 20px; font-size: 13px; }
+.toc-heading span { min-width: 24px; padding: 2px 7px; border-radius: 999px; background: var(--neutral-alpha-weak); color: var(--neutral-on-background-weak); text-align: center; font-size: 11px; }
+.toc { display: flex; max-height: calc(100vh - 158px); overflow: auto; padding: 3px 10px 22px 20px; flex-direction: column; gap: 3px; scrollbar-width: thin; scroll-padding-block: 28px; }
+.toc a { position: relative; padding: 6px 8px; border-radius: 8px; color: var(--neutral-on-background-weak); line-height: 1.45; transition: color .18s ease, background .18s ease, transform .18s ease; }
 .toc a:hover { color: var(--brand-on-background-strong); }
+.toc a.active { background: var(--brand-alpha-weak); color: var(--brand-on-background-strong); transform: translateX(3px); }
+.toc a.active::before { content: ""; position: absolute; top: 8px; bottom: 8px; left: -21px; width: 2px; border-radius: 2px; background: var(--brand-background-strong); }
 .toc .depth-3 { padding-left: 12px; }
 .toc .depth-4 { padding-left: 24px; }
 
@@ -125,7 +128,7 @@ main { min-height: 70vh; }
   .hero, .about-layout { grid-template-columns: 1fr; }
   .author-card { justify-self: start; }
   .article-columns { grid-template-columns: minmax(0, var(--reading-width)); }
-  .toc { display: none; }
+  .toc-shell { display: none; }
   .about-card { position: static; }
 }
 @media (max-width: 680px) {

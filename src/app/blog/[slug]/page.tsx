@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { TableOfContents } from "@/components";
 import { getAllPosts, getPost, renderMarkdown } from "@/content/posts";
 
 export function generateStaticParams() {
@@ -26,11 +27,11 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         <div className="article-meta"><time>{post.publishedAt}</time><span>{post.readingMinutes} 分钟阅读</span></div>
         <h1>{post.title}</h1>
         <p>{post.summary}</p>
-        <div className="tag-row">{post.tags.map((tag) => <Link className="tag" href={`/tags/${encodeURIComponent(tag)}`} key={tag}>{tag}</Link>)}</div>
+        <div className="tag-row">{post.tags.map((tag) => <Link className="tag" href={`/tags/${tag}`} key={tag}>{tag}</Link>)}</div>
       </header>
       <div className="article-columns">
         <div className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
-        {toc.length > 0 && <aside className="toc"><strong>本文目录</strong>{toc.map((item) => <a className={`depth-${item.depth}`} href={`#${item.id}`} key={`${item.id}-${item.depth}`}>{item.text}</a>)}</aside>}
+        {toc.length > 0 && <TableOfContents items={toc} />}
       </div>
     </article>
   );

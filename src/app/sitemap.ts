@@ -8,6 +8,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     "", "/archive", "/tags", "/about",
     ...getAllPosts().map((post) => `/blog/${post.slug}`),
-    ...getTags().map(([tag]) => `/tags/${encodeURIComponent(tag)}`),
+    ...getTags().map(([tag]) => `/tags/${tag}`),
   ].map((route) => ({ url: `${base}${route}`, lastModified: new Date() }));
 }
