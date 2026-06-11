@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import type { TocItem } from "@/content/posts";
 
 export function TableOfContents({ items }: { items: TocItem[] }) {
@@ -66,6 +66,17 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
     }
   }, [activeId]);
 
+  const handleTocClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    item: TocItem,
+  ) => {
+    event.preventDefault();
+    document.getElementById(item.id)?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <aside className="toc-shell">
       <div className="toc-heading">
@@ -78,6 +89,7 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
             className={`depth-${item.depth}${activeId === item.id ? " active" : ""}`}
             href={`#${item.id}`}
             aria-current={activeId === item.id ? "location" : undefined}
+            onClick={(event) => handleTocClick(event, item)}
             key={`${item.id}-${item.depth}`}
           >
             {item.text}
