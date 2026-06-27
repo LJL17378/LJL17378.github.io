@@ -156,7 +156,7 @@ for (const entry of entries.filter((item) => item.isFile() && item.name.endsWith
     tags: Array.isArray(parsed.data.tags)
       ? parsed.data.tags.map(String)
       : inferTags(title, body),
-    cover: parsed.data.cover ? String(parsed.data.cover) : undefined,
+    ...(parsed.data.cover ? { cover: String(parsed.data.cover) } : {}),
     draft: parsed.data.draft === true,
     sourceFile: entry.name,
   })

@@ -52,3 +52,13 @@ test('copies every local post asset to a stable public directory', async () => {
     await access(new URL(`../public/posts-assets/${asset}`, import.meta.url))
   }
 })
+
+test('omits the optional cover field when a source post has no cover', async () => {
+  const migrationScript = await readFile(
+    new URL('../scripts/migrate-content.mjs', import.meta.url),
+    'utf8',
+  )
+
+  assert.doesNotMatch(migrationScript, /cover:[^\n]+undefined/)
+  assert.match(migrationScript, /\.\.\.\(parsed\.data\.cover/)
+})
