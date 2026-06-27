@@ -3,6 +3,7 @@ export { Footer } from "./Footer";
 export { Header } from "./Header";
 export { PostCard } from "./PostCard";
 export { Providers } from "./Providers";
+export { ReadingProgress } from "./ReadingProgress";
 export { SearchOverlay } from "./SearchOverlay";
 export { TableOfContents } from "./TableOfContents";
 export { ThemeToggle } from "./ThemeToggle";

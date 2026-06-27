@@ -5,6 +5,7 @@ import type { TocItem } from "@/content/posts";
 
 export function TableOfContents({ items }: { items: TocItem[] }) {
   const [activeId, setActiveId] = useState(items[0]?.id ?? "");
+  const [mobileOpen, setMobileOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -75,27 +76,52 @@ export function TableOfContents({ items }: { items: TocItem[] }) {
       behavior: "smooth",
       block: "start",
     });
+    setMobileOpen(false);
   };
 
+  const renderItems = (mobile = false) => items.map((item) => (
+    <a
+      className={`depth-${item.depth}${activeId === item.id ? " active" : ""}`}
+      href={`#${item.id}`}
+      aria-current={activeId === item.id ? "location" : undefined}
+      onClick={(event) => handleTocClick(event, item)}
+      key={`${mobile ? "mobile-" : ""}${item.id}-${item.depth}`}
+    >
+      {item.text}
+    </a>
+  ));
+
   return (
-    <aside className="toc-shell">
-      <div className="toc-heading">
-        <strong>本文目录</strong>
-        <span>{items.length}</span>
-      </div>
-      <nav className="toc" ref={navRef} aria-label="本文目录">
-        {items.map((item) => (
-          <a
-            className={`depth-${item.depth}${activeId === item.id ? " active" : ""}`}
-            href={`#${item.id}`}
-            aria-current={activeId === item.id ? "location" : undefined}
-            onClick={(event) => handleTocClick(event, item)}
-            key={`${item.id}-${item.depth}`}
-          >
-            {item.text}
-          </a>
-        ))}
-      </nav>
-    </aside>
+    <>
+      <aside className="toc-shell">
+        <div className="toc-heading">
+          <strong>本文目录</strong>
+          <span>{items.length}</span>
+        </div>
+        <nav className="toc" ref={navRef} aria-label="本文目录">
+          {renderItems()}
+        </nav>
+      </aside>
+
+      <button
+        className="mobile-toc-trigger"
+        type="button"
+        aria-expanded={mobileOpen}
+        aria-controls="mobile-toc-drawer"
+        onClick={() => setMobileOpen(true)}
+      >
+        <span>目录</span><small>{items.length}</small>
+      </button>
+      <div className={`mobile-toc-backdrop${mobileOpen ? " open" : ""}`} onClick={() => setMobileOpen(false)} />
+      <aside className={`mobile-toc-drawer${mobileOpen ? " open" : ""}`} id="mobile-toc-drawer" aria-hidden={!mobileOpen}>
+        <div className="toc-heading">
+          <strong>本文目录</strong>
+          <button type="button" onClick={() => setMobileOpen(false)} aria-label="关闭目录">×</button>
+        </div>
+        <nav className="toc mobile-toc" aria-label="移动端本文目录">
+          {renderItems(true)}
+        </nav>
+      </aside>
+    </>
   );
 }
