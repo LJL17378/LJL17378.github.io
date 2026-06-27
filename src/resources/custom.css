@@ -345,7 +345,7 @@ main { min-height: 72vh; }
   .search-trigger { display: none; }
   .heo-hero { min-height: 455px; margin-top: 14px; padding: 29px 22px; align-items: flex-end; border-radius: 22px; background-position: 58% center; }
   .heo-hero-content { width: 100%; padding-bottom: 39px; }
-  .heo-hero h1 { font-size: clamp(47px, 14vw, 64px); }
+  .heo-hero h1 { font-size: clamp(42px, 11.5vw, 51px); }
   .heo-hero p { font-size: 14px; }
   .hero-actions { margin-top: 23px; }
   .hero-corner { right: 20px; bottom: 17px; }
