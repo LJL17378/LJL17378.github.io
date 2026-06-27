@@ -5,8 +5,9 @@ export function Footer() {
     <footer className="site-footer">
       <span>© {new Date().getFullYear()} LJL17378</span>
       <span>
-        Built with{" "}
-        <Link href="https://once-ui.com/products/magic-portfolio">Once UI / Magic Portfolio</Link>
+        Heo design inspired by{" "}
+        <Link href="https://github.com/notionnext-org/NotionNext">NotionNext Heo</Link>
+        {" · "}Powered by <Link href="https://once-ui.com/products/magic-portfolio">Once UI</Link>
       </span>
     </footer>
   );

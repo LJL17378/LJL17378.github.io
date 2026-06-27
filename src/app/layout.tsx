@@ -4,6 +4,7 @@ import "@once-ui-system/core/css/tokens.css";
 import "highlight.js/styles/github-dark.css";
 import "@/resources/custom.css";
 import { Footer, Header, Providers } from "@/components";
+import { getAllPosts } from "@/content/posts";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://ljl17378.github.io"),
@@ -20,13 +21,13 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const searchPosts = getAllPosts().map(({ slug, title, summary, tags, publishedAt }) => ({ slug, title, summary, tags, publishedAt }));
   return (
     <html lang="zh-CN" suppressHydrationWarning data-theme="dark" data-brand="cyan" data-accent="blue" data-neutral="gray" data-solid="contrast" data-solid-style="flat" data-border="playful" data-surface="translucent" data-transition="all" data-scaling="100">
       <body>
         <Providers>
-          <div className="background-grid" />
           <div className="site-shell">
-            <Header />
+            <Header posts={searchPosts} />
             <main>{children}</main>
             <Footer />
           </div>

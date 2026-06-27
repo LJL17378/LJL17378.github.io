@@ -3,5 +3,6 @@ export { Footer } from "./Footer";
 export { Header } from "./Header";
 export { PostCard } from "./PostCard";
 export { Providers } from "./Providers";
+export { SearchOverlay } from "./SearchOverlay";
 export { TableOfContents } from "./TableOfContents";
 export { ThemeToggle } from "./ThemeToggle";

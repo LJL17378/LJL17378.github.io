@@ -1,6 +1,8 @@
 import type { Post } from "./posts";
 
-export function searchPosts(posts: Post[], query: string, limit?: number): Post[];
+export type SearchDocument = Pick<Post, "slug" | "title" | "summary" | "tags" | "publishedAt">;
+
+export function searchPosts<T extends SearchDocument>(posts: T[], query: string, limit?: number): T[];
 export function getRelatedPosts(
   posts: Post[],
   currentPost: Post,
