@@ -22,6 +22,7 @@ export type Post = {
   updatedAt: string;
   summary: string;
   tags: string[];
+  cover?: string;
   body: string;
   readingMinutes: number;
 };
@@ -44,10 +45,13 @@ function readPost(file: string): Post {
     updatedAt: String(data.updatedAt || data.publishedAt || "2024-01-01"),
     summary: String(data.summary || ""),
     tags: Array.isArray(data.tags) ? data.tags.map(String) : ["随笔"],
+    cover: data.cover ? String(data.cover) : undefined,
     body: content,
     readingMinutes: Math.max(1, Math.ceil(readingTime(content).minutes)),
   };
 }
+
+export { getAdjacentPosts, getRelatedPosts, searchPosts } from "./post-utils.mjs";
 
 export function getAllPosts(): Post[] {
   if (!fs.existsSync(postsDirectory)) return [];
