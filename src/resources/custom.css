@@ -171,16 +171,39 @@ main { min-height: 72vh; }
 
 .home-sidebar { display: flex; flex-direction: column; gap: 16px; }
 .sidebar-card { overflow: hidden; border: 1px solid var(--heo-line); border-radius: 20px; background: var(--heo-card); box-shadow: var(--heo-shadow); }
-.profile-card { position: relative; padding: 0 22px 22px; text-align: center; }
-.profile-banner { height: 82px; margin: 0 -22px; background: linear-gradient(135deg, #425aef, #49b1f5 58%, #78dcca); }
-.profile-card img { display: block; margin: -39px auto 0; border: 4px solid var(--heo-card); border-radius: 50%; object-fit: cover; }
-.profile-card h2 { margin: 10px 0 5px; font-size: 20px; }
-.profile-card > p { margin: 0 auto 17px; color: var(--heo-muted); font-size: 12px; line-height: 1.65; }
-.profile-stats { display: grid; grid-template-columns: repeat(2, 1fr); margin-bottom: 16px; padding: 13px 0; border-block: 1px solid var(--heo-line); color: var(--heo-faint); font-size: 10px; }
-.profile-stats span { display: flex; flex-direction: column; gap: 2px; }
-.profile-stats span + span { border-left: 1px solid var(--heo-line); }
-.profile-stats strong { color: var(--heo-text); font-size: 17px; }
-.profile-link { display: flex; padding: 10px 13px; justify-content: center; gap: 8px; border-radius: 10px; background: var(--heo-blue); color: #fff; font-size: 12px; font-weight: 700; }
+.bili-widget { min-width: 0; }
+.bili-widget bilibili-user-card {
+  display: block;
+  width: 100%;
+  --bic-background: var(--heo-card);
+  --bic-border: var(--heo-line);
+  --bic-divider: var(--heo-line);
+  --bic-font: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --bic-hover-shadow: 0 10px 28px rgba(31, 45, 61, .12);
+  --bic-max-width: 100%;
+  --bic-muted: var(--heo-muted);
+  --bic-primary: #fb7299;
+  --bic-radius: 16px;
+  --bic-shadow: none;
+  --bic-text: var(--heo-text);
+}
+.bili-widget bilibili-user-card:not(:defined) {
+  display: grid;
+  min-height: 256px;
+  place-items: center;
+  border: 1px solid var(--heo-line);
+  border-radius: 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, #fb7299 18%, var(--heo-card)), var(--heo-card));
+  color: var(--heo-muted);
+  font-size: 12px;
+}
+.bili-widget bilibili-user-card:not(:defined)::before { content: "正在加载 B 站资料"; }
+.bili-widget bilibili-user-card::part(card), .bili-widget bilibili-user-card::part(loading), .bili-widget bilibili-user-card::part(error) { border-color: var(--heo-line); box-shadow: none; }
+.bili-widget bilibili-user-card::part(card) { min-height: 246px; }
+.bili-widget bilibili-user-card::part(stats) { padding: 10px 6px 12px; }
+.bili-widget bilibili-user-card::part(stat) { padding-inline: 5px; }
+.bili-widget bilibili-user-card::part(name) { font-size: 20px; }
+.bili-widget bilibili-user-card::part(signature) { max-width: 180px; font-size: 12px; -webkit-line-clamp: 1; }
 .sidebar-title { display: flex; padding: 17px 18px 11px; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 800; }
 .sidebar-title a { color: var(--heo-blue); font-size: 10px; font-weight: 650; }
 .recent-card { padding-bottom: 9px; }
@@ -333,7 +356,7 @@ main { min-height: 72vh; }
   .mobile-nav-drawer { display: block; }
   .home-layout { grid-template-columns: 1fr; }
   .home-sidebar { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .profile-card { grid-row: span 2; }
+  .bili-widget { grid-row: span 2; }
   .about-layout { grid-template-columns: 1fr; }
   .about-card { position: static; }
 }
@@ -360,6 +383,9 @@ main { min-height: 72vh; }
   .post-card-link { grid-template-rows: 195px 1fr; }
   .post-card-content { padding: 18px; }
   .home-sidebar { display: flex; }
+  .bili-widget { grid-row: auto; }
+  .bili-widget bilibili-user-card::part(stats) { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: 0 !important; padding: 10px 4px 12px; }
+  .bili-widget bilibili-user-card::part(stat) { padding-inline: 3px; }
   .recent-card { order: -1; }
   .page-section, .article-layout { padding: 49px 0 68px; }
   .page-title h1 { font-size: 45px; }

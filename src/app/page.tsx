@@ -1,6 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
-import { PostCard } from "@/components";
+import { BiliInfoCard, PostCard } from "@/components";
 import { getAllPosts, getTags } from "@/content/posts";
 
 export default function Home() {
@@ -45,17 +44,7 @@ export default function Home() {
         </section>
 
         <aside className="home-sidebar">
-          <section className="sidebar-card profile-card">
-            <div className="profile-banner" />
-            <Image src="/avatar.png" alt="LJL17378" width={76} height={76} priority />
-            <h2>LJL17378</h2>
-            <p>持续学习，也持续把混乱整理成可以复用的经验。</p>
-            <div className="profile-stats">
-              <span><strong>{posts.length}</strong>文章</span>
-              <span><strong>{getTags().length}</strong>标签</span>
-            </div>
-            <Link className="profile-link" href="https://github.com/LJL17378">访问 GitHub <span>↗</span></Link>
-          </section>
+          <BiliInfoCard />
 
           <section className="sidebar-card recent-card">
             <div className="sidebar-title"><span>最近发布</span><Link href="/archive">归档</Link></div>

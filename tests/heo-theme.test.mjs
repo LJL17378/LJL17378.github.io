@@ -24,6 +24,20 @@ test('provides Heo navigation, search, mobile navigation, and card covers', asyn
   assert.match(postCard, /cover-palette-/)
 })
 
+test('uses the Bili info card web component in the home sidebar', async () => {
+  const home = await readFile('src/app/page.tsx', 'utf8')
+  const component = await readFile('src/components/BiliInfoCard.tsx', 'utf8')
+  const styles = await readFile('src/resources/custom.css', 'utf8')
+  const declarations = await readFile('src/types/custom-elements.d.ts', 'utf8')
+
+  assert.match(home, /<BiliInfoCard \/>/)
+  assert.match(component, /https:\/\/bili-info-card\.vercel\.app\/bilibili-user-card\.js/)
+  assert.match(component, /<bilibili-user-card uid=\{BILI_UID\}/)
+  assert.match(styles, /\.bili-widget bilibili-user-card/)
+  assert.match(styles, /--bic-max-width:\s*100%/)
+  assert.match(declarations, /"bilibili-user-card"/)
+})
+
 test('retains the NotionNext MIT notice for the Heo design reference', async () => {
   const footer = await readFile('src/components/Footer.tsx', 'utf8')
   const license = await readFile('LICENSE.notionnext', 'utf8')
