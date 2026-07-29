@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { BiliInfoCard, PostCard } from "@/components";
+import { BiliInfoCard, CityInspirationCard, PostCard } from "@/components";
 import { getAllPosts, getTags } from "@/content/posts";
+import Link from "next/link";
 
 export default function Home() {
   const posts = getAllPosts();
@@ -55,6 +55,8 @@ export default function Home() {
               </Link>
             ))}
           </section>
+
+          <CityInspirationCard />
 
           <section className="sidebar-card tag-card">
             <div className="sidebar-title"><span>标签云</span><Link href="/tags">全部</Link></div>

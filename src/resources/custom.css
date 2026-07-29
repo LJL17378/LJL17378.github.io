@@ -172,6 +172,17 @@ main { min-height: 72vh; }
 .home-sidebar { display: flex; flex-direction: column; gap: 16px; }
 .sidebar-card { overflow: hidden; border: 1px solid var(--heo-line); border-radius: 20px; background: var(--heo-card); box-shadow: var(--heo-shadow); }
 .bili-widget { min-width: 0; }
+.city-widget { min-width: 0; }
+.city-widget info-card-craft {
+  display: block;
+  width: 100%;
+}
+.city-widget info-card-craft:not(:defined) {
+  min-height: 420px;
+  border: 1px solid var(--heo-line);
+  border-radius: 20px;
+  background: linear-gradient(145deg, color-mix(in srgb, #ff7657 12%, var(--heo-card)), var(--heo-card));
+}
 .bili-widget bilibili-user-card {
   display: block;
   width: 100%;

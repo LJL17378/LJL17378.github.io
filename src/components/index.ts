@@ -1,5 +1,6 @@
 export { ArticleContent } from "./ArticleContent";
 export { BiliInfoCard } from "./BiliInfoCard";
+export { CityInspirationCard } from "./CityInspirationCard";
 export { Footer } from "./Footer";
 export { Header } from "./Header";
 export { PostCard } from "./PostCard";

@@ -38,6 +38,18 @@ test('uses the Bili info card web component in the home sidebar', async () => {
   assert.match(declarations, /"bilibili-user-card"/)
 })
 
+test('embeds the live Beijing inspiration card in the home sidebar', async () => {
+  const home = await readFile('src/app/page.tsx', 'utf8')
+  const component = await readFile('src/components/CityInspirationCard.tsx', 'utf8')
+  const declarations = await readFile('src/types/custom-elements.d.ts', 'utf8')
+
+  assert.match(home, /<CityInspirationCard \/>/)
+  assert.match(component, /https:\/\/info-card-craft\.vercel\.app\/embed\.js/)
+  assert.match(component, /card-id="demo-city-inspiration"/)
+  assert.match(component, /input-city="北京"/)
+  assert.match(declarations, /"info-card-craft"/)
+})
+
 test('retains the NotionNext MIT notice for the Heo design reference', async () => {
   const footer = await readFile('src/components/Footer.tsx', 'utf8')
   const license = await readFile('LICENSE.notionnext', 'utf8')

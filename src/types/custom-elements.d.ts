@@ -11,6 +11,14 @@ declare module "react" {
         },
         HTMLElement
       >;
+      "info-card-craft": DetailedHTMLProps<
+        HTMLAttributes<HTMLElement> & {
+          "card-id": string;
+          "input-city"?: string;
+          version?: string;
+        },
+        HTMLElement
+      >;
     }
   }
 }
