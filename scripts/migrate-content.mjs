@@ -140,10 +140,14 @@ for (const entry of entries.filter((item) => item.isFile() && item.name.endsWith
 
   const body = rewriteLocalAssets(fenceDangerousBlocks(parsed.content.trim()), localAssets)
   const record = records.get(entry.name)
-  const publishedAt = new Date(record?.date || '2024-01-01T00:00:00.000Z')
+  const publishedAt = new Date(
+    record?.date || parsed.data.date || parsed.data.publishedAt || '2024-01-01T00:00:00.000Z',
+  )
     .toISOString()
     .slice(0, 10)
-  const updatedAt = new Date(record?.updated || record?.date || publishedAt)
+  const updatedAt = new Date(
+    record?.updated || parsed.data.updated || parsed.data.updatedAt || record?.date || publishedAt,
+  )
     .toISOString()
     .slice(0, 10)
 
