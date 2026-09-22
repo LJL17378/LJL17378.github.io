@@ -6,7 +6,7 @@ const postsDirectory = new URL('../content/posts/', import.meta.url)
 
 test('migrates every Hexo post with unique slugs and dates', async () => {
   const files = (await readdir(postsDirectory)).filter((file) => file.endsWith('.md'))
-  assert.equal(files.length, 34)
+  assert.equal(files.length, 36)
   assert.equal(new Set(files).size, files.length)
 
   for (const file of files) {
