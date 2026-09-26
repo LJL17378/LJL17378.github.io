@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">对象在分代垃圾回收器中的生命周期</title>
+  <desc id="desc">对象先进入年轻代，短命对象很快回收，多次存活的对象晋升老年代，最终不可达后被回收并整理空间。</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#ecfeff"/>
+    </linearGradient>
+    <filter id="s2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="7" stdDeviation="9" flood-color="#0f172a" flood-opacity=".12"/>
+    </filter>
+    <marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10z" fill="#475569"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="700" rx="28" fill="url(#bg2)"/>
+  <text x="60" y="70" font-family="system-ui, sans-serif" font-size="32" font-weight="700" fill="#0f172a">对象的一生：先放在门口，值得留下的才搬进储藏室</text>
+  <text x="60" y="107" font-family="system-ui, sans-serif" font-size="18" fill="#475569">分代假说：大多数对象很快失去引用，因此年轻代适合频繁、快速地回收</text>
+
+  <g stroke="#475569" stroke-width="4" fill="none" marker-end="url(#a2)">
+    <path d="M245 260 L330 260"/>
+    <path d="M565 260 L650 260"/>
+    <path d="M885 260 L970 260"/>
+    <path d="M445 350 C445 430 345 470 270 500"/>
+    <path d="M765 350 C765 430 665 470 590 500"/>
+    <path d="M1060 350 C1060 430 965 470 890 500"/>
+  </g>
+
+  <g filter="url(#s2)" font-family="system-ui, sans-serif">
+    <rect x="55" y="185" width="190" height="150" rx="22" fill="#dbeafe" stroke="#3b82f6" stroke-width="3"/>
+    <text x="150" y="230" text-anchor="middle" font-size="24" font-weight="700" fill="#1e3a8a">创建对象</text>
+    <text x="150" y="266" text-anchor="middle" font-size="16" fill="#1d4ed8">请求参数、临时数组</text>
+    <text x="150" y="294" text-anchor="middle" font-size="16" fill="#1d4ed8">新建 DTO、闭包</text>
+
+    <rect x="330" y="165" width="235" height="185" rx="22" fill="#ccfbf1" stroke="#14b8a6" stroke-width="3"/>
+    <text x="447" y="215" text-anchor="middle" font-size="24" font-weight="700" fill="#134e4a">年轻代 / Nursery</text>
+    <text x="447" y="252" text-anchor="middle" font-size="16" fill="#0f766e">频繁执行 Minor GC</text>
+    <text x="447" y="282" text-anchor="middle" font-size="16" fill="#0f766e">只搬运仍然可达的对象</text>
+    <text x="447" y="312" text-anchor="middle" font-size="16" fill="#0f766e">大量短命对象直接消失</text>
+
+    <rect x="650" y="165" width="235" height="185" rx="22" fill="#ede9fe" stroke="#8b5cf6" stroke-width="3"/>
+    <text x="767" y="215" text-anchor="middle" font-size="24" font-weight="700" fill="#4c1d95">多次存活 / 晋升</text>
+    <text x="767" y="252" text-anchor="middle" font-size="16" fill="#6d28d9">缓存、会话、常驻状态</text>
+    <text x="767" y="282" text-anchor="middle" font-size="16" fill="#6d28d9">生命周期被证明更长</text>
+    <text x="767" y="312" text-anchor="middle" font-size="16" fill="#6d28d9">转入老年代</text>
+
+    <rect x="970" y="165" width="175" height="185" rx="22" fill="#fef3c7" stroke="#f59e0b" stroke-width="3"/>
+    <text x="1057" y="215" text-anchor="middle" font-size="24" font-weight="700" fill="#78350f">老年代</text>
+    <text x="1057" y="252" text-anchor="middle" font-size="16" fill="#b45309">回收频率较低</text>
+    <text x="1057" y="282" text-anchor="middle" font-size="16" fill="#b45309">单次工作更重</text>
+    <text x="1057" y="312" text-anchor="middle" font-size="16" fill="#b45309">关注碎片与停顿</text>
+  </g>
+
+  <g filter="url(#s2)" font-family="system-ui, sans-serif">
+    <rect x="140" y="500" width="260" height="105" rx="20" fill="#dcfce7" stroke="#22c55e" stroke-width="3"/>
+    <text x="270" y="542" text-anchor="middle" font-size="22" font-weight="700" fill="#14532d">很快不可达</text>
+    <text x="270" y="575" text-anchor="middle" font-size="16" fill="#15803d">年轻代回收最划算</text>
+
+    <rect x="460" y="500" width="260" height="105" rx="20" fill="#fee2e2" stroke="#ef4444" stroke-width="3"/>
+    <text x="590" y="542" text-anchor="middle" font-size="22" font-weight="700" fill="#7f1d1d">引用一直没放下</text>
+    <text x="590" y="575" text-anchor="middle" font-size="16" fill="#b91c1c">继续存活，甚至形成泄漏</text>
+
+    <rect x="780" y="500" width="260" height="105" rx="20" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="3"/>
+    <text x="910" y="542" text-anchor="middle" font-size="22" font-weight="700" fill="#0c4a6e">最终失去引用</text>
+    <text x="910" y="575" text-anchor="middle" font-size="16" fill="#0369a1">标记、清扫或搬迁压缩</text>
+  </g>
+
+  <text x="60" y="660" font-family="system-ui, sans-serif" font-size="17" fill="#64748b">重要：年轻代与老年代是回收策略中的逻辑分区；V8 和 HotSpot G1 的具体布局与实现并不相同。</text>
+</svg>

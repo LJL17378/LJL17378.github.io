@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">GC 可达性与房间断舍离类比</title>
+  <desc id="desc">从根对象出发能找到的对象会被保留，无法从根到达的对象可被垃圾回收。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef2ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#334155" flood-opacity=".13"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="680" rx="28" fill="url(#bg)"/>
+  <text x="60" y="72" font-family="system-ui, sans-serif" font-size="32" font-weight="700" fill="#0f172a">GC 不判断“有没有用”，只判断“还能不能找到”</text>
+  <text x="60" y="108" font-family="system-ui, sans-serif" font-size="18" fill="#475569">从根集合出发沿引用关系搜索：可达对象保留，不可达对象才有资格被回收</text>
+
+  <g filter="url(#shadow)">
+    <rect x="60" y="160" width="220" height="105" rx="20" fill="#4338ca"/>
+    <text x="170" y="202" text-anchor="middle" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="white">根集合 Roots</text>
+    <text x="170" y="235" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#e0e7ff">调用栈 · 全局对象 · 运行时句柄</text>
+  </g>
+
+  <g stroke="#64748b" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M280 195 C350 160 385 160 440 190"/>
+    <path d="M280 230 C350 285 385 300 440 300"/>
+    <path d="M620 205 C690 205 715 235 760 260"/>
+    <path d="M620 315 C685 340 710 365 760 385"/>
+    <path d="M920 275 C975 300 985 360 940 395"/>
+  </g>
+
+  <g filter="url(#shadow)" font-family="system-ui, sans-serif">
+    <rect x="440" y="150" width="180" height="100" rx="18" fill="#c7d2fe" stroke="#6366f1" stroke-width="3"/>
+    <text x="530" y="193" text-anchor="middle" font-size="22" font-weight="700" fill="#312e81">全局缓存</text>
+    <text x="530" y="222" text-anchor="middle" font-size="15" fill="#4338ca">仍被 global 引用</text>
+
+    <rect x="440" y="275" width="180" height="100" rx="18" fill="#bfdbfe" stroke="#3b82f6" stroke-width="3"/>
+    <text x="530" y="318" text-anchor="middle" font-size="22" font-weight="700" fill="#1e3a8a">当前请求</text>
+    <text x="530" y="347" text-anchor="middle" font-size="15" fill="#1d4ed8">栈帧还在使用</text>
+
+    <rect x="760" y="225" width="180" height="100" rx="18" fill="#bbf7d0" stroke="#22c55e" stroke-width="3"/>
+    <text x="850" y="268" text-anchor="middle" font-size="22" font-weight="700" fill="#14532d">用户对象</text>
+    <text x="850" y="297" text-anchor="middle" font-size="15" fill="#15803d">沿缓存引用可达</text>
+
+    <rect x="760" y="355" width="180" height="100" rx="18" fill="#bbf7d0" stroke="#22c55e" stroke-width="3"/>
+    <text x="850" y="398" text-anchor="middle" font-size="22" font-weight="700" fill="#14532d">响应数据</text>
+    <text x="850" y="427" text-anchor="middle" font-size="15" fill="#15803d">沿请求引用可达</text>
+  </g>
+
+  <g filter="url(#shadow)" font-family="system-ui, sans-serif">
+    <rect x="335" y="505" width="250" height="105" rx="20" fill="#fee2e2" stroke="#ef4444" stroke-width="3" stroke-dasharray="9 7"/>
+    <text x="460" y="547" text-anchor="middle" font-size="22" font-weight="700" fill="#7f1d1d">失去入口的一组对象</text>
+    <text x="460" y="578" text-anchor="middle" font-size="16" fill="#b91c1c">内部即使互相引用，也整体不可达</text>
+
+    <rect x="725" y="520" width="350" height="80" rx="18" fill="#fff7ed" stroke="#f97316" stroke-width="3"/>
+    <text x="900" y="553" text-anchor="middle" font-size="21" font-weight="700" fill="#9a3412">可达但业务已不用：逻辑内存泄漏</text>
+    <text x="900" y="580" text-anchor="middle" font-size="15" fill="#c2410c">GC 会遵守引用关系，把它认真地留下来</text>
+  </g>
+
+  <text x="60" y="650" font-family="system-ui, sans-serif" font-size="17" fill="#64748b">房间类比：钥匙、清单和通道都断开后，整理者才会把物品视为可清走；“心里不需要”并不算。</text>
+</svg>

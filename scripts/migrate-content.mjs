@@ -20,8 +20,9 @@ const records = new Map(
   ]),
 )
 
-function createSlug(filename, title) {
-  const preferred = records.get(filename)?.slug || title || path.basename(filename, '.md')
+function createSlug(filename, title, explicitSlug) {
+  const preferred =
+    explicitSlug || records.get(filename)?.slug || title || path.basename(filename, '.md')
   return (
     slugify(preferred, {
       lowercase: true,
@@ -129,7 +130,7 @@ for (const entry of entries.filter((item) => item.isFile() && item.name.endsWith
   const raw = await readFile(path.join(sourceDirectory, entry.name), 'utf8')
   const parsed = matter(raw)
   const title = String(parsed.data.title || path.basename(entry.name, '.md')).trim()
-  let slug = createSlug(entry.name, title)
+  let slug = createSlug(entry.name, title, parsed.data.slug)
 
   if (usedSlugs.has(slug)) {
     let suffix = 2

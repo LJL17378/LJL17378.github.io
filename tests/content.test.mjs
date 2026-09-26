@@ -6,7 +6,7 @@ const postsDirectory = new URL('../content/posts/', import.meta.url)
 
 test('migrates every Hexo post with unique slugs and dates', async () => {
   const files = (await readdir(postsDirectory)).filter((file) => file.endsWith('.md'))
-  assert.equal(files.length, 36)
+  assert.equal(files.length, 37)
   assert.equal(new Set(files).size, files.length)
 
   for (const file of files) {
@@ -14,6 +14,14 @@ test('migrates every Hexo post with unique slugs and dates', async () => {
     assert.match(source, /^---\n[\s\S]*title:/)
     assert.match(source, /\npublishedAt: ['"]?\d{4}-\d{2}-\d{2}['"]?/)
   }
+})
+
+test('respects an explicit source slug when transliteration would be ambiguous', async () => {
+  const filename = 'cong-gc-zhong-xue-dao-duan-she-li-de-zhi-hui.md'
+  const source = await readFile(new URL(filename, postsDirectory), 'utf8')
+
+  assert.match(source, /slug: cong-gc-zhong-xue-dao-duan-she-li-de-zhi-hui/)
+  assert.match(source, /title: 从 GC 中学到断舍离的智慧/)
 })
 
 test('preserves code examples instead of escaping the whole article', async () => {
@@ -46,6 +54,8 @@ test('copies every local post asset to a stable public directory', async () => {
     'image-5.png',
     'image-6.png',
     'image.png',
+    'gc-room-reachability.svg',
+    'gc-generational-lifecycle.svg',
   ]
 
   for (const asset of assets) {
